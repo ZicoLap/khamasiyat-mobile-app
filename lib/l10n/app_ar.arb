@@ -1,0 +1,306 @@
+{
+  "@@locale": "ar",
+  "appTitle": "خماسيات",
+  "sessionRestoring": "جاري استعادة جلستك…",
+  "loginTitle": "تسجيل الدخول",
+  "loginSubtitle": "مرحبًا بعودتك. سجّل الدخول بحساب العميل.",
+  "loginAction": "تسجيل الدخول",
+  "createAccountLink": "إنشاء حساب",
+  "haveAccountLink": "لديك حساب؟ سجّل الدخول",
+  "forgotPasswordLink": "نسيت كلمة المرور؟",
+  "registerTitle": "إنشاء حساب",
+  "registerSubtitle": "أدخل بياناتك. سنرسل رمز التحقق إلى بريدك.",
+  "registerContinueAction": "متابعة",
+  "registerVerifyTitle": "تأكيد البريد",
+  "registerVerifySubtitle": "أدخل الرمز المرسل إلى {email} ثم اختر كلمة مرور.",
+  "@registerVerifySubtitle": {
+    "placeholders": {
+      "email": { "type": "String" }
+    }
+  },
+  "registerVerifyAction": "تأكيد وإنشاء الحساب",
+  "forgotPasswordTitle": "نسيت كلمة المرور",
+  "forgotPasswordSubtitle": "أدخل بريدك وسنرسل رمز إعادة التعيين إن وُجد حساب.",
+  "forgotPasswordAction": "إرسال رمز إعادة التعيين",
+  "resetPasswordTitle": "إعادة تعيين كلمة المرور",
+  "resetPasswordSubtitle": "أدخل الرمز المرسل إلى {email} وكلمة المرور الجديدة.",
+  "@resetPasswordSubtitle": {
+    "placeholders": {
+      "email": { "type": "String" }
+    }
+  },
+  "resetPasswordAction": "إعادة التعيين",
+  "resetPasswordSuccess": "تم تحديث كلمة المرور. يرجى تسجيل الدخول.",
+  "changePasswordTitle": "تغيير كلمة المرور",
+  "changePasswordSubtitle": "اختر كلمة مرور جديدة لحسابك.",
+  "changePasswordAction": "تحديث كلمة المرور",
+  "logoutAction": "تسجيل الخروج",
+  "homePlaceholderTitle": "أنت مسجّل الدخول",
+  "homePlaceholderBody": "ميزات الكتالوج والحجز تأتي في المرحلة التالية.",
+  "homeSignedInAs": "مسجّل الدخول باسم {name} ({email})",
+  "@homeSignedInAs": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "email": { "type": "String" }
+    }
+  },
+  "nameLabel": "الاسم الكامل",
+  "emailLabel": "البريد الإلكتروني",
+  "phoneLabel": "الهاتف",
+  "phoneHint": "0912345678 أو +249912345678",
+  "passwordLabel": "كلمة المرور",
+  "currentPasswordLabel": "كلمة المرور الحالية",
+  "newPasswordLabel": "كلمة المرور الجديدة",
+  "confirmPasswordLabel": "تأكيد كلمة المرور",
+  "otpLabel": "رمز التحقق",
+  "otpResendAction": "إعادة إرسال الرمز",
+  "otpResendCooldown": "إعادة الإرسال بعد {seconds} ث",
+  "@otpResendCooldown": {
+    "placeholders": {
+      "seconds": { "type": "int" }
+    }
+  },
+  "otpResentInfo": "إذا كان التسجيل معلّقًا، فقد أُرسل رمز جديد.",
+  "languageLabel": "اللغة",
+  "switchToArabic": "العربية",
+  "switchToEnglish": "English",
+  "validationEmailRequired": "البريد مطلوب",
+  "validationEmailInvalid": "أدخل بريدًا صالحًا",
+  "validationPasswordRequired": "كلمة المرور مطلوبة",
+  "validationPasswordWeak": "استخدم 8 أحرف على الأقل مع حرف ورقم",
+  "validationPasswordMismatch": "كلمتا المرور غير متطابقتين",
+  "validationNameRequired": "أدخل اسمك (حرفان على الأقل)",
+  "validationPhoneRequired": "الهاتف مطلوب",
+  "validationPhoneInvalid": "أدخل رقم هاتف سوداني صالحًا",
+  "validationOtpInvalid": "أدخل رمز التحقق الرقمي",
+  "authErrorInvalidCredentials": "البريد أو كلمة المرور غير صحيحة",
+  "authErrorAccountSuspended": "تم تعليق هذا الحساب",
+  "authErrorInvalidOtp": "رمز التحقق غير صالح",
+  "authErrorOtpExpired": "انتهت صلاحية الرمز. اطلب رمزًا جديدًا",
+  "authErrorEmailRegistered": "يوجد حساب بهذا البريد بالفعل",
+  "authErrorPhoneRegistered": "يوجد حساب بهذا الهاتف بالفعل",
+  "authErrorEmailNotVerified": "البريد غير مؤكد",
+  "authErrorRateLimited": "محاولات كثيرة. انتظر ثم أعد المحاولة",
+  "authErrorPasswordMismatch": "كلمتا المرور غير متطابقتين",
+  "authErrorWeakPassword": "كلمة المرور ضعيفة",
+  "authErrorMailFailed": "تعذر إرسال البريد. حاول لاحقًا",
+  "authErrorMustChangePassword": "يجب تغيير كلمة المرور قبل المتابعة",
+  "authErrorValidation": "يرجى التحقق من المدخلات",
+  "authErrorForbidden": "غير مسموح بهذا الإجراء",
+  "authErrorNonCustomer": "لا يمكن استخدام هذا الحساب في تطبيق العميل",
+  "authErrorNetwork": "الشبكة غير متاحة. تحقق من الاتصال وحاول مجددًا",
+  "authErrorTimeout": "انتهت مهلة الطلب. حاول مجددًا",
+  "authErrorUnauthorized": "جلستك لم تعد صالحة. يرجى تسجيل الدخول",
+  "authErrorSessionExpired": "انتهت جلستك. يرجى تسجيل الدخول مجددًا",
+  "authErrorUnexpected": "حدث خطأ ما. حاول مجددًا",
+  "authPasswordChangedRelogin": "تم تحديث كلمة المرور. يرجى تسجيل الدخول مجددًا",
+  "navHome": "الرئيسية",
+  "navSearch": "بحث",
+  "navBookings": "حجوزاتي",
+  "navProfile": "حسابي",
+  "brandName": "خماسيات",
+  "homeGreetingMorningGeneric": "صباح الخير 👋",
+  "homeGreetingAfternoonGeneric": "مساء الخير 👋",
+  "homeGreetingEveningGeneric": "مساء الخير 👋",
+  "homeGreetingMorningNamed": "صباح الخير، {name} 👋",
+  "@homeGreetingMorningNamed": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "homeGreetingAfternoonNamed": "مساء الخير، {name} 👋",
+  "@homeGreetingAfternoonNamed": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "homeGreetingEveningNamed": "مساء الخير، {name} 👋",
+  "@homeGreetingEveningNamed": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "homeWelcomeGeneric": "مرحبًا",
+  "homeWelcomeNamed": "أهلًا، {name}",
+  "@homeWelcomeNamed": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "homeHeadline": "مباراتك الجاية تبدأ من هنا",
+  "homeQuestion": "مباراتك الجاية تبدأ من هنا",
+  "homeHeroSupport": "اكتشف واحجز ملاعب كرة القدم في جميع أنحاء السودان",
+  "homeDiscoverCta": "ابحث عن ملعب",
+  "homeQuickFilters": "تصفية",
+  "homeStadiumsSection": "استكشف الملاعب",
+  "homeSeeAll": "عرض الكل",
+  "searchTitle": "بحث",
+  "searchSubtitle": "الولاية أو المدينة أو نوع الملعب",
+  "searchResultsCount": "{count, plural, =0{ما في ملاعب} one{ملعب واحد} other{{count} ملاعب}}",
+  "@searchResultsCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "catalogEmptyTitle": "ما في ملاعب",
+  "catalogEmptyBody": "جرّب منطقة أو نوع ملعب ثاني، أو امسح الفلاتر.",
+  "catalogClearFilters": "مسح الكل",
+  "catalogErrorTitle": "تعذر تحميل الملاعب",
+  "catalogLoadMoreRetry": "أعد محاولة التحميل",
+  "catalogEndOfList": "وصلت لنهاية القائمة",
+  "retryAction": "إعادة المحاولة",
+  "filtersAction": "فلاتر",
+  "filtersSheetTitle": "الفلاتر",
+  "filtersApply": "عرض النتائج",
+  "filtersReset": "إعادة ضبط",
+  "filterState": "الولاية",
+  "filterCity": "المدينة",
+  "filterPitchType": "نوع الملعب",
+  "filterAny": "الكل",
+  "stadiumActivePitches": "{count, plural, =0{ما في ملاعب} one{ملعب واحد} other{{count} ملاعب}}",
+  "@stadiumActivePitches": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "stadiumPhotoPlaceholder": "قريبًا",
+  "stadiumPhotoUnavailable": "غير متاحة",
+  "stadiumDetailPlaceholderTitle": "الملعب",
+  "stadiumDetailPlaceholderBody": "تفاصيل الملعب تأتي في المرحلة التالية.",
+  "stadiumDetailIdLabel": "معرّف الملعب: {id}",
+  "@stadiumDetailIdLabel": {
+    "placeholders": {
+      "id": { "type": "String" }
+    }
+  },
+  "stadiumDetailAbout": "نبذة",
+  "stadiumDetailRules": "القواعد",
+  "stadiumDetailPitches": "الملاعب",
+  "stadiumDetailFacilities": "المرافق",
+  "stadiumDetailLocation": "الموقع",
+  "stadiumDetailShowMore": "عرض المزيد",
+  "stadiumDetailShowLess": "عرض أقل",
+  "stadiumDetailChoosePitch": "اختر ملعبًا",
+  "stadiumDetailGetDirections": "الحصول على الاتجاهات",
+  "stadiumDetailCallStadium": "اتصل بالملعب",
+  "stadiumDetailNoPitches": "لا توجد ملاعب قابلة للحجز الآن.",
+  "stadiumDetailErrorBody": "تحقق من اتصالك وحاول مرة أخرى.",
+  "stadiumDetailErrorTitle": "تعذّر تحميل الملعب",
+  "stadiumDetailIndoor": "داخلي",
+  "stadiumDetailRoofed": "مسقوف",
+  "stadiumDetailSummarySemantic": "ملخص الملعب",
+  "stadiumDetailPitchCount": "{count, plural, =0{لا ملاعب} one{ملعب واحد} other{{count} ملاعب}}",
+  "@stadiumDetailPitchCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "stadiumDetailFacilityCount": "{count, plural, =0{لا مرافق} one{مرفق واحد} other{{count} مرافق}}",
+  "@stadiumDetailFacilityCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "stadiumDetailPhotoCount": "{current} / {total}",
+  "@stadiumDetailPhotoCount": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "stadiumDetailPhotoSemantic": "صورة {name}، {current} من {total}",
+  "@stadiumDetailPhotoSemantic": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "amenityParking": "موقف سيارات",
+  "amenityChangingRooms": "غرف تبديل",
+  "amenityToilets": "دورات مياه",
+  "amenitySeating": "مقاعد",
+  "amenityCafe": "مقهى",
+  "amenityPrayerArea": "مصلى",
+  "amenityWater": "مياه للشرب",
+  "amenityFirstAid": "إسعافات أولية",
+  "surfaceNaturalGrass": "عشب طبيعي",
+  "surfaceArtificialTurf": "عشب صناعي",
+  "surfaceFutsal": "صالة",
+  "surfaceOther": "سطح آخر",
+  "pitchDetailPlaceholderTitle": "الملعب الفرعي",
+  "pitchDetailPlaceholderBody": "توفر المواعيد يأتي في المرحلة التالية.",
+  "pitchDetailIdLabel": "معرّف الملعب: {id}",
+  "@pitchDetailIdLabel": {
+    "placeholders": {
+      "id": { "type": "String" }
+    }
+  },
+  "bookingsPlaceholderTitle": "حجوزاتك",
+  "bookingsPlaceholderBody": "سجل الحجوزات والمباريات القادمة سيظهر هنا قريبًا.",
+  "profilePlaceholderTitle": "حسابك",
+  "profilePlaceholderBody": "إعدادات الملف الشخصي تأتي لاحقًا. يمكنك تسجيل الخروج من هنا.",
+  "pitchTypeFiveASide": "خماسي",
+  "pitchTypeSevenASide": "سباعي",
+  "pitchTypeElevenASide": "أحد عشر",
+  "pitchTypeOther": "أخرى",
+  "stateKhartoum": "الخرطوم",
+  "stateNorthern": "الشمالية",
+  "stateRiverNile": "نهر النيل",
+  "stateRedSea": "البحر الأحمر",
+  "stateKassala": "كسلا",
+  "stateGedaref": "القضارف",
+  "stateGezira": "الجزيرة",
+  "stateWhiteNile": "النيل الأبيض",
+  "stateBlueNile": "النيل الأزرق",
+  "stateSennar": "سنار",
+  "stateNorthKordofan": "شمال كردفان",
+  "stateSouthKordofan": "جنوب كردفان",
+  "stateWestKordofan": "غرب كردفان",
+  "stateNorthDarfur": "شمال دارفور",
+  "stateSouthDarfur": "جنوب دارفور",
+  "stateEastDarfur": "شرق دارفور",
+  "stateWestDarfur": "غرب دارفور",
+  "stateCentralDarfur": "وسط دارفور",
+  "cityKhartoumCity": "الخرطوم",
+  "cityOmdurman": "أم درمان",
+  "cityBahri": "بحري",
+  "cityDongola": "دنقلا",
+  "cityKarima": "كريمة",
+  "cityWadiHalfa": "وادي حلفا",
+  "cityAtbara": "عطبرة",
+  "cityEdDamer": "الدامر",
+  "cityShendi": "شندي",
+  "cityBerber": "بربر",
+  "cityPortSudan": "بورتسودان",
+  "citySuakin": "سواكن",
+  "cityTokar": "طوكر",
+  "cityKassalaCity": "كسلا",
+  "cityNewHalfa": "حلفا الجديدة",
+  "cityGedarefCity": "القضارف",
+  "cityShowak": "الشواك",
+  "cityWadMadani": "ود مدني",
+  "cityHasahisa": "الحصاحيصا",
+  "cityKamlin": "الكاملين",
+  "cityManaqil": "المناقل",
+  "cityRabak": "ربك",
+  "cityKosti": "كوستي",
+  "cityEdDueim": "الدويم",
+  "cityDamazin": "الدمازين",
+  "cityRoseires": "الروصيرص",
+  "citySinnarCity": "سنار",
+  "citySinga": "سنجة",
+  "cityElObeid": "الأبيض",
+  "cityUmRawaba": "أم روابة",
+  "cityKadugli": "كادقلي",
+  "cityAbuJubaiha": "أبو جبيهة",
+  "cityAlFula": "الفولة",
+  "cityAnNuhud": "النهود",
+  "cityElFasher": "الفاشر",
+  "cityKutum": "كتم",
+  "cityNyala": "نيالا",
+  "cityKass": "كاس",
+  "cityEdDaein": "الضعين",
+  "cityGeneina": "الجنينة",
+  "cityZalingei": "زالنجي"
+}

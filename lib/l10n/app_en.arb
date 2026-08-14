@@ -1,0 +1,309 @@
+{
+  "@@locale": "en",
+  "appTitle": "Khamasiyat",
+  "@appTitle": {
+    "description": "Application brand name"
+  },
+  "sessionRestoring": "Restoring your session…",
+  "loginTitle": "Sign in",
+  "loginSubtitle": "Welcome back. Sign in with your customer account.",
+  "loginAction": "Sign in",
+  "createAccountLink": "Create an account",
+  "haveAccountLink": "Already have an account? Sign in",
+  "forgotPasswordLink": "Forgot password?",
+  "registerTitle": "Create account",
+  "registerSubtitle": "Enter your details. We will email you a verification code.",
+  "registerContinueAction": "Continue",
+  "registerVerifyTitle": "Verify email",
+  "registerVerifySubtitle": "Enter the code sent to {email}, then choose a password.",
+  "@registerVerifySubtitle": {
+    "placeholders": {
+      "email": { "type": "String" }
+    }
+  },
+  "registerVerifyAction": "Verify and create account",
+  "forgotPasswordTitle": "Forgot password",
+  "forgotPasswordSubtitle": "Enter your email and we will send a reset code if an account exists.",
+  "forgotPasswordAction": "Send reset code",
+  "resetPasswordTitle": "Reset password",
+  "resetPasswordSubtitle": "Enter the code sent to {email} and your new password.",
+  "@resetPasswordSubtitle": {
+    "placeholders": {
+      "email": { "type": "String" }
+    }
+  },
+  "resetPasswordAction": "Reset password",
+  "resetPasswordSuccess": "Password updated. Please sign in.",
+  "changePasswordTitle": "Change password",
+  "changePasswordSubtitle": "Choose a new password for your account.",
+  "changePasswordAction": "Update password",
+  "logoutAction": "Sign out",
+  "homePlaceholderTitle": "You're signed in",
+  "homePlaceholderBody": "Catalog and booking features arrive in the next phase.",
+  "homeSignedInAs": "Signed in as {name} ({email})",
+  "@homeSignedInAs": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "email": { "type": "String" }
+    }
+  },
+  "nameLabel": "Full name",
+  "emailLabel": "Email",
+  "phoneLabel": "Phone",
+  "phoneHint": "0912345678 or +249912345678",
+  "passwordLabel": "Password",
+  "currentPasswordLabel": "Current password",
+  "newPasswordLabel": "New password",
+  "confirmPasswordLabel": "Confirm password",
+  "otpLabel": "Verification code",
+  "otpResendAction": "Resend code",
+  "otpResendCooldown": "Resend available in {seconds}s",
+  "@otpResendCooldown": {
+    "placeholders": {
+      "seconds": { "type": "int" }
+    }
+  },
+  "otpResentInfo": "If registration is pending, a new code has been sent.",
+  "languageLabel": "Language",
+  "switchToArabic": "العربية",
+  "switchToEnglish": "English",
+  "validationEmailRequired": "Email is required",
+  "validationEmailInvalid": "Enter a valid email",
+  "validationPasswordRequired": "Password is required",
+  "validationPasswordWeak": "Use at least 8 characters with a letter and a number",
+  "validationPasswordMismatch": "Passwords do not match",
+  "validationNameRequired": "Enter your name (at least 2 characters)",
+  "validationPhoneRequired": "Phone is required",
+  "validationPhoneInvalid": "Enter a valid Sudanese mobile number",
+  "validationOtpInvalid": "Enter the numeric verification code",
+  "authErrorInvalidCredentials": "Invalid email or password",
+  "authErrorAccountSuspended": "This account has been suspended",
+  "authErrorInvalidOtp": "Invalid verification code",
+  "authErrorOtpExpired": "Verification code expired. Request a new one",
+  "authErrorEmailRegistered": "An account with this email already exists",
+  "authErrorPhoneRegistered": "An account with this phone already exists",
+  "authErrorEmailNotVerified": "Email is not verified",
+  "authErrorRateLimited": "Too many attempts. Please wait and try again",
+  "authErrorPasswordMismatch": "Passwords do not match",
+  "authErrorWeakPassword": "Password is too weak",
+  "authErrorMailFailed": "Could not send email. Try again later",
+  "authErrorMustChangePassword": "You must change your password before continuing",
+  "authErrorValidation": "Please check your input",
+  "authErrorForbidden": "You are not allowed to perform this action",
+  "authErrorNonCustomer": "This account cannot use the Customer app",
+  "authErrorNetwork": "Network unavailable. Check your connection and try again",
+  "authErrorTimeout": "The request timed out. Please try again",
+  "authErrorUnauthorized": "Your session is no longer valid. Please sign in",
+  "authErrorSessionExpired": "Your session expired. Please sign in again",
+  "authErrorUnexpected": "Something went wrong. Please try again",
+  "authPasswordChangedRelogin": "Password updated. Please sign in again",
+  "navHome": "Home",
+  "navSearch": "Search",
+  "navBookings": "Bookings",
+  "navProfile": "Profile",
+  "brandName": "Khamasiyat",
+  "homeGreetingMorningGeneric": "Good morning 👋",
+  "homeGreetingAfternoonGeneric": "Good afternoon 👋",
+  "homeGreetingEveningGeneric": "Good evening 👋",
+  "homeGreetingMorningNamed": "Good morning, {name} 👋",
+  "@homeGreetingMorningNamed": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "homeGreetingAfternoonNamed": "Good afternoon, {name} 👋",
+  "@homeGreetingAfternoonNamed": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "homeGreetingEveningNamed": "Good evening, {name} 👋",
+  "@homeGreetingEveningNamed": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "homeWelcomeGeneric": "Welcome",
+  "homeWelcomeNamed": "Hi, {name}",
+  "@homeWelcomeNamed": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "homeHeadline": "Your next game starts here.",
+  "homeQuestion": "Your next game starts here.",
+  "homeHeroSupport": "Discover and book football pitches across Sudan.",
+  "homeDiscoverCta": "Find a stadium",
+  "homeQuickFilters": "Filter",
+  "homeStadiumsSection": "Explore stadiums",
+  "homeSeeAll": "See all",
+  "searchTitle": "Search",
+  "searchSubtitle": "State, city, or pitch type",
+  "searchResultsCount": "{count, plural, =0{No stadiums} one{1 stadium} other{{count} stadiums}}",
+  "@searchResultsCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "catalogEmptyTitle": "No stadiums found",
+  "catalogEmptyBody": "Try another area or pitch type, or clear your filters.",
+  "catalogClearFilters": "Clear all",
+  "catalogErrorTitle": "Couldn’t load stadiums",
+  "catalogLoadMoreRetry": "Retry loading more",
+  "catalogEndOfList": "You’re all caught up",
+  "retryAction": "Retry",
+  "filtersAction": "Filters",
+  "filtersSheetTitle": "Filters",
+  "filtersApply": "Show results",
+  "filtersReset": "Reset",
+  "filterState": "State",
+  "filterCity": "City",
+  "filterPitchType": "Pitch type",
+  "filterAny": "Any",
+  "stadiumActivePitches": "{count, plural, =0{No pitches} one{1 pitch} other{{count} pitches}}",
+  "@stadiumActivePitches": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "stadiumPhotoPlaceholder": "Photo soon",
+  "stadiumPhotoUnavailable": "Unavailable",
+  "stadiumDetailPlaceholderTitle": "Stadium",
+  "stadiumDetailPlaceholderBody": "Stadium details arrive in the next phase.",
+  "stadiumDetailIdLabel": "Stadium ID: {id}",
+  "@stadiumDetailIdLabel": {
+    "placeholders": {
+      "id": { "type": "String" }
+    }
+  },
+  "stadiumDetailAbout": "About",
+  "stadiumDetailRules": "Rules",
+  "stadiumDetailPitches": "Pitches",
+  "stadiumDetailFacilities": "Facilities",
+  "stadiumDetailLocation": "Location",
+  "stadiumDetailShowMore": "Show more",
+  "stadiumDetailShowLess": "Show less",
+  "stadiumDetailChoosePitch": "Choose a pitch",
+  "stadiumDetailGetDirections": "Get directions",
+  "stadiumDetailCallStadium": "Call stadium",
+  "stadiumDetailNoPitches": "No bookable pitches available right now.",
+  "stadiumDetailErrorBody": "Check your connection and try again.",
+  "stadiumDetailErrorTitle": "Couldn't load stadium",
+  "stadiumDetailIndoor": "Indoor",
+  "stadiumDetailRoofed": "Roofed",
+  "stadiumDetailSummarySemantic": "Stadium summary",
+  "stadiumDetailPitchCount": "{count, plural, =0{No pitches} one{1 pitch} other{{count} pitches}}",
+  "@stadiumDetailPitchCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "stadiumDetailFacilityCount": "{count, plural, =0{No facilities} one{1 facility} other{{count} facilities}}",
+  "@stadiumDetailFacilityCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "stadiumDetailPhotoCount": "{current} / {total}",
+  "@stadiumDetailPhotoCount": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "stadiumDetailPhotoSemantic": "Photo of {name}, {current} of {total}",
+  "@stadiumDetailPhotoSemantic": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "amenityParking": "Parking",
+  "amenityChangingRooms": "Changing rooms",
+  "amenityToilets": "Toilets",
+  "amenitySeating": "Seating",
+  "amenityCafe": "Cafe",
+  "amenityPrayerArea": "Prayer area",
+  "amenityWater": "Drinking water",
+  "amenityFirstAid": "First aid",
+  "surfaceNaturalGrass": "Natural grass",
+  "surfaceArtificialTurf": "Artificial turf",
+  "surfaceFutsal": "Futsal",
+  "surfaceOther": "Other surface",
+  "pitchDetailPlaceholderTitle": "Pitch",
+  "pitchDetailPlaceholderBody": "Pitch availability arrives in the next phase.",
+  "pitchDetailIdLabel": "Pitch ID: {id}",
+  "@pitchDetailIdLabel": {
+    "placeholders": {
+      "id": { "type": "String" }
+    }
+  },
+  "bookingsPlaceholderTitle": "Your bookings",
+  "bookingsPlaceholderBody": "Booking history and upcoming matches will appear here soon.",
+  "profilePlaceholderTitle": "Your profile",
+  "profilePlaceholderBody": "Profile settings arrive in a later phase. You can sign out below.",
+  "pitchTypeFiveASide": "5-a-side",
+  "pitchTypeSevenASide": "7-a-side",
+  "pitchTypeElevenASide": "11-a-side",
+  "pitchTypeOther": "Other",
+  "stateKhartoum": "Khartoum",
+  "stateNorthern": "Northern",
+  "stateRiverNile": "River Nile",
+  "stateRedSea": "Red Sea",
+  "stateKassala": "Kassala",
+  "stateGedaref": "Gedaref",
+  "stateGezira": "Gezira",
+  "stateWhiteNile": "White Nile",
+  "stateBlueNile": "Blue Nile",
+  "stateSennar": "Sennar",
+  "stateNorthKordofan": "North Kordofan",
+  "stateSouthKordofan": "South Kordofan",
+  "stateWestKordofan": "West Kordofan",
+  "stateNorthDarfur": "North Darfur",
+  "stateSouthDarfur": "South Darfur",
+  "stateEastDarfur": "East Darfur",
+  "stateWestDarfur": "West Darfur",
+  "stateCentralDarfur": "Central Darfur",
+  "cityKhartoumCity": "Khartoum",
+  "cityOmdurman": "Omdurman",
+  "cityBahri": "Bahri",
+  "cityDongola": "Dongola",
+  "cityKarima": "Karima",
+  "cityWadiHalfa": "Wadi Halfa",
+  "cityAtbara": "Atbara",
+  "cityEdDamer": "Ed Damer",
+  "cityShendi": "Shendi",
+  "cityBerber": "Berber",
+  "cityPortSudan": "Port Sudan",
+  "citySuakin": "Suakin",
+  "cityTokar": "Tokar",
+  "cityKassalaCity": "Kassala",
+  "cityNewHalfa": "New Halfa",
+  "cityGedarefCity": "Gedaref",
+  "cityShowak": "Showak",
+  "cityWadMadani": "Wad Madani",
+  "cityHasahisa": "Hasahisa",
+  "cityKamlin": "Kamlin",
+  "cityManaqil": "Manaqil",
+  "cityRabak": "Rabak",
+  "cityKosti": "Kosti",
+  "cityEdDueim": "Ed Dueim",
+  "cityDamazin": "Damazin",
+  "cityRoseires": "Roseires",
+  "citySinnarCity": "Sinnar",
+  "citySinga": "Singa",
+  "cityElObeid": "El Obeid",
+  "cityUmRawaba": "Um Rawaba",
+  "cityKadugli": "Kadugli",
+  "cityAbuJubaiha": "Abu Jubaiha",
+  "cityAlFula": "Al Fula",
+  "cityAnNuhud": "An Nuhud",
+  "cityElFasher": "El Fasher",
+  "cityKutum": "Kutum",
+  "cityNyala": "Nyala",
+  "cityKass": "Kass",
+  "cityEdDaein": "Ed Daein",
+  "cityGeneina": "Geneina",
+  "cityZalingei": "Zalingei"
+}

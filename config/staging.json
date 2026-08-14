@@ -1,0 +1,5 @@
+{
+  "ENV": "staging",
+  "API_BASE_URL": "https://staging-api.khamasiyat.example",
+  "ENABLE_NETWORK_LOGGING": "true"
+}
