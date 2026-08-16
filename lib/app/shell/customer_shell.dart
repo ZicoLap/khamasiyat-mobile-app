@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:khamasiyat_mobile_app/app/localization/l10n_extensions.dart';
 import 'package:khamasiyat_mobile_app/app/theme/app_colors.dart';
+import 'package:khamasiyat_mobile_app/features/bookings/presentation/my_bookings_controller.dart';
 
 /// Authenticated bottom-navigation shell.
-class CustomerShell extends StatelessWidget {
+class CustomerShell extends ConsumerWidget {
   const CustomerShell({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
 
     return Scaffold(
@@ -26,6 +28,9 @@ class CustomerShell extends StatelessWidget {
             index,
             initialLocation: index == navigationShell.currentIndex,
           );
+          if (index == 2) {
+            ref.read(myBookingsControllerProvider.notifier).refreshQuiet();
+          }
         },
         destinations: [
           NavigationDestination(

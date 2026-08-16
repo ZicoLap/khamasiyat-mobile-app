@@ -13,6 +13,7 @@ class FakeAuthRemote implements AuthRemoteSource {
     this.refreshDelay = Duration.zero,
     this.refreshCallCount = 0,
     this.failGetMeWith,
+    this.failUpdateMeWith,
     this.failRefreshWith,
     this.failLoginWith,
     this.failLogoutWith,
@@ -25,13 +26,16 @@ class FakeAuthRemote implements AuthRemoteSource {
   Duration refreshDelay;
   int refreshCallCount;
   int getMeCallCount = 0;
+  int updateMeCallCount = 0;
   int logoutCallCount = 0;
   Object? failGetMeWith;
+  Object? failUpdateMeWith;
   Object? failRefreshWith;
   Object? failLoginWith;
   Object? failLogoutWith;
   String? lastRefreshToken;
   String? lastLogoutRefreshToken;
+  UpdateMeRequest? lastUpdateMeRequest;
 
   @override
   Future<MessageResponse> registerStart(RegisterStartRequest request) async {
@@ -117,5 +121,21 @@ class FakeAuthRemote implements AuthRemoteSource {
       throw const UnauthorizedException();
     }
     return user;
+  }
+
+  @override
+  Future<AuthUser> updateMe(UpdateMeRequest request) async {
+    updateMeCallCount += 1;
+    lastUpdateMeRequest = request;
+    if (failUpdateMeWith != null) {
+      throw failUpdateMeWith!;
+    }
+    final current = meUser;
+    if (current == null) {
+      throw const UnauthorizedException();
+    }
+    final updated = current.copyWith(name: request.name);
+    meUser = updated;
+    return updated;
   }
 }

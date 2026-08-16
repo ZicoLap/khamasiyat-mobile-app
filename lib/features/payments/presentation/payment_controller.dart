@@ -23,12 +23,21 @@ enum PaymentUiPhase {
   failure,
 }
 
+/// Separate from [PaymentUiPhase] so an empty stadium config is not shown as a
+/// transport/parse failure, and failures are not shown as "no methods".
+enum PaymentMethodsLoadState {
+  loading,
+  loaded,
+  failure,
+}
+
 @immutable
 class PaymentViewState {
   const PaymentViewState({
     required this.phase,
     this.booking,
     this.methods = const [],
+    this.methodsLoadState = PaymentMethodsLoadState.loading,
     this.selectedMethod,
     this.receipt,
     this.reference = '',
@@ -36,11 +45,13 @@ class PaymentViewState {
     this.errorMessage,
     this.uploadProgress,
     this.remainingHold,
+    this.isCancelling = false,
   });
 
   final PaymentUiPhase phase;
   final CustomerBooking? booking;
   final List<StadiumPaymentMethod> methods;
+  final PaymentMethodsLoadState methodsLoadState;
   final StadiumPaymentMethodType? selectedMethod;
   final SelectedReceiptFile? receipt;
   final String reference;
@@ -48,22 +59,52 @@ class PaymentViewState {
   final String? errorMessage;
   final double? uploadProgress;
   final Duration? remainingHold;
+  final bool isCancelling;
 
   bool get isBusy =>
+      isCancelling ||
       phase == PaymentUiPhase.loading ||
       phase == PaymentUiPhase.requestingIntent ||
       phase == PaymentUiPhase.uploading ||
       phase == PaymentUiPhase.submittingPayment;
 
+  bool get holdIsValid {
+    final booking = this.booking;
+    if (booking == null) return false;
+    return !booking.isHoldExpired(now: clock.now().toUtc());
+  }
+
+  bool get showCancelBooking {
+    final booking = this.booking;
+    if (booking == null || !booking.isPending) return false;
+    return phase == PaymentUiPhase.ready ||
+        phase == PaymentUiPhase.submitted ||
+        phase == PaymentUiPhase.rejected;
+  }
+
+  bool get canCancelBooking => showCancelBooking && !isBusy;
+
+  /// Non-alarm copy key for a disabled Submit button on the form.
+  /// `selectMethod` | `bankDetails` | null.
+  String? get submitDisabledHint {
+    if (canSubmit || isBusy) return null;
+    if (phase != PaymentUiPhase.ready) return null;
+    if (methodsLoadState != PaymentMethodsLoadState.loaded) return null;
+    if (selectedMethod == null && methods.isNotEmpty) {
+      return 'selectMethod';
+    }
+    if (selectedMethod?.requiresReceipt == true) {
+      return 'bankDetails';
+    }
+    return null;
+  }
+
   bool get canSubmit {
     if (isBusy) return false;
-    if (phase == PaymentUiPhase.expired ||
-        phase == PaymentUiPhase.confirmed ||
-        phase == PaymentUiPhase.submitted) {
-      return false;
-    }
+    if (phase != PaymentUiPhase.ready) return false;
     final method = selectedMethod;
     if (method == null || booking == null) return false;
+    if (!holdIsValid) return false;
     if (method.requiresReceipt) {
       return receipt != null && reference.trim().isNotEmpty;
     }
@@ -74,6 +115,7 @@ class PaymentViewState {
     PaymentUiPhase? phase,
     CustomerBooking? booking,
     List<StadiumPaymentMethod>? methods,
+    PaymentMethodsLoadState? methodsLoadState,
     StadiumPaymentMethodType? selectedMethod,
     SelectedReceiptFile? receipt,
     String? reference,
@@ -81,6 +123,7 @@ class PaymentViewState {
     String? errorMessage,
     double? uploadProgress,
     Duration? remainingHold,
+    bool? isCancelling,
     bool clearReceipt = false,
     bool clearError = false,
     bool clearSelectedMethod = false,
@@ -90,6 +133,7 @@ class PaymentViewState {
       phase: phase ?? this.phase,
       booking: booking ?? this.booking,
       methods: methods ?? this.methods,
+      methodsLoadState: methodsLoadState ?? this.methodsLoadState,
       selectedMethod:
           clearSelectedMethod ? null : (selectedMethod ?? this.selectedMethod),
       receipt: clearReceipt ? null : (receipt ?? this.receipt),
@@ -98,6 +142,7 @@ class PaymentViewState {
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
       uploadProgress: uploadProgress,
       remainingHold: remainingHold ?? this.remainingHold,
+      isCancelling: isCancelling ?? this.isCancelling,
     );
   }
 }
@@ -156,6 +201,7 @@ class PaymentController extends StateNotifier<PaymentViewState>
   var _disposed = false;
   var _foreground = true;
   var _submitInFlight = false;
+  var _cancelInFlight = false;
 
   @override
   void dispose() {
@@ -180,6 +226,7 @@ class PaymentController extends StateNotifier<PaymentViewState>
   Future<void> load() async {
     state = state.copyWith(
       phase: PaymentUiPhase.loading,
+      methodsLoadState: PaymentMethodsLoadState.loading,
       clearError: true,
     );
     try {
@@ -211,17 +258,44 @@ class PaymentController extends StateNotifier<PaymentViewState>
     }
   }
 
+  Future<void> reloadMethods() async {
+    final booking = state.booking;
+    if (booking == null || booking.stadiumId.isEmpty) return;
+    state = state.copyWith(methodsLoadState: PaymentMethodsLoadState.loading);
+    try {
+      final methods = await _payments.listStadiumPaymentMethods(
+        booking.stadiumId,
+      );
+      if (_disposed) return;
+      state = state.copyWith(
+        methods: methods,
+        methodsLoadState: PaymentMethodsLoadState.loaded,
+        selectedMethod: _autoSelect(methods, state.selectedMethod),
+      );
+    } catch (_) {
+      if (_disposed) return;
+      state = state.copyWith(methodsLoadState: PaymentMethodsLoadState.failure);
+    }
+  }
+
   Future<void> _applyBooking(
     CustomerBooking booking, {
     required bool loadMethods,
   }) async {
     List<StadiumPaymentMethod> methods = state.methods;
+    var methodsLoadState = state.methodsLoadState;
     if (loadMethods && booking.stadiumId.isNotEmpty) {
       try {
         methods = await _payments.listStadiumPaymentMethods(booking.stadiumId);
+        methodsLoadState = PaymentMethodsLoadState.loaded;
       } catch (_) {
-        // Keep previous methods if refresh of methods fails.
+        if (methodsLoadState != PaymentMethodsLoadState.loaded) {
+          methodsLoadState = PaymentMethodsLoadState.failure;
+        }
       }
+    } else if (loadMethods && booking.stadiumId.isEmpty) {
+      methods = const [];
+      methodsLoadState = PaymentMethodsLoadState.loaded;
     }
 
     PaymentRecord? payment = state.payment;
@@ -248,15 +322,60 @@ class PaymentController extends StateNotifier<PaymentViewState>
     }
 
     final phase = _phaseFor(booking: booking, payment: payment);
+    final selected = _autoSelect(methods, state.selectedMethod);
     state = state.copyWith(
       phase: phase,
       booking: booking,
       methods: methods,
+      methodsLoadState: methodsLoadState,
+      selectedMethod: selected,
       payment: payment,
       remainingHold: _remaining(booking.holdsUntil),
       clearError: phase != PaymentUiPhase.failure,
     );
     _ensurePolling();
+  }
+
+  StadiumPaymentMethodType? _autoSelect(
+    List<StadiumPaymentMethod> methods,
+    StadiumPaymentMethodType? current,
+  ) {
+    if (methods.length == 1) return methods.first.method;
+    return current;
+  }
+
+  Future<bool> cancelBooking() async {
+    if (!state.canCancelBooking || _cancelInFlight || _submitInFlight) {
+      return false;
+    }
+    _cancelInFlight = true;
+    state = state.copyWith(isCancelling: true, clearError: true);
+    try {
+      final cancelled = await _bookings.cancelBooking(bookingId);
+      if (_disposed) return false;
+      state = state.copyWith(
+        isCancelling: false,
+        booking: cancelled,
+        phase: PaymentUiPhase.expired,
+      );
+      return true;
+    } on AppException catch (error) {
+      if (_disposed) return false;
+      state = state.copyWith(
+        isCancelling: false,
+        errorMessage: error.message,
+      );
+      return false;
+    } catch (error) {
+      if (_disposed) return false;
+      state = state.copyWith(
+        isCancelling: false,
+        errorMessage: error.toString(),
+      );
+      return false;
+    } finally {
+      _cancelInFlight = false;
+    }
   }
 
   PaymentUiPhase _phaseFor({
@@ -345,7 +464,7 @@ class PaymentController extends StateNotifier<PaymentViewState>
   }
 
   Future<void> submit() async {
-    if (!state.canSubmit || _submitInFlight) return;
+    if (!state.canSubmit || _submitInFlight || _cancelInFlight) return;
     final booking = state.booking!;
     final method = state.selectedMethod!;
     if (booking.isHoldExpired(now: clock.now().toUtc())) {
@@ -373,7 +492,7 @@ class PaymentController extends StateNotifier<PaymentViewState>
       }
       state = state.copyWith(
         phase: PaymentUiPhase.ready,
-        errorMessage: error.message,
+        errorMessage: _submitErrorToken(error),
         uploadProgress: null,
       );
     } catch (error) {
@@ -509,5 +628,12 @@ class PaymentController extends StateNotifier<PaymentViewState>
   void _stopPolling() {
     _pollTimer?.cancel();
     _pollTimer = null;
+  }
+
+  static String _submitErrorToken(AppException error) {
+    if (error is ApiException && error.code == 'RECEIPT_STORAGE_UNAVAILABLE') {
+      return error.code;
+    }
+    return error.message;
   }
 }

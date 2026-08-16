@@ -19,21 +19,17 @@ class PaymentPlaceholderScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final localeCode = Localizations.localeOf(context).languageCode;
     final session = ref.watch(pendingBookingSessionProvider);
-    final booking =
-        session?.booking.id == bookingId ? session!.booking : null;
-    final review =
-        session?.booking.id == bookingId ? session!.review : null;
+    final booking = session?.booking.id == bookingId ? session!.booking : null;
+    final review = session?.booking.id == bookingId ? session!.review : null;
 
     final dateLabel =
         booking == null
             ? '—'
-            : DateFormat.yMMMEd(localeCode).format(
-              StadiumTime.parseIsoDate(booking.date),
-            );
+            : DateFormat.yMMMEd(
+              localeCode,
+            ).format(StadiumTime.parseIsoDate(booking.date));
     final timeRange =
-        booking == null
-            ? '—'
-            : '${booking.startTime} → ${booking.endTime}';
+        booking == null ? '—' : '${booking.startTime} → ${booking.endTime}';
     final amount =
         booking == null
             ? '—'
@@ -41,9 +37,9 @@ class PaymentPlaceholderScreen extends ConsumerWidget {
     final holdLabel =
         booking?.holdsUntil == null
             ? null
-            : DateFormat.yMMMd(localeCode)
-                .add_Hm()
-                .format(booking!.holdsUntil!.toLocal());
+            : DateFormat.yMMMd(
+              localeCode,
+            ).add_Hm().format(booking!.holdsUntil!.toLocal());
 
     return Scaffold(
       backgroundColor: AppColors.canvas,
@@ -58,9 +54,9 @@ class PaymentPlaceholderScreen extends ConsumerWidget {
           Text(
             l10n.paymentPlaceholderBody,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.onSurfaceMuted,
-                  height: 1.4,
-                ),
+              color: AppColors.onSurfaceMuted,
+              height: 1.4,
+            ),
           ),
           const SizedBox(height: AppSpacing.lg),
           _Line(text: l10n.paymentBookingIdLabel(bookingId)),
@@ -98,9 +94,9 @@ class _Line extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+        style: Theme.of(
+          context,
+        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
       ),
     );
   }

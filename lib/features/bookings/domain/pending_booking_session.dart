@@ -3,10 +3,7 @@ import 'package:khamasiyat_mobile_app/features/bookings/domain/booking_review_dr
 
 /// Real PENDING booking plus review display context for Payment handoff.
 class PendingBookingSession {
-  const PendingBookingSession({
-    required this.booking,
-    required this.review,
-  });
+  const PendingBookingSession({required this.booking, required this.review});
 
   final CreatedBooking booking;
   final BookingReviewDraft review;

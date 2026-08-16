@@ -44,10 +44,7 @@ void main() {
   BookingReviewDraft draft({
     List<String> photoUrls = const ['https://cdn.example/p.jpg'],
   }) {
-    final pitch = samplePitchDetail(
-      name: 'Pitch Bahri',
-      photoUrls: photoUrls,
-    );
+    final pitch = samplePitchDetail(name: 'Pitch Bahri', photoUrls: photoUrls);
     return BookingReviewDraft.fromPitchAndSlot(
       pitch: pitch,
       slot: sampleSlot(
@@ -76,9 +73,7 @@ void main() {
     final pitch = samplePitchDetail(
       name: 'Pitch Bahri',
       photoUrls:
-          reviewDraft.photoUrl == null
-              ? const []
-              : [reviewDraft.photoUrl!],
+          reviewDraft.photoUrl == null ? const [] : [reviewDraft.photoUrl!],
     );
     final authController = AuthController(
       repository: AuthRepository(

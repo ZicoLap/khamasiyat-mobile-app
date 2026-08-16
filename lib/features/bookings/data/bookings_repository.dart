@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:khamasiyat_mobile_app/core/network/api_client.dart';
 import 'package:khamasiyat_mobile_app/features/bookings/data/bookings_api.dart';
+import 'package:khamasiyat_mobile_app/features/bookings/domain/booking_access_pin.dart';
+import 'package:khamasiyat_mobile_app/features/bookings/domain/booking_list_page.dart';
 import 'package:khamasiyat_mobile_app/features/bookings/domain/booking_models.dart';
 import 'package:khamasiyat_mobile_app/features/bookings/domain/customer_booking.dart';
 
@@ -21,6 +23,22 @@ class BookingsRepository {
 
   Future<CustomerBooking> getBooking(String bookingId) {
     return _remote.getBooking(bookingId);
+  }
+
+  Future<CustomerBooking> cancelBooking(String bookingId) {
+    return _remote.cancelBooking(bookingId);
+  }
+
+  Future<CustomerBookingListPage> listBookings({
+    int page = 1,
+    int limit = 20,
+    String? status,
+  }) {
+    return _remote.listBookings(page: page, limit: limit, status: status);
+  }
+
+  Future<BookingAccessPin> getAccessPin(String bookingId) {
+    return _remote.getAccessPin(bookingId);
   }
 }
 

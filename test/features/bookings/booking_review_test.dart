@@ -188,10 +188,7 @@ void main() {
 
   testWidgets('Arabic RTL summary', (tester) async {
     await tester.pumpWidget(
-      reviewApp(
-        overrides: baseOverrides(),
-        locale: const Locale('ar'),
-      ),
+      reviewApp(overrides: baseOverrides(), locale: const Locale('ar')),
     );
     await tester.pumpAndSettle();
     expect(find.text('مراجعة الحجز'), findsOneWidget);

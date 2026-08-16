@@ -13,14 +13,16 @@ import 'package:khamasiyat_mobile_app/features/auth/presentation/login/login_scr
 import 'package:khamasiyat_mobile_app/features/auth/presentation/register/register_screen.dart';
 import 'package:khamasiyat_mobile_app/features/auth/presentation/register/register_verify_screen.dart';
 import 'package:khamasiyat_mobile_app/features/auth/presentation/session_splash_screen.dart';
+import 'package:khamasiyat_mobile_app/features/bookings/presentation/booking_detail_screen.dart';
 import 'package:khamasiyat_mobile_app/features/bookings/presentation/booking_review_screen.dart';
-import 'package:khamasiyat_mobile_app/features/bookings/presentation/bookings_placeholder_screen.dart';
+import 'package:khamasiyat_mobile_app/features/bookings/presentation/my_bookings_screen.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/presentation/pitch_detail_screen.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/presentation/search_screen.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/presentation/stadium_detail_screen.dart';
 import 'package:khamasiyat_mobile_app/features/home/presentation/home_screen.dart';
 import 'package:khamasiyat_mobile_app/features/payments/presentation/payment_screen.dart';
-import 'package:khamasiyat_mobile_app/features/profile/presentation/profile_placeholder_screen.dart';
+import 'package:khamasiyat_mobile_app/features/profile/presentation/edit_name_screen.dart';
+import 'package:khamasiyat_mobile_app/features/profile/presentation/profile_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
@@ -156,6 +158,15 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           return PaymentScreen(bookingId: id);
         },
       ),
+      GoRoute(
+        path: AppRoutes.bookingDetailPath,
+        name: 'bookingDetail',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) {
+          final id = state.pathParameters['bookingId'] ?? '';
+          return BookingDetailScreen(bookingId: id);
+        },
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return CustomerShell(navigationShell: navigationShell);
@@ -184,7 +195,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoutes.bookings,
                 name: 'bookings',
-                builder: (context, state) => const BookingsPlaceholderScreen(),
+                builder: (context, state) => const MyBookingsScreen(),
               ),
             ],
           ),
@@ -193,7 +204,14 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoutes.profile,
                 name: 'profile',
-                builder: (context, state) => const ProfilePlaceholderScreen(),
+                builder: (context, state) => const ProfileScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'edit-name',
+                    name: 'editName',
+                    builder: (context, state) => const EditNameScreen(),
+                  ),
+                ],
               ),
             ],
           ),

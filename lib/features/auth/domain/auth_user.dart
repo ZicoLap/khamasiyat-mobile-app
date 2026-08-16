@@ -26,6 +26,28 @@ class AuthUser {
 
   bool get isSuspended => status.toUpperCase() == 'SUSPENDED';
 
+  AuthUser copyWith({
+    String? id,
+    String? name,
+    String? email,
+    String? phone,
+    UserRole? role,
+    String? status,
+    bool? emailVerified,
+    bool? mustChangePassword,
+  }) {
+    return AuthUser(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      role: role ?? this.role,
+      status: status ?? this.status,
+      emailVerified: emailVerified ?? this.emailVerified,
+      mustChangePassword: mustChangePassword ?? this.mustChangePassword,
+    );
+  }
+
   factory AuthUser.fromJson(Map<String, dynamic> json) {
     return AuthUser(
       id: json['id'] as String,
@@ -54,11 +76,24 @@ class AuthUser {
   bool operator ==(Object other) {
     return other is AuthUser &&
         other.id == id &&
+        other.name == name &&
         other.email == email &&
+        other.phone == phone &&
         other.role == role &&
+        other.status == status &&
+        other.emailVerified == emailVerified &&
         other.mustChangePassword == mustChangePassword;
   }
 
   @override
-  int get hashCode => Object.hash(id, email, role, mustChangePassword);
+  int get hashCode => Object.hash(
+        id,
+        name,
+        email,
+        phone,
+        role,
+        status,
+        emailVerified,
+        mustChangePassword,
+      );
 }

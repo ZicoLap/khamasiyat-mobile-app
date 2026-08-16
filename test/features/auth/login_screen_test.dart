@@ -16,12 +16,15 @@ import 'package:khamasiyat_mobile_app/features/auth/data/auth_repository.dart';
 import 'package:khamasiyat_mobile_app/features/auth/domain/auth_state.dart';
 import 'package:khamasiyat_mobile_app/features/auth/domain/auth_tokens.dart';
 import 'package:khamasiyat_mobile_app/features/auth/presentation/auth_controller.dart';
+import 'package:khamasiyat_mobile_app/features/bookings/data/bookings_repository.dart';
+import 'package:khamasiyat_mobile_app/features/bookings/presentation/my_bookings_controller.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/data/catalog_repository.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/domain/stadium_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../helpers/auth_fixtures.dart';
 import '../../helpers/fake_auth_remote.dart';
+import '../../helpers/fake_bookings_remote.dart';
 import '../../helpers/fake_catalog_remote.dart';
 
 const _config = AppConfig(
@@ -85,6 +88,10 @@ void main() {
               ),
             ),
           ),
+          bookingsRepositoryProvider.overrideWithValue(
+            BookingsRepository(FakeBookingsRemote()),
+          ),
+          myBookingsHoldTickIntervalProvider.overrideWithValue(null),
         ],
         child: const KhamasiyatApp(),
       ),

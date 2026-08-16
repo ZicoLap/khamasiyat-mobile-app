@@ -31,6 +31,11 @@ class PaymentScreen extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: AppColors.canvas,
         elevation: 0,
+        automaticallyImplyLeading: false,
+        leading:
+            Navigator.of(context).canPop()
+                ? const BackButton()
+                : null,
         title: Text(l10n.paymentTitle),
       ),
       body: switch (state.phase) {
@@ -43,12 +48,27 @@ class PaymentScreen extends ConsumerWidget {
         ),
         PaymentUiPhase.expired => _ExpiredBody(
           onChooseAnother: () => _backToBrowse(context, state.booking),
+          onHome: () => _goHome(context),
         ),
-        PaymentUiPhase.confirmed => _ConfirmedBody(booking: state.booking),
+        PaymentUiPhase.confirmed => _ConfirmedBody(
+          booking: state.booking,
+          onHome: () => _goHome(context),
+        ),
         PaymentUiPhase.submitted => _SubmittedBody(
           booking: state.booking,
           payment: state.payment,
           localeCode: localeCode,
+          onLeave: () => _goHome(context),
+          onCancel:
+              state.showCancelBooking
+                  ? () => _confirmCancelBooking(
+                        context: context,
+                        ref: ref,
+                        bookingId: bookingId,
+                      )
+                  : null,
+          cancelEnabled: state.canCancelBooking,
+          isCancelling: state.isCancelling,
         ),
         PaymentUiPhase.rejected => _RejectedBody(
           booking: state.booking,
@@ -59,6 +79,17 @@ class PaymentScreen extends ConsumerWidget {
                 .read(paymentControllerProvider(bookingId).notifier)
                 .beginRetryAfterRejection();
           },
+          onLeave: () => _goHome(context),
+          onCancel:
+              state.showCancelBooking
+                  ? () => _confirmCancelBooking(
+                        context: context,
+                        ref: ref,
+                        bookingId: bookingId,
+                      )
+                  : null,
+          cancelEnabled: state.canCancelBooking,
+          isCancelling: state.isCancelling,
         ),
         _ => _PaymentFormBody(
           bookingId: bookingId,
@@ -75,7 +106,59 @@ class PaymentScreen extends ConsumerWidget {
       context.go(AppRoutes.pitchDetail(pitchId));
       return;
     }
+    _goHome(context);
+  }
+}
+
+void _goHome(BuildContext context) {
+  final router = GoRouter.maybeOf(context);
+  if (router != null) {
     context.go(AppRoutes.home);
+    return;
+  }
+  Navigator.of(context).popUntil((route) => route.isFirst);
+}
+
+Future<void> _confirmCancelBooking({
+  required BuildContext context,
+  required WidgetRef ref,
+  required String bookingId,
+}) async {
+  final l10n = context.l10n;
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (dialogContext) {
+      return AlertDialog(
+        title: Text(l10n.paymentCancelBookingTitle),
+        content: Text(l10n.paymentCancelBookingBody),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n.paymentCancelBookingKeep),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(l10n.paymentCancelBookingConfirm),
+          ),
+        ],
+      );
+    },
+  );
+  if (confirmed != true || !context.mounted) return;
+  final ok = await ref
+      .read(paymentControllerProvider(bookingId).notifier)
+      .cancelBooking();
+  if (!context.mounted) return;
+  if (ok) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(l10n.paymentCancelledSnackbar)),
+    );
+    _goHome(context);
+    return;
+  }
+  final message = ref.read(paymentControllerProvider(bookingId)).errorMessage;
+  if (message != null && message.isNotEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 }
 
@@ -131,9 +214,11 @@ class _PaymentFormBodyState extends ConsumerState<_PaymentFormBody> {
     return Column(
       children: [
         Expanded(
-          child: ListView(
+          child: SingleChildScrollView(
             padding: const EdgeInsets.all(AppSpacing.md),
-            children: [
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               if (booking != null) ...[
                 _HoldBanner(remaining: state.remainingHold),
                 const SizedBox(height: AppSpacing.md),
@@ -147,21 +232,37 @@ class _PaymentFormBodyState extends ConsumerState<_PaymentFormBody> {
                     ),
               ),
               const SizedBox(height: AppSpacing.sm),
-              if (state.methods.isEmpty)
+              if (state.methodsLoadState == PaymentMethodsLoadState.loading)
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                  child: Center(
+                    child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  ),
+                )
+              else if (state.methodsLoadState == PaymentMethodsLoadState.failure)
+                _MethodsFailureBody(
+                  onRetry: () => notifier.reloadMethods(),
+                )
+              else if (state.methods.isEmpty)
                 Text(
                   l10n.paymentNoMethods,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: AppColors.onSurfaceMuted,
                       ),
-                ),
-              for (final method in state.methods)
-                _MethodTile(
-                  method: method,
-                  selected: state.selectedMethod == method.method,
-                  groupValue: state.selectedMethod,
-                  enabled: !busy,
-                  onTap: () => notifier.selectMethod(method.method),
-                ),
+                )
+              else
+                for (final method in state.methods)
+                  _MethodTile(
+                    method: method,
+                    selected: state.selectedMethod == method.method,
+                    groupValue: state.selectedMethod,
+                    enabled: !busy,
+                    onTap: () => notifier.selectMethod(method.method),
+                  ),
               if (state.selectedMethod != null) ...[
                 const SizedBox(height: AppSpacing.md),
                 _MethodDetails(
@@ -212,23 +313,66 @@ class _PaymentFormBodyState extends ConsumerState<_PaymentFormBody> {
               ],
               const SizedBox(height: AppSpacing.xl),
             ],
+            ),
           ),
         ),
         SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
-            child: SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: state.canSubmit ? () => notifier.submit() : null,
-                child: busy
-                    ? const SizedBox(
-                        height: 22,
-                        width: 22,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : Text(l10n.paymentSubmit),
-              ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: state.canSubmit ? () => notifier.submit() : null,
+                    child: busy
+                        ? const SizedBox(
+                            height: 22,
+                            width: 22,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : Text(l10n.paymentSubmit),
+                  ),
+                ),
+                if (state.submitDisabledHint != null) ...[
+                  const SizedBox(height: AppSpacing.sm),
+                  Text(
+                    state.submitDisabledHint == 'selectMethod'
+                        ? l10n.paymentSelectMethodToContinue
+                        : l10n.paymentAddReferenceAndReceipt,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: AppColors.onSurfaceMuted,
+                        ),
+                  ),
+                ],
+                const SizedBox(height: AppSpacing.sm),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () => _goHome(context),
+                        child: Text(l10n.paymentLeaveForNow),
+                      ),
+                    ),
+                    if (state.showCancelBooking)
+                      Expanded(
+                        child: TextButton(
+                          onPressed:
+                              state.canCancelBooking
+                                  ? () => _confirmCancelBooking(
+                                        context: context,
+                                        ref: ref,
+                                        bookingId: bookingId,
+                                      )
+                                  : null,
+                          child: Text(l10n.paymentCancelBooking),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
@@ -292,9 +436,38 @@ class _PaymentFormBodyState extends ConsumerState<_PaymentFormBody> {
         return l10n.paymentErrorUnsupportedType;
       case 'oversized':
         return l10n.paymentErrorOversized;
+      case 'RECEIPT_STORAGE_UNAVAILABLE':
+        return l10n.paymentErrorReceiptStorageUnavailable;
       default:
         return code;
     }
+  }
+}
+
+class _MethodsFailureBody extends StatelessWidget {
+  const _MethodsFailureBody({required this.onRetry});
+
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          l10n.paymentMethodsLoadFailed,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Colors.red.shade800,
+              ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        OutlinedButton(
+          onPressed: onRetry,
+          child: Text(l10n.paymentRetryLoad),
+        ),
+      ],
+    );
   }
 }
 
@@ -637,11 +810,19 @@ class _SubmittedBody extends StatelessWidget {
     required this.booking,
     required this.payment,
     required this.localeCode,
+    required this.onLeave,
+    required this.onCancel,
+    required this.cancelEnabled,
+    required this.isCancelling,
   });
 
   final CustomerBooking? booking;
   final PaymentRecord? payment;
   final String localeCode;
+  final VoidCallback onLeave;
+  final VoidCallback? onCancel;
+  final bool cancelEnabled;
+  final bool isCancelling;
 
   @override
   Widget build(BuildContext context) {
@@ -680,6 +861,16 @@ class _SubmittedBody extends StatelessWidget {
           Text(l10n.paymentAmountLabel(amount)),
           Text(l10n.paymentStatusLabel(l10n.paymentStatusSubmitted)),
         ],
+        const SizedBox(height: AppSpacing.lg),
+        FilledButton(
+          onPressed: onLeave,
+          child: Text(l10n.paymentLeaveForNow),
+        ),
+        if (onCancel != null)
+          TextButton(
+            onPressed: cancelEnabled && !isCancelling ? onCancel : null,
+            child: Text(l10n.paymentCancelBooking),
+          ),
       ],
     );
   }
@@ -691,12 +882,20 @@ class _RejectedBody extends StatelessWidget {
     required this.payment,
     required this.remainingHold,
     required this.onRetry,
+    required this.onLeave,
+    required this.onCancel,
+    required this.cancelEnabled,
+    required this.isCancelling,
   });
 
   final CustomerBooking? booking;
   final PaymentRecord? payment;
   final Duration? remainingHold;
   final VoidCallback onRetry;
+  final VoidCallback onLeave;
+  final VoidCallback? onCancel;
+  final bool cancelEnabled;
+  final bool isCancelling;
 
   @override
   Widget build(BuildContext context) {
@@ -736,15 +935,26 @@ class _RejectedBody extends StatelessWidget {
             onPressed: onRetry,
             child: Text(l10n.paymentUploadAnotherReceipt),
           ),
+        const SizedBox(height: AppSpacing.sm),
+        TextButton(
+          onPressed: onLeave,
+          child: Text(l10n.paymentLeaveForNow),
+        ),
+        if (onCancel != null)
+          TextButton(
+            onPressed: cancelEnabled && !isCancelling ? onCancel : null,
+            child: Text(l10n.paymentCancelBooking),
+          ),
       ],
     );
   }
 }
 
 class _ConfirmedBody extends StatelessWidget {
-  const _ConfirmedBody({required this.booking});
+  const _ConfirmedBody({required this.booking, required this.onHome});
 
   final CustomerBooking? booking;
+  final VoidCallback onHome;
 
   @override
   Widget build(BuildContext context) {
@@ -769,6 +979,14 @@ class _ConfirmedBody extends StatelessWidget {
             Text(booking!.stadiumName),
             Text(booking!.pitchName),
           ],
+          const Spacer(),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton(
+              onPressed: onHome,
+              child: Text(l10n.paymentBackToHome),
+            ),
+          ),
         ],
       ),
     );
@@ -776,9 +994,13 @@ class _ConfirmedBody extends StatelessWidget {
 }
 
 class _ExpiredBody extends StatelessWidget {
-  const _ExpiredBody({required this.onChooseAnother});
+  const _ExpiredBody({
+    required this.onChooseAnother,
+    required this.onHome,
+  });
 
   final VoidCallback onChooseAnother;
+  final VoidCallback onHome;
 
   @override
   Widget build(BuildContext context) {
@@ -800,6 +1022,11 @@ class _ExpiredBody extends StatelessWidget {
           FilledButton(
             onPressed: onChooseAnother,
             child: Text(l10n.paymentExpiredChooseAnother),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          TextButton(
+            onPressed: onHome,
+            child: Text(l10n.paymentBackToHome),
           ),
         ],
       ),

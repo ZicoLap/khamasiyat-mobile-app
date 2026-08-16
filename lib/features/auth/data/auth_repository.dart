@@ -99,6 +99,12 @@ class AuthRepository {
     return user;
   }
 
+  Future<AuthUser> updateMe(UpdateMeRequest request) async {
+    final user = await _api.updateMe(request);
+    await _ensureCustomerOrClear(user);
+    return user;
+  }
+
   Future<MessageResponse> forgotPassword(String email) {
     return _api.forgotPassword(ForgotPasswordRequest(email: email));
   }

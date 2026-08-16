@@ -11,6 +11,7 @@ class FakePaymentsRemote implements PaymentsRemoteSource {
     this.failIntentWith,
     this.failSubmitWith,
     this.failGetWith,
+    this.failMethodsWith,
   }) : methods = methods ?? _defaultMethods;
 
   static final _defaultMethods = [
@@ -41,15 +42,19 @@ class FakePaymentsRemote implements PaymentsRemoteSource {
   Object? failIntentWith;
   Object? failSubmitWith;
   Object? failGetWith;
+  Object? failMethodsWith;
 
   final List<Map<String, dynamic>> intentRequests = [];
   final List<Map<String, dynamic>> submitRequests = [];
+  final List<String> stadiumIds = [];
   int getPaymentCalls = 0;
 
   @override
   Future<List<StadiumPaymentMethod>> listStadiumPaymentMethods(
     String stadiumId,
   ) async {
+    stadiumIds.add(stadiumId);
+    if (failMethodsWith != null) throw failMethodsWith!;
     return List.unmodifiable(methods);
   }
 

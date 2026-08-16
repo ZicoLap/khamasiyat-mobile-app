@@ -13,12 +13,15 @@ import 'package:khamasiyat_mobile_app/core/storage/token_store_provider.dart';
 import 'package:khamasiyat_mobile_app/features/auth/data/auth_repository.dart';
 import 'package:khamasiyat_mobile_app/features/auth/domain/auth_state.dart';
 import 'package:khamasiyat_mobile_app/features/auth/presentation/auth_controller.dart';
+import 'package:khamasiyat_mobile_app/features/bookings/data/bookings_repository.dart';
+import 'package:khamasiyat_mobile_app/features/bookings/presentation/my_bookings_controller.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/data/catalog_repository.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/domain/stadium_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../helpers/auth_fixtures.dart';
 import '../../helpers/fake_auth_remote.dart';
+import '../../helpers/fake_bookings_remote.dart';
 import '../../helpers/fake_catalog_remote.dart';
 
 const _config = AppConfig(
@@ -78,6 +81,10 @@ void main() {
         catalogRepositoryProvider.overrideWithValue(
           CatalogRepository(catalogRemote),
         ),
+        bookingsRepositoryProvider.overrideWithValue(
+          BookingsRepository(FakeBookingsRemote()),
+        ),
+        myBookingsHoldTickIntervalProvider.overrideWithValue(null),
       ],
     );
 
@@ -158,11 +165,18 @@ void main() {
 
     await tester.tap(find.text('Bookings'));
     await tester.pumpAndSettle();
-    expect(find.text('Your bookings'), findsOneWidget);
+    expect(find.text('No bookings yet'), findsOneWidget);
 
     await tester.tap(find.text('Profile'));
     await tester.pumpAndSettle();
     expect(find.text('Your profile'), findsOneWidget);
+    expect(find.text('Customer'), findsWidgets);
+    expect(find.text('customer@example.com'), findsWidgets);
+    expect(find.text('+249912345678'), findsOneWidget);
+    expect(find.text('Edit name'), findsOneWidget);
+    expect(find.text('Change password'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Sign out'), 200);
+    expect(find.text('Sign out'), findsOneWidget);
   });
 
   testWidgets('register navigation works from login', (tester) async {

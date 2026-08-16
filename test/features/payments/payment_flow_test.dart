@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:khamasiyat_mobile_app/core/errors/api_error.dart';
 import 'package:khamasiyat_mobile_app/core/errors/app_exception.dart';
 import 'package:khamasiyat_mobile_app/features/bookings/data/bookings_repository.dart';
@@ -53,6 +54,104 @@ SelectedReceiptFile _receipt({
     name: name,
     bytes: List<int>.filled(size, 1),
     contentType: contentType,
+  );
+}
+
+Widget _paymentApp({
+  required FakeBookingsRemote bookingsRemote,
+  required FakePaymentsRemote paymentsRemote,
+  Locale locale = const Locale('en'),
+}) {
+  return ProviderScope(
+    overrides: [
+      bookingsRepositoryProvider.overrideWithValue(
+        BookingsRepository(bookingsRemote),
+      ),
+      paymentsRepositoryProvider.overrideWithValue(
+        PaymentsRepository(paymentsRemote, FakeReceiptUploadClient()),
+      ),
+      paymentPollIntervalProvider.overrideWithValue(null),
+      paymentHoldTickIntervalProvider.overrideWithValue(null),
+    ],
+    child: MaterialApp(
+      locale: locale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      home: const PaymentScreen(bookingId: 'b-1'),
+    ),
+  );
+}
+
+List<StadiumPaymentMethod> _cashOnlyMethods() {
+  return const [
+    StadiumPaymentMethod(
+      method: StadiumPaymentMethodType.cash,
+      instructions: 'Pay at the gate',
+    ),
+  ];
+}
+
+Widget _paymentNavApp({
+  required FakeBookingsRemote bookingsRemote,
+  required FakePaymentsRemote paymentsRemote,
+  required String initialLocation,
+  Locale locale = const Locale('en'),
+}) {
+  return ProviderScope(
+    overrides: [
+      bookingsRepositoryProvider.overrideWithValue(
+        BookingsRepository(bookingsRemote),
+      ),
+      paymentsRepositoryProvider.overrideWithValue(
+        PaymentsRepository(paymentsRemote, FakeReceiptUploadClient()),
+      ),
+      paymentPollIntervalProvider.overrideWithValue(null),
+      paymentHoldTickIntervalProvider.overrideWithValue(null),
+    ],
+    child: MaterialApp.router(
+      locale: locale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      routerConfig: GoRouter(
+        initialLocation: initialLocation,
+        routes: [
+          GoRoute(
+            path: '/home',
+            builder: (_, __) => const Scaffold(body: Text('Home')),
+          ),
+          GoRoute(
+            path: '/review',
+            builder: (context, _) {
+              return Scaffold(
+                appBar: AppBar(title: const Text('Review')),
+                body: ElevatedButton(
+                  onPressed: () => context.push('/bookings/b-1/payment'),
+                  child: const Text('Continue to payment'),
+                ),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/bookings/:bookingId/payment',
+            builder: (context, state) {
+              return PaymentScreen(
+                bookingId: state.pathParameters['bookingId'] ?? '',
+              );
+            },
+          ),
+        ],
+      ),
+    ),
   );
 }
 
@@ -171,12 +270,143 @@ void main() {
     test('loads payment methods from backend', () async {
       await waitReady();
       expect(state().phase, PaymentUiPhase.ready);
+      expect(state().methodsLoadState, PaymentMethodsLoadState.loaded);
       expect(state().methods.map((m) => m.method.apiValue), [
         'CASH',
         'BANKAK',
         'BANK_TRANSFER',
       ]);
       expect(bookingsRemote.getBookingIds, ['b-1']);
+    });
+
+    test('does not auto-select when multiple methods are available', () async {
+      await waitReady();
+      expect(state().selectedMethod, isNull);
+      expect(state().canSubmit, isFalse);
+      expect(state().submitDisabledHint, 'selectMethod');
+    });
+
+    test('auto-selects the only available payment method', () async {
+      paymentsRemote = FakePaymentsRemote(methods: _cashOnlyMethods());
+      container.dispose();
+      subscription.close();
+      bindContainer(
+        ProviderContainer(
+          overrides: [
+            bookingsRepositoryProvider.overrideWithValue(
+              BookingsRepository(bookingsRemote),
+            ),
+            paymentsRepositoryProvider.overrideWithValue(
+              PaymentsRepository(paymentsRemote, uploadClient),
+            ),
+            paymentPollIntervalProvider.overrideWithValue(null),
+            paymentHoldTickIntervalProvider.overrideWithValue(null),
+          ],
+        ),
+      );
+      await waitReady();
+      expect(state().selectedMethod, StadiumPaymentMethodType.cash);
+      expect(state().canSubmit, isTrue);
+      expect(state().submitDisabledHint, isNull);
+    });
+
+    test('CASH canSubmit without receipt or reference', () async {
+      await waitReady();
+      controller().selectMethod(StadiumPaymentMethodType.cash);
+      expect(state().receipt, isNull);
+      expect(state().reference, isEmpty);
+      expect(state().canSubmit, isTrue);
+      expect(state().submitDisabledHint, isNull);
+    });
+
+    test('BANKAK canSubmit is false until reference and receipt', () async {
+      await waitReady();
+      controller().selectMethod(StadiumPaymentMethodType.bankak);
+      expect(state().canSubmit, isFalse);
+      expect(state().submitDisabledHint, 'bankDetails');
+      controller().setReference('REF-1');
+      expect(state().canSubmit, isFalse);
+      controller().setReceipt(_receipt());
+      expect(state().canSubmit, isTrue);
+      expect(state().submitDisabledHint, isNull);
+    });
+
+    test('empty methods list is loaded-empty, not a failure', () async {
+      paymentsRemote = FakePaymentsRemote(methods: const []);
+      container.dispose();
+      subscription.close();
+      bindContainer(
+        ProviderContainer(
+          overrides: [
+            bookingsRepositoryProvider.overrideWithValue(
+              BookingsRepository(bookingsRemote),
+            ),
+            paymentsRepositoryProvider.overrideWithValue(
+              PaymentsRepository(paymentsRemote, uploadClient),
+            ),
+            paymentPollIntervalProvider.overrideWithValue(null),
+            paymentHoldTickIntervalProvider.overrideWithValue(null),
+          ],
+        ),
+      );
+      await waitReady();
+      expect(state().methodsLoadState, PaymentMethodsLoadState.loaded);
+      expect(state().methods, isEmpty);
+      expect(state().phase, PaymentUiPhase.ready);
+    });
+
+    test('methods request failure is failure, not empty', () async {
+      paymentsRemote = FakePaymentsRemote(
+        failMethodsWith: const NetworkException(message: 'offline'),
+      );
+      container.dispose();
+      subscription.close();
+      bindContainer(
+        ProviderContainer(
+          overrides: [
+            bookingsRepositoryProvider.overrideWithValue(
+              BookingsRepository(bookingsRemote),
+            ),
+            paymentsRepositoryProvider.overrideWithValue(
+              PaymentsRepository(paymentsRemote, uploadClient),
+            ),
+            paymentPollIntervalProvider.overrideWithValue(null),
+            paymentHoldTickIntervalProvider.overrideWithValue(null),
+          ],
+        ),
+      );
+      await waitReady();
+      expect(state().methodsLoadState, PaymentMethodsLoadState.failure);
+      expect(state().methods, isEmpty);
+      expect(state().phase, PaymentUiPhase.ready);
+    });
+
+    test('reloadMethods recovers after failure', () async {
+      paymentsRemote = FakePaymentsRemote(
+        failMethodsWith: const NetworkException(message: 'offline'),
+      );
+      container.dispose();
+      subscription.close();
+      bindContainer(
+        ProviderContainer(
+          overrides: [
+            bookingsRepositoryProvider.overrideWithValue(
+              BookingsRepository(bookingsRemote),
+            ),
+            paymentsRepositoryProvider.overrideWithValue(
+              PaymentsRepository(paymentsRemote, uploadClient),
+            ),
+            paymentPollIntervalProvider.overrideWithValue(null),
+            paymentHoldTickIntervalProvider.overrideWithValue(null),
+          ],
+        ),
+      );
+      await waitReady();
+      expect(state().methodsLoadState, PaymentMethodsLoadState.failure);
+      paymentsRemote.failMethodsWith = null;
+      await controller().reloadMethods();
+      expect(state().methodsLoadState, PaymentMethodsLoadState.loaded);
+      expect(state().methods, isNotEmpty);
     });
 
     test('method selection updates state', () async {
@@ -330,6 +560,75 @@ void main() {
       expect(slow.submitCalls, 1);
     });
 
+    test('cancelBooking calls POST cancel and succeeds', () async {
+      await waitReady();
+      final ok = await controller().cancelBooking();
+      expect(ok, isTrue);
+      expect(bookingsRemote.cancelledIds, ['b-1']);
+      expect(state().booking?.status, 'CANCELLED');
+    });
+
+    test('duplicate cancel is prevented while in flight', () async {
+      await waitReady();
+      bookingsRemote.delay = const Duration(milliseconds: 80);
+      final first = controller().cancelBooking();
+      final second = controller().cancelBooking();
+      await Future.wait([first, second]);
+      expect(bookingsRemote.cancelledIds, ['b-1']);
+    });
+
+    test('cancellation error is mapped onto state', () async {
+      await waitReady();
+      bookingsRemote.failCancelWith = ApiException(
+        error: const ApiError(
+          code: 'BOOKING_NOT_CANCELLABLE',
+          message: 'cannot cancel',
+        ),
+      );
+      final ok = await controller().cancelBooking();
+      expect(ok, isFalse);
+      expect(state().errorMessage, 'cannot cancel');
+      expect(state().isCancelling, isFalse);
+    });
+
+    test('submit is blocked while cancelling', () async {
+      await waitReady();
+      bookingsRemote.delay = const Duration(milliseconds: 80);
+      controller().selectMethod(StadiumPaymentMethodType.cash);
+      final cancel = controller().cancelBooking();
+      await controller().submit();
+      await cancel;
+      expect(paymentsRemote.submitRequests, isEmpty);
+    });
+
+    test('cancel is blocked while submit is in flight', () async {
+      paymentsRemote = FakePaymentsRemote();
+      final slow = _SlowPaymentsRemote(paymentsRemote);
+      container.dispose();
+      subscription.close();
+      bindContainer(
+        ProviderContainer(
+          overrides: [
+            bookingsRepositoryProvider.overrideWithValue(
+              BookingsRepository(bookingsRemote),
+            ),
+            paymentsRepositoryProvider.overrideWithValue(
+              PaymentsRepository(slow, uploadClient),
+            ),
+            paymentPollIntervalProvider.overrideWithValue(null),
+            paymentHoldTickIntervalProvider.overrideWithValue(null),
+          ],
+        ),
+      );
+      await waitReady();
+      controller().selectMethod(StadiumPaymentMethodType.cash);
+      final submit = controller().submit();
+      final cancelled = await controller().cancelBooking();
+      await submit;
+      expect(cancelled, isFalse);
+      expect(bookingsRemote.cancelledIds, isEmpty);
+    });
+
     test('booking expiry disables payment', () async {
       bookingsRemote.booking = _booking(
         status: 'EXPIRED',
@@ -464,6 +763,22 @@ void main() {
       await controller().submit();
       expect(state().phase, PaymentUiPhase.expired);
     });
+
+    test('RECEIPT_STORAGE_UNAVAILABLE is a coded submit error', () async {
+      paymentsRemote.failIntentWith = ApiException(
+        error: const ApiError(
+          code: 'RECEIPT_STORAGE_UNAVAILABLE',
+          message: 'Receipt storage is not configured.',
+        ),
+      );
+      await waitReady();
+      controller().selectMethod(StadiumPaymentMethodType.bankak);
+      controller().setReference('R');
+      controller().setReceipt(_receipt());
+      await controller().submit();
+      expect(state().phase, PaymentUiPhase.ready);
+      expect(state().errorMessage, 'RECEIPT_STORAGE_UNAVAILABLE');
+    });
   });
 
   group('PaymentScreen UI', () {
@@ -502,6 +817,337 @@ void main() {
       final l10n = AppLocalizations.of(context);
       expect(find.text(l10n.paymentHoldReservedTitle), findsOneWidget);
       expect(find.text(l10n.paymentChooseMethod), findsOneWidget);
+      expect(find.text(l10n.paymentSelectMethodToContinue), findsOneWidget);
+      expect(find.text(l10n.paymentLeaveForNow), findsOneWidget);
+      expect(find.text(l10n.paymentCancelBooking), findsOneWidget);
+    });
+
+    testWidgets('empty methods shows empty copy, not failure', (tester) async {
+      await tester.pumpWidget(
+        _paymentApp(
+          bookingsRemote: FakeBookingsRemote(booking: _booking()),
+          paymentsRemote: FakePaymentsRemote(methods: const []),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+      final l10n = AppLocalizations.of(
+        tester.element(find.byType(PaymentScreen)),
+      );
+      expect(find.text(l10n.paymentNoMethods), findsOneWidget);
+      expect(find.text(l10n.paymentMethodsLoadFailed), findsNothing);
+    });
+
+    testWidgets('methods failure shows retry and not empty copy', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        _paymentApp(
+          bookingsRemote: FakeBookingsRemote(booking: _booking()),
+          paymentsRemote: FakePaymentsRemote(
+            failMethodsWith: const NetworkException(message: 'offline'),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+      final l10n = AppLocalizations.of(
+        tester.element(find.byType(PaymentScreen)),
+      );
+      expect(find.text(l10n.paymentMethodsLoadFailed), findsOneWidget);
+      expect(find.text(l10n.paymentRetryLoad), findsOneWidget);
+      expect(find.text(l10n.paymentNoMethods), findsNothing);
+    });
+
+    testWidgets('disabled submit shows select-method guidance', (tester) async {
+      await tester.pumpWidget(
+        _paymentApp(
+          bookingsRemote: FakeBookingsRemote(booking: _booking()),
+          paymentsRemote: FakePaymentsRemote(),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+      final l10n = AppLocalizations.of(
+        tester.element(find.byType(PaymentScreen)),
+      );
+      expect(find.text(l10n.paymentSelectMethodToContinue), findsOneWidget);
+      expect(find.text(l10n.paymentAddReferenceAndReceipt), findsNothing);
+      final submit = tester.widget<FilledButton>(
+        find.widgetWithText(FilledButton, l10n.paymentSubmit),
+      );
+      expect(submit.onPressed, isNull);
+    });
+
+    testWidgets('BANKAK shows reference-and-receipt guidance', (tester) async {
+      await tester.pumpWidget(
+        _paymentApp(
+          bookingsRemote: FakeBookingsRemote(booking: _booking()),
+          paymentsRemote: FakePaymentsRemote(),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+      final l10n = AppLocalizations.of(
+        tester.element(find.byType(PaymentScreen)),
+      );
+      await tester.ensureVisible(find.text(l10n.paymentMethodBankak));
+      await tester.tap(find.text(l10n.paymentMethodBankak));
+      await tester.pump();
+      expect(find.text(l10n.paymentAddReferenceAndReceipt), findsOneWidget);
+      expect(find.text(l10n.paymentSelectMethodToContinue), findsNothing);
+    });
+
+    testWidgets('Payment reached from review can pop without cancelling', (
+      tester,
+    ) async {
+      final bookingsRemote = FakeBookingsRemote(booking: _booking());
+      await tester.pumpWidget(
+        _paymentNavApp(
+          bookingsRemote: bookingsRemote,
+          paymentsRemote: FakePaymentsRemote(),
+          initialLocation: '/review',
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Continue to payment'));
+      await tester.pumpAndSettle();
+      expect(find.byType(PaymentScreen), findsOneWidget);
+      expect(find.byType(BackButton), findsOneWidget);
+      await tester.tap(find.byType(BackButton));
+      await tester.pumpAndSettle();
+      expect(find.byType(PaymentScreen), findsNothing);
+      expect(find.text('Continue to payment'), findsOneWidget);
+      expect(bookingsRemote.cancelledIds, isEmpty);
+    });
+
+    testWidgets('Leave for now goes Home without cancelling', (tester) async {
+      final bookingsRemote = FakeBookingsRemote(booking: _booking());
+      await tester.pumpWidget(
+        _paymentNavApp(
+          bookingsRemote: bookingsRemote,
+          paymentsRemote: FakePaymentsRemote(),
+          initialLocation: '/bookings/b-1/payment',
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+      final l10n = AppLocalizations.of(
+        tester.element(find.byType(PaymentScreen)),
+      );
+      expect(find.byType(BackButton), findsNothing);
+      await tester.tap(find.text(l10n.paymentLeaveForNow));
+      await tester.pumpAndSettle();
+      expect(find.text('Home'), findsOneWidget);
+      expect(find.byType(PaymentScreen), findsNothing);
+      expect(bookingsRemote.cancelledIds, isEmpty);
+    });
+
+    testWidgets('Cancel booking confirms then calls cancel and goes Home', (
+      tester,
+    ) async {
+      final bookingsRemote = FakeBookingsRemote(booking: _booking());
+      await tester.pumpWidget(
+        _paymentNavApp(
+          bookingsRemote: bookingsRemote,
+          paymentsRemote: FakePaymentsRemote(),
+          initialLocation: '/bookings/b-1/payment',
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+      final l10n = AppLocalizations.of(
+        tester.element(find.byType(PaymentScreen)),
+      );
+      await tester.tap(find.text(l10n.paymentCancelBooking).first);
+      await tester.pumpAndSettle();
+      expect(find.text(l10n.paymentCancelBookingTitle), findsOneWidget);
+      expect(find.text(l10n.paymentCancelBookingBody), findsOneWidget);
+      await tester.tap(
+        find.descendant(
+          of: find.byType(AlertDialog),
+          matching: find.text(l10n.paymentCancelBookingConfirm),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+      expect(bookingsRemote.cancelledIds, ['b-1']);
+      expect(find.text('Home'), findsOneWidget);
+      expect(find.text(l10n.paymentCancelledSnackbar), findsOneWidget);
+    });
+
+    testWidgets('cancellation error is shown without leaving Payment', (
+      tester,
+    ) async {
+      final bookingsRemote = FakeBookingsRemote(booking: _booking())
+        ..failCancelWith = ApiException(
+          error: const ApiError(
+            code: 'BOOKING_NOT_CANCELLABLE',
+            message: 'cannot cancel',
+          ),
+        );
+      await tester.pumpWidget(
+        _paymentNavApp(
+          bookingsRemote: bookingsRemote,
+          paymentsRemote: FakePaymentsRemote(),
+          initialLocation: '/bookings/b-1/payment',
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+      final l10n = AppLocalizations.of(
+        tester.element(find.byType(PaymentScreen)),
+      );
+      await tester.tap(find.text(l10n.paymentCancelBooking).first);
+      await tester.pumpAndSettle();
+      await tester.tap(
+        find.descendant(
+          of: find.byType(AlertDialog),
+          matching: find.text(l10n.paymentCancelBookingConfirm),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+      expect(find.byType(PaymentScreen), findsOneWidget);
+      expect(find.text('cannot cancel'), findsWidgets);
+      expect(find.text('Home'), findsNothing);
+    });
+
+    testWidgets('SUBMITTED state has a leave exit and no cancel-payment', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        _paymentNavApp(
+          bookingsRemote: FakeBookingsRemote(
+            booking: _booking(
+              paymentSummary: const CustomerPaymentSummary(
+                id: 'pay-1',
+                status: 'SUBMITTED',
+                method: 'CASH',
+                amountSdg: 15000,
+                currency: 'SDG',
+                hasReceipt: false,
+              ),
+            ),
+          ),
+          paymentsRemote: FakePaymentsRemote(
+            getPaymentResult: const PaymentRecord(
+              id: 'pay-1',
+              bookingId: 'b-1',
+              stadiumId: 'st1',
+              method: StadiumPaymentMethodType.cash,
+              status: 'SUBMITTED',
+              amountSdg: 15000,
+              currency: 'SDG',
+              hasReceipt: false,
+            ),
+          ),
+          initialLocation: '/bookings/b-1/payment',
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+      final l10n = AppLocalizations.of(
+        tester.element(find.byType(PaymentScreen)),
+      );
+      expect(find.text(l10n.paymentSubmittedTitle), findsOneWidget);
+      expect(find.text(l10n.paymentLeaveForNow), findsOneWidget);
+      expect(find.text(l10n.paymentSubmit), findsNothing);
+      await tester.tap(find.text(l10n.paymentLeaveForNow));
+      await tester.pumpAndSettle();
+      expect(find.text('Home'), findsOneWidget);
+    });
+
+    testWidgets('CONFIRMED state has Back to Home', (tester) async {
+      await tester.pumpWidget(
+        _paymentNavApp(
+          bookingsRemote: FakeBookingsRemote(
+            booking: _booking(status: 'CONFIRMED'),
+          ),
+          paymentsRemote: FakePaymentsRemote(),
+          initialLocation: '/bookings/b-1/payment',
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+      final l10n = AppLocalizations.of(
+        tester.element(find.byType(PaymentScreen)),
+      );
+      expect(find.text(l10n.paymentConfirmedTitle), findsOneWidget);
+      expect(find.text(l10n.paymentBackToHome), findsOneWidget);
+      expect(find.text(l10n.paymentCancelBooking), findsNothing);
+      await tester.tap(find.text(l10n.paymentBackToHome));
+      await tester.pumpAndSettle();
+      expect(find.text('Home'), findsOneWidget);
+    });
+
+    testWidgets('REJECTED state keeps retry and leave', (tester) async {
+      await tester.pumpWidget(
+        _paymentNavApp(
+          bookingsRemote: FakeBookingsRemote(
+            booking: _booking(
+              paymentSummary: const CustomerPaymentSummary(
+                id: 'pay-9',
+                status: 'REJECTED',
+                method: 'BANKAK',
+                amountSdg: 15000,
+                currency: 'SDG',
+                hasReceipt: true,
+                rejectionReason: 'Blurry image',
+              ),
+            ),
+          ),
+          paymentsRemote: FakePaymentsRemote(
+            getPaymentResult: const PaymentRecord(
+              id: 'pay-9',
+              bookingId: 'b-1',
+              stadiumId: 'st1',
+              method: StadiumPaymentMethodType.bankak,
+              status: 'REJECTED',
+              amountSdg: 15000,
+              currency: 'SDG',
+              hasReceipt: true,
+              rejectionReason: 'Blurry image',
+            ),
+          ),
+          initialLocation: '/bookings/b-1/payment',
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+      final l10n = AppLocalizations.of(
+        tester.element(find.byType(PaymentScreen)),
+      );
+      expect(find.text(l10n.paymentRejectedTitle), findsOneWidget);
+      expect(find.text(l10n.paymentUploadAnotherReceipt), findsOneWidget);
+      expect(find.text(l10n.paymentLeaveForNow), findsOneWidget);
+      expect(find.text(l10n.paymentCancelBooking), findsOneWidget);
+    });
+
+    testWidgets('EXPIRED state still offers another time and Home', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        _paymentNavApp(
+          bookingsRemote: FakeBookingsRemote(
+            booking: _booking(
+              status: 'EXPIRED',
+              holdsUntil: DateTime.utc(2026, 8, 14, 7, 0),
+            ),
+          ),
+          paymentsRemote: FakePaymentsRemote(),
+          initialLocation: '/bookings/b-1/payment',
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
+      final l10n = AppLocalizations.of(
+        tester.element(find.byType(PaymentScreen)),
+      );
+      expect(find.text(l10n.paymentExpiredTitle), findsOneWidget);
+      expect(find.text(l10n.paymentExpiredChooseAnother), findsOneWidget);
+      expect(find.text(l10n.paymentBackToHome), findsOneWidget);
+      expect(find.text(l10n.paymentCancelBooking), findsNothing);
     });
   });
 }

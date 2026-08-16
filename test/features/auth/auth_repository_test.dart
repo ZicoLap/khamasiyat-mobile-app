@@ -114,6 +114,40 @@ void main() {
     });
   });
 
+  group('AuthRepository.updateMe', () {
+    test('returns updated CUSTOMER name', () async {
+      remote.meUser = buildAuthUser();
+
+      final user = await repository.updateMe(
+        const UpdateMeRequest(name: 'New Name'),
+      );
+
+      expect(user.name, 'New Name');
+      expect(remote.updateMeCallCount, 1);
+      expect(remote.lastUpdateMeRequest?.name, 'New Name');
+    });
+
+    test('rejects OWNER and clears session', () async {
+      await tokens.saveTokens(accessToken: 'a1', refreshToken: 'r1');
+      remote.meUser = buildAuthUser(role: UserRole.owner);
+
+      await expectLater(
+        repository.updateMe(const UpdateMeRequest(name: 'Owner')),
+        throwsA(isA<NonCustomerAccountException>()),
+      );
+      expect(await tokens.readAccessToken(), isNull);
+    });
+  });
+
+  group('AuthRepository.fetchMe', () {
+    test('returns current CUSTOMER', () async {
+      remote.meUser = buildAuthUser(name: 'Refreshed');
+      final user = await repository.fetchMe();
+      expect(user.name, 'Refreshed');
+      expect(remote.getMeCallCount, 1);
+    });
+  });
+
   group('AuthRepository.logout', () {
     test('calls backend and clears local tokens', () async {
       await tokens.saveTokens(accessToken: 'a1', refreshToken: 'r1');

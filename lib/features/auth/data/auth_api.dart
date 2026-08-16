@@ -109,4 +109,15 @@ class AuthApi implements AuthRemoteSource {
       ),
     );
   }
+
+  @override
+  Future<AuthUser> updateMe(UpdateMeRequest request) {
+    return _client.patch(
+      '/users/me',
+      data: request.toJson(),
+      fromJson: (json) => AuthUser.fromJson(
+        Map<String, dynamic>.from(json! as Map),
+      ),
+    );
+  }
 }

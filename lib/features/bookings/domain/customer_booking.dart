@@ -16,8 +16,13 @@ class CustomerBooking {
     required this.stadiumName,
     required this.pitchName,
     required this.pitchType,
+    this.hasAccessPin = false,
     this.holdsUntil,
     this.paymentSummary,
+    this.cancelledAt,
+    this.cancellationReason,
+    this.completedAt,
+    this.checkedInAt,
   });
 
   final String id;
@@ -33,13 +38,19 @@ class CustomerBooking {
   final String stadiumName;
   final String pitchName;
   final PitchType pitchType;
+  final bool hasAccessPin;
   final DateTime? holdsUntil;
   final CustomerPaymentSummary? paymentSummary;
+  final DateTime? cancelledAt;
+  final String? cancellationReason;
+  final DateTime? completedAt;
+  final DateTime? checkedInAt;
 
   bool get isPending => status == 'PENDING';
   bool get isConfirmed => status == 'CONFIRMED';
   bool get isExpired => status == 'EXPIRED';
   bool get isCancelled => status == 'CANCELLED';
+  bool get isCompleted => status == 'COMPLETED';
 
   bool isHoldExpired({DateTime? now}) {
     final until = holdsUntil;
@@ -64,9 +75,8 @@ class CustomerBooking {
       stadiumId: json['stadiumId'] as String? ?? stadium['id'] as String? ?? '',
       stadiumName: stadium['name'] as String? ?? '',
       pitchName: pitch['name'] as String? ?? '',
-      pitchType: PitchType.fromApi(
-        pitch['type'] as String? ?? 'OTHER',
-      ),
+      pitchType: PitchType.fromApi(pitch['type'] as String? ?? 'OTHER'),
+      hasAccessPin: json['hasAccessPin'] as bool? ?? false,
       holdsUntil: _parseInstant(json['holdsUntil']),
       paymentSummary:
           summaryRaw is Map
@@ -74,6 +84,10 @@ class CustomerBooking {
                 Map<String, dynamic>.from(summaryRaw),
               )
               : null,
+      cancelledAt: _parseInstant(json['cancelledAt']),
+      cancellationReason: json['cancellationReason'] as String?,
+      completedAt: _parseInstant(json['completedAt']),
+      checkedInAt: _parseInstant(json['checkedInAt']),
     );
   }
 

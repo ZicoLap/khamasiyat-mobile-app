@@ -736,6 +736,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get paymentNoMethods => 'لا تتوفر طرق دفع لهذا الملعب حاليًا.';
 
   @override
+  String get paymentMethodsLoadFailed => 'تعذر تحميل طرق الدفع.';
+
+  @override
+  String get paymentErrorReceiptStorageUnavailable => 'رفع الإيصال غير متاح مؤقتًا. ادفع نقدًا أو حاول لاحقًا.';
+
+  @override
   String get paymentMethodCash => 'نقدًا في الملعب';
 
   @override
@@ -864,16 +870,220 @@ class AppLocalizationsAr extends AppLocalizations {
   String get paymentExpiredChooseAnother => 'اختر وقتًا آخر';
 
   @override
+  String get paymentSelectMethodToContinue => 'اختر طريقة دفع للمتابعة.';
+
+  @override
+  String get paymentAddReferenceAndReceipt => 'أضف مرجعًا وإيصالًا للمتابعة.';
+
+  @override
+  String get paymentLeaveForNow => 'المغادرة الآن';
+
+  @override
+  String get paymentCancelBooking => 'إلغاء الحجز';
+
+  @override
+  String get paymentCancelBookingTitle => 'إلغاء هذا الحجز؟';
+
+  @override
+  String get paymentCancelBookingBody => 'سيتم تحرير الموعد المحجوز. لا يمكن التراجع عن هذا للحجز الحالي.';
+
+  @override
+  String get paymentCancelBookingConfirm => 'إلغاء الحجز';
+
+  @override
+  String get paymentCancelBookingKeep => 'الإبقاء على الحجز';
+
+  @override
+  String get paymentCancelledSnackbar => 'تم إلغاء الحجز.';
+
+  @override
+  String get paymentBackToHome => 'العودة إلى الرئيسية';
+
+  @override
   String get bookingsPlaceholderTitle => 'حجوزاتك';
 
   @override
   String get bookingsPlaceholderBody => 'سجل الحجوزات والمباريات القادمة سيظهر هنا قريبًا.';
 
   @override
-  String get profilePlaceholderTitle => 'حسابك';
+  String get myBookingsFilterAll => 'الكل';
 
   @override
-  String get profilePlaceholderBody => 'إعدادات الملف الشخصي تأتي لاحقًا. يمكنك تسجيل الخروج من هنا.';
+  String get myBookingsFilterPending => 'قيد الانتظار';
+
+  @override
+  String get myBookingsFilterConfirmed => 'مؤكد';
+
+  @override
+  String get myBookingsFilterCompleted => 'مكتمل';
+
+  @override
+  String get myBookingsUpcoming => 'القادمة';
+
+  @override
+  String get myBookingsPast => 'السابقة';
+
+  @override
+  String get myBookingsEmptyTitle => 'لا حجوزات بعد';
+
+  @override
+  String get myBookingsEmptyBody => 'ستظهر مبارياتك القادمة هنا.';
+
+  @override
+  String get myBookingsFindPitch => 'ابحث عن ملعب';
+
+  @override
+  String get myBookingsEmptyPending => 'لا توجد حجوزات قيد الانتظار';
+
+  @override
+  String get myBookingsEmptyConfirmed => 'لا توجد حجوزات مؤكدة';
+
+  @override
+  String get myBookingsEmptyCompleted => 'لا توجد حجوزات مكتملة';
+
+  @override
+  String get myBookingsLoadFailed => 'تعذر تحميل حجوزاتك.';
+
+  @override
+  String get myBookingsTryAgain => 'إعادة المحاولة';
+
+  @override
+  String get myBookingsStatusPaymentRequired => 'يلزم الدفع';
+
+  @override
+  String get myBookingsStatusWaiting => 'بانتظار التأكيد';
+
+  @override
+  String get myBookingsStatusRejected => 'الدفع مرفوض';
+
+  @override
+  String get myBookingsStatusConfirmed => 'مؤكد';
+
+  @override
+  String get myBookingsStatusCancelled => 'ملغى';
+
+  @override
+  String get myBookingsStatusCompleted => 'مكتمل';
+
+  @override
+  String get myBookingsStatusExpired => 'منتهٍ';
+
+  @override
+  String get myBookingsCompletePayment => 'إكمال الدفع';
+
+  @override
+  String get myBookingsRetryPayment => 'إعادة الدفع';
+
+  @override
+  String get myBookingsViewPayment => 'عرض الدفع';
+
+  @override
+  String get myBookingsViewBooking => 'عرض الحجز';
+
+  @override
+  String get myBookingsRejectedHint => 'طلب الملعب دفعة جديدة.';
+
+  @override
+  String get myBookingsDetailTitle => 'الحجز';
+
+  @override
+  String get bookingDetailLoadFailed => 'تعذر تحميل الحجز.';
+
+  @override
+  String get bookingDetailEntryPin => 'رمز الدخول';
+
+  @override
+  String get bookingDetailShowPin => 'إظهار الرمز';
+
+  @override
+  String get bookingDetailHidePin => 'إخفاء الرمز';
+
+  @override
+  String get bookingDetailCopyPin => 'نسخ الرمز';
+
+  @override
+  String get bookingDetailPinCopied => 'تم نسخ الرمز';
+
+  @override
+  String get bookingDetailPinHint => 'أظهر هذا الرمز عند الوصول.';
+
+  @override
+  String get bookingDetailPinLoadFailed => 'تعذر تحميل رمز الدخول.';
+
+  @override
+  String get bookingDetailPinHiddenSemantic => 'رمز الدخول مخفي';
+
+  @override
+  String get bookingDetailPayment => 'الدفع';
+
+  @override
+  String get bookingDetailPaymentConfirmed => 'تم تأكيد الدفع';
+
+  @override
+  String get bookingDetailPaymentExpired => 'انتهت صلاحية الدفع';
+
+  @override
+  String get bookingDetailPaymentRefunded => 'مسترد';
+
+  @override
+  String get bookingDetailWaitingBody => 'تم إرسال الدفع وهو بانتظار مراجعة الملعب.';
+
+  @override
+  String get bookingDetailBookingId => 'رقم الحجز';
+
+  @override
+  String get bookingDetailContactStadium => 'التواصل مع الملعب';
+
+  @override
+  String get bookingDetailPrice => 'السعر';
+
+  @override
+  String get bookingDetailMethod => 'الطريقة';
+
+  @override
+  String get bookingDetailDimensions => 'الأبعاد';
+
+  @override
+  String get bookingDetailSurface => 'السطح';
+
+  @override
+  String get bookingDetailCheckedIn => 'تم تسجيل الحضور';
+
+  @override
+  String get profileTitle => 'حسابك';
+
+  @override
+  String get profileImmutableHint => 'لا يمكن تغيير البريد الإلكتروني أو رقم الهاتف من هنا.';
+
+  @override
+  String get profileEditName => 'تعديل الاسم';
+
+  @override
+  String get profileEditNameTitle => 'تعديل الاسم';
+
+  @override
+  String get profileEditNameSubtitle => 'يظهر هذا الاسم في حجوزاتك وعلى الشاشة الرئيسية.';
+
+  @override
+  String get profileSaveName => 'حفظ الاسم';
+
+  @override
+  String get profileNameUpdated => 'تم تحديث الاسم.';
+
+  @override
+  String get profileEmailVerified => 'موثّق';
+
+  @override
+  String get profileEmailUnverified => 'غير موثّق';
+
+  @override
+  String get profileEmailStatusLabel => 'حالة البريد';
+
+  @override
+  String get profileLanguageArabic => 'العربية';
+
+  @override
+  String get profileLanguageEnglish => 'English';
 
   @override
   String get pitchTypeFiveASide => 'خماسي';

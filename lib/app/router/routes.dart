@@ -12,16 +12,19 @@ abstract final class AppRoutes {
   static const search = '/search';
   static const bookings = '/bookings';
   static const profile = '/profile';
+  static const editName = '/profile/edit-name';
 
   static const stadiumDetailPath = '/stadiums/:stadiumId';
   static const pitchDetailPath = '/pitches/:pitchId';
   static const bookingReview = '/booking/review';
   static const bookingPaymentPath = '/bookings/:bookingId/payment';
+  static const bookingDetailPath = '/bookings/:bookingId';
 
   static String stadiumDetail(String stadiumId) => '/stadiums/$stadiumId';
   static String pitchDetail(String pitchId) => '/pitches/$pitchId';
   static String bookingPayment(String bookingId) =>
       '/bookings/$bookingId/payment';
+  static String bookingDetail(String bookingId) => '/bookings/$bookingId';
 
   /// Alias used as go_router initial location.
   static const root = splash;
@@ -46,6 +49,7 @@ abstract final class AppRoutes {
         path == search ||
         path == bookings ||
         path == profile ||
+        path.startsWith('$profile/') ||
         path == changePassword ||
         path.startsWith('/stadiums/') ||
         path.startsWith('/pitches/') ||

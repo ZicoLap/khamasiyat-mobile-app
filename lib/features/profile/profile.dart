@@ -1,2 +1,2 @@
-/// Placeholder — profile feature UI arrives in F8.
+/// Customer profile hub (F8). Identity HTTP stays in auth.
 library;

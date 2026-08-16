@@ -1373,6 +1373,18 @@ abstract class AppLocalizations {
   /// **'No payment methods are available for this stadium right now.'**
   String get paymentNoMethods;
 
+  /// No description provided for @paymentMethodsLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load payment methods.'**
+  String get paymentMethodsLoadFailed;
+
+  /// No description provided for @paymentErrorReceiptStorageUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt upload is temporarily unavailable. Pay with cash or try again later.'**
+  String get paymentErrorReceiptStorageUnavailable;
+
   /// No description provided for @paymentMethodCash.
   ///
   /// In en, this message translates to:
@@ -1613,6 +1625,66 @@ abstract class AppLocalizations {
   /// **'Choose another time'**
   String get paymentExpiredChooseAnother;
 
+  /// No description provided for @paymentSelectMethodToContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a payment method to continue.'**
+  String get paymentSelectMethodToContinue;
+
+  /// No description provided for @paymentAddReferenceAndReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a reference and receipt to continue.'**
+  String get paymentAddReferenceAndReceipt;
+
+  /// No description provided for @paymentLeaveForNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave for now'**
+  String get paymentLeaveForNow;
+
+  /// No description provided for @paymentCancelBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel booking'**
+  String get paymentCancelBooking;
+
+  /// No description provided for @paymentCancelBookingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this booking?'**
+  String get paymentCancelBookingTitle;
+
+  /// No description provided for @paymentCancelBookingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The reserved slot will be released. This cannot be undone for the current hold.'**
+  String get paymentCancelBookingBody;
+
+  /// No description provided for @paymentCancelBookingConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel booking'**
+  String get paymentCancelBookingConfirm;
+
+  /// No description provided for @paymentCancelBookingKeep.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep booking'**
+  String get paymentCancelBookingKeep;
+
+  /// No description provided for @paymentCancelledSnackbar.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking cancelled.'**
+  String get paymentCancelledSnackbar;
+
+  /// No description provided for @paymentBackToHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Home'**
+  String get paymentBackToHome;
+
   /// No description provided for @bookingsPlaceholderTitle.
   ///
   /// In en, this message translates to:
@@ -1625,17 +1697,365 @@ abstract class AppLocalizations {
   /// **'Booking history and upcoming matches will appear here soon.'**
   String get bookingsPlaceholderBody;
 
-  /// No description provided for @profilePlaceholderTitle.
+  /// No description provided for @myBookingsFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get myBookingsFilterAll;
+
+  /// No description provided for @myBookingsFilterPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get myBookingsFilterPending;
+
+  /// No description provided for @myBookingsFilterConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get myBookingsFilterConfirmed;
+
+  /// No description provided for @myBookingsFilterCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get myBookingsFilterCompleted;
+
+  /// No description provided for @myBookingsUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get myBookingsUpcoming;
+
+  /// No description provided for @myBookingsPast.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get myBookingsPast;
+
+  /// No description provided for @myBookingsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No bookings yet'**
+  String get myBookingsEmptyTitle;
+
+  /// No description provided for @myBookingsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your upcoming games will appear here.'**
+  String get myBookingsEmptyBody;
+
+  /// No description provided for @myBookingsFindPitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a pitch'**
+  String get myBookingsFindPitch;
+
+  /// No description provided for @myBookingsEmptyPending.
+  ///
+  /// In en, this message translates to:
+  /// **'No pending bookings'**
+  String get myBookingsEmptyPending;
+
+  /// No description provided for @myBookingsEmptyConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'No confirmed bookings'**
+  String get myBookingsEmptyConfirmed;
+
+  /// No description provided for @myBookingsEmptyCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'No completed bookings'**
+  String get myBookingsEmptyCompleted;
+
+  /// No description provided for @myBookingsLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your bookings.'**
+  String get myBookingsLoadFailed;
+
+  /// No description provided for @myBookingsTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get myBookingsTryAgain;
+
+  /// No description provided for @myBookingsStatusPaymentRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment required'**
+  String get myBookingsStatusPaymentRequired;
+
+  /// No description provided for @myBookingsStatusWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for confirmation'**
+  String get myBookingsStatusWaiting;
+
+  /// No description provided for @myBookingsStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment rejected'**
+  String get myBookingsStatusRejected;
+
+  /// No description provided for @myBookingsStatusConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get myBookingsStatusConfirmed;
+
+  /// No description provided for @myBookingsStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get myBookingsStatusCancelled;
+
+  /// No description provided for @myBookingsStatusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get myBookingsStatusCompleted;
+
+  /// No description provided for @myBookingsStatusExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get myBookingsStatusExpired;
+
+  /// No description provided for @myBookingsCompletePayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete payment'**
+  String get myBookingsCompletePayment;
+
+  /// No description provided for @myBookingsRetryPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry payment'**
+  String get myBookingsRetryPayment;
+
+  /// No description provided for @myBookingsViewPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'View payment'**
+  String get myBookingsViewPayment;
+
+  /// No description provided for @myBookingsViewBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'View booking'**
+  String get myBookingsViewBooking;
+
+  /// No description provided for @myBookingsRejectedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The stadium asked for a new payment.'**
+  String get myBookingsRejectedHint;
+
+  /// No description provided for @myBookingsDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking'**
+  String get myBookingsDetailTitle;
+
+  /// No description provided for @bookingDetailLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load booking.'**
+  String get bookingDetailLoadFailed;
+
+  /// No description provided for @bookingDetailEntryPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry PIN'**
+  String get bookingDetailEntryPin;
+
+  /// No description provided for @bookingDetailShowPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Show PIN'**
+  String get bookingDetailShowPin;
+
+  /// No description provided for @bookingDetailHidePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide PIN'**
+  String get bookingDetailHidePin;
+
+  /// No description provided for @bookingDetailCopyPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy PIN'**
+  String get bookingDetailCopyPin;
+
+  /// No description provided for @bookingDetailPinCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN copied'**
+  String get bookingDetailPinCopied;
+
+  /// No description provided for @bookingDetailPinHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Show this code when you arrive.'**
+  String get bookingDetailPinHint;
+
+  /// No description provided for @bookingDetailPinLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load access PIN.'**
+  String get bookingDetailPinLoadFailed;
+
+  /// No description provided for @bookingDetailPinHiddenSemantic.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry PIN hidden'**
+  String get bookingDetailPinHiddenSemantic;
+
+  /// No description provided for @bookingDetailPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get bookingDetailPayment;
+
+  /// No description provided for @bookingDetailPaymentConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment confirmed'**
+  String get bookingDetailPaymentConfirmed;
+
+  /// No description provided for @bookingDetailPaymentExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment expired'**
+  String get bookingDetailPaymentExpired;
+
+  /// No description provided for @bookingDetailPaymentRefunded.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded'**
+  String get bookingDetailPaymentRefunded;
+
+  /// No description provided for @bookingDetailWaitingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment has been submitted and is waiting for stadium review.'**
+  String get bookingDetailWaitingBody;
+
+  /// No description provided for @bookingDetailBookingId.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking ID'**
+  String get bookingDetailBookingId;
+
+  /// No description provided for @bookingDetailContactStadium.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact stadium'**
+  String get bookingDetailContactStadium;
+
+  /// No description provided for @bookingDetailPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get bookingDetailPrice;
+
+  /// No description provided for @bookingDetailMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Method'**
+  String get bookingDetailMethod;
+
+  /// No description provided for @bookingDetailDimensions.
+  ///
+  /// In en, this message translates to:
+  /// **'Dimensions'**
+  String get bookingDetailDimensions;
+
+  /// No description provided for @bookingDetailSurface.
+  ///
+  /// In en, this message translates to:
+  /// **'Surface'**
+  String get bookingDetailSurface;
+
+  /// No description provided for @bookingDetailCheckedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in'**
+  String get bookingDetailCheckedIn;
+
+  /// No description provided for @profileTitle.
   ///
   /// In en, this message translates to:
   /// **'Your profile'**
-  String get profilePlaceholderTitle;
+  String get profileTitle;
 
-  /// No description provided for @profilePlaceholderBody.
+  /// No description provided for @profileImmutableHint.
   ///
   /// In en, this message translates to:
-  /// **'Profile settings arrive in a later phase. You can sign out below.'**
-  String get profilePlaceholderBody;
+  /// **'Email and phone cannot be changed here.'**
+  String get profileImmutableHint;
+
+  /// No description provided for @profileEditName.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit name'**
+  String get profileEditName;
+
+  /// No description provided for @profileEditNameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit name'**
+  String get profileEditNameTitle;
+
+  /// No description provided for @profileEditNameSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This name is shown on your bookings and home screen.'**
+  String get profileEditNameSubtitle;
+
+  /// No description provided for @profileSaveName.
+  ///
+  /// In en, this message translates to:
+  /// **'Save name'**
+  String get profileSaveName;
+
+  /// No description provided for @profileNameUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Name updated.'**
+  String get profileNameUpdated;
+
+  /// No description provided for @profileEmailVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get profileEmailVerified;
+
+  /// No description provided for @profileEmailUnverified.
+  ///
+  /// In en, this message translates to:
+  /// **'Not verified'**
+  String get profileEmailUnverified;
+
+  /// No description provided for @profileEmailStatusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email status'**
+  String get profileEmailStatusLabel;
+
+  /// No description provided for @profileLanguageArabic.
+  ///
+  /// In en, this message translates to:
+  /// **'العربية'**
+  String get profileLanguageArabic;
+
+  /// No description provided for @profileLanguageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get profileLanguageEnglish;
 
   /// No description provided for @pitchTypeFiveASide.
   ///

@@ -736,6 +736,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentNoMethods => 'No payment methods are available for this stadium right now.';
 
   @override
+  String get paymentMethodsLoadFailed => 'Couldn\'t load payment methods.';
+
+  @override
+  String get paymentErrorReceiptStorageUnavailable => 'Receipt upload is temporarily unavailable. Pay with cash or try again later.';
+
+  @override
   String get paymentMethodCash => 'Cash at stadium';
 
   @override
@@ -864,16 +870,220 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentExpiredChooseAnother => 'Choose another time';
 
   @override
+  String get paymentSelectMethodToContinue => 'Select a payment method to continue.';
+
+  @override
+  String get paymentAddReferenceAndReceipt => 'Add a reference and receipt to continue.';
+
+  @override
+  String get paymentLeaveForNow => 'Leave for now';
+
+  @override
+  String get paymentCancelBooking => 'Cancel booking';
+
+  @override
+  String get paymentCancelBookingTitle => 'Cancel this booking?';
+
+  @override
+  String get paymentCancelBookingBody => 'The reserved slot will be released. This cannot be undone for the current hold.';
+
+  @override
+  String get paymentCancelBookingConfirm => 'Cancel booking';
+
+  @override
+  String get paymentCancelBookingKeep => 'Keep booking';
+
+  @override
+  String get paymentCancelledSnackbar => 'Booking cancelled.';
+
+  @override
+  String get paymentBackToHome => 'Back to Home';
+
+  @override
   String get bookingsPlaceholderTitle => 'Your bookings';
 
   @override
   String get bookingsPlaceholderBody => 'Booking history and upcoming matches will appear here soon.';
 
   @override
-  String get profilePlaceholderTitle => 'Your profile';
+  String get myBookingsFilterAll => 'All';
 
   @override
-  String get profilePlaceholderBody => 'Profile settings arrive in a later phase. You can sign out below.';
+  String get myBookingsFilterPending => 'Pending';
+
+  @override
+  String get myBookingsFilterConfirmed => 'Confirmed';
+
+  @override
+  String get myBookingsFilterCompleted => 'Completed';
+
+  @override
+  String get myBookingsUpcoming => 'Upcoming';
+
+  @override
+  String get myBookingsPast => 'Past';
+
+  @override
+  String get myBookingsEmptyTitle => 'No bookings yet';
+
+  @override
+  String get myBookingsEmptyBody => 'Your upcoming games will appear here.';
+
+  @override
+  String get myBookingsFindPitch => 'Find a pitch';
+
+  @override
+  String get myBookingsEmptyPending => 'No pending bookings';
+
+  @override
+  String get myBookingsEmptyConfirmed => 'No confirmed bookings';
+
+  @override
+  String get myBookingsEmptyCompleted => 'No completed bookings';
+
+  @override
+  String get myBookingsLoadFailed => 'Couldn\'t load your bookings.';
+
+  @override
+  String get myBookingsTryAgain => 'Try again';
+
+  @override
+  String get myBookingsStatusPaymentRequired => 'Payment required';
+
+  @override
+  String get myBookingsStatusWaiting => 'Waiting for confirmation';
+
+  @override
+  String get myBookingsStatusRejected => 'Payment rejected';
+
+  @override
+  String get myBookingsStatusConfirmed => 'Confirmed';
+
+  @override
+  String get myBookingsStatusCancelled => 'Cancelled';
+
+  @override
+  String get myBookingsStatusCompleted => 'Completed';
+
+  @override
+  String get myBookingsStatusExpired => 'Expired';
+
+  @override
+  String get myBookingsCompletePayment => 'Complete payment';
+
+  @override
+  String get myBookingsRetryPayment => 'Retry payment';
+
+  @override
+  String get myBookingsViewPayment => 'View payment';
+
+  @override
+  String get myBookingsViewBooking => 'View booking';
+
+  @override
+  String get myBookingsRejectedHint => 'The stadium asked for a new payment.';
+
+  @override
+  String get myBookingsDetailTitle => 'Booking';
+
+  @override
+  String get bookingDetailLoadFailed => 'Couldn\'t load booking.';
+
+  @override
+  String get bookingDetailEntryPin => 'Entry PIN';
+
+  @override
+  String get bookingDetailShowPin => 'Show PIN';
+
+  @override
+  String get bookingDetailHidePin => 'Hide PIN';
+
+  @override
+  String get bookingDetailCopyPin => 'Copy PIN';
+
+  @override
+  String get bookingDetailPinCopied => 'PIN copied';
+
+  @override
+  String get bookingDetailPinHint => 'Show this code when you arrive.';
+
+  @override
+  String get bookingDetailPinLoadFailed => 'Couldn\'t load access PIN.';
+
+  @override
+  String get bookingDetailPinHiddenSemantic => 'Entry PIN hidden';
+
+  @override
+  String get bookingDetailPayment => 'Payment';
+
+  @override
+  String get bookingDetailPaymentConfirmed => 'Payment confirmed';
+
+  @override
+  String get bookingDetailPaymentExpired => 'Payment expired';
+
+  @override
+  String get bookingDetailPaymentRefunded => 'Refunded';
+
+  @override
+  String get bookingDetailWaitingBody => 'Payment has been submitted and is waiting for stadium review.';
+
+  @override
+  String get bookingDetailBookingId => 'Booking ID';
+
+  @override
+  String get bookingDetailContactStadium => 'Contact stadium';
+
+  @override
+  String get bookingDetailPrice => 'Price';
+
+  @override
+  String get bookingDetailMethod => 'Method';
+
+  @override
+  String get bookingDetailDimensions => 'Dimensions';
+
+  @override
+  String get bookingDetailSurface => 'Surface';
+
+  @override
+  String get bookingDetailCheckedIn => 'Checked in';
+
+  @override
+  String get profileTitle => 'Your profile';
+
+  @override
+  String get profileImmutableHint => 'Email and phone cannot be changed here.';
+
+  @override
+  String get profileEditName => 'Edit name';
+
+  @override
+  String get profileEditNameTitle => 'Edit name';
+
+  @override
+  String get profileEditNameSubtitle => 'This name is shown on your bookings and home screen.';
+
+  @override
+  String get profileSaveName => 'Save name';
+
+  @override
+  String get profileNameUpdated => 'Name updated.';
+
+  @override
+  String get profileEmailVerified => 'Verified';
+
+  @override
+  String get profileEmailUnverified => 'Not verified';
+
+  @override
+  String get profileEmailStatusLabel => 'Email status';
+
+  @override
+  String get profileLanguageArabic => 'العربية';
+
+  @override
+  String get profileLanguageEnglish => 'English';
 
   @override
   String get pitchTypeFiveASide => '5-a-side';

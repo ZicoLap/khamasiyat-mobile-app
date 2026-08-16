@@ -92,6 +92,14 @@ class ResetPasswordRequest {
       };
 }
 
+class UpdateMeRequest {
+  const UpdateMeRequest({required this.name});
+
+  final String name;
+
+  Map<String, dynamic> toJson() => {'name': name};
+}
+
 class ChangePasswordRequest {
   const ChangePasswordRequest({
     required this.currentPassword,

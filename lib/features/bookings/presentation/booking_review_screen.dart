@@ -35,10 +35,7 @@ enum BookingReviewPopResult {
 }
 
 class BookingReviewScreen extends ConsumerStatefulWidget {
-  const BookingReviewScreen({
-    super.key,
-    this.bookingAttemptKeys,
-  });
+  const BookingReviewScreen({super.key, this.bookingAttemptKeys});
 
   final BookingAttemptKeys? bookingAttemptKeys;
 
@@ -50,7 +47,6 @@ class BookingReviewScreen extends ConsumerStatefulWidget {
 class _BookingReviewScreenState extends ConsumerState<BookingReviewScreen> {
   late final BookingAttemptKeys _attemptKeys;
   var _busy = false;
-  var _navigatingToPayment = false;
 
   @override
   void initState() {
@@ -67,7 +63,7 @@ class _BookingReviewScreenState extends ConsumerState<BookingReviewScreen> {
   }
 
   Future<void> _cancel() async {
-    if (_busy || _navigatingToPayment) return;
+    if (_busy) return;
     _pop(BookingReviewPopResult.cancelled);
   }
 
@@ -76,7 +72,9 @@ class _BookingReviewScreenState extends ConsumerState<BookingReviewScreen> {
     setState(() => _busy = true);
     final key = _attemptKeys.keyFor(draft.slotOccurrenceId);
     try {
-      final booking = await ref.read(bookingsRepositoryProvider).createBooking(
+      final booking = await ref
+          .read(bookingsRepositoryProvider)
+          .createBooking(
             slotOccurrenceId: draft.slotOccurrenceId,
             idempotencyKey: key,
           );
@@ -90,19 +88,19 @@ class _BookingReviewScreenState extends ConsumerState<BookingReviewScreen> {
         await _showConflictDialog();
         return;
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.message)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.message)));
     } on AppException catch (error) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.message)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.message)));
     } catch (error) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.toString())),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.toString())));
     } finally {
       if (mounted && _busy) setState(() => _busy = false);
     }
@@ -183,18 +181,18 @@ class _BookingReviewScreenState extends ConsumerState<BookingReviewScreen> {
                   l10n.bookingReservedTitle,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.brandDeep,
-                      ),
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.brandDeep,
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   l10n.bookingReservedBody,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppColors.onSurfaceMuted,
-                        height: 1.4,
-                      ),
+                    color: AppColors.onSurfaceMuted,
+                    height: 1.4,
+                  ),
                 ),
                 if (holdLabel != null) ...[
                   const SizedBox(height: AppSpacing.md),
@@ -202,9 +200,9 @@ class _BookingReviewScreenState extends ConsumerState<BookingReviewScreen> {
                     l10n.bookingReservedHoldUntil(holdLabel),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.onSurface,
-                        ),
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.onSurface,
+                    ),
                   ),
                 ],
                 const SizedBox(height: AppSpacing.lg),
@@ -224,22 +222,20 @@ class _BookingReviewScreenState extends ConsumerState<BookingReviewScreen> {
   }
 
   void _goToPayment(CreatedBooking booking, BookingReviewDraft draft) {
-    _navigatingToPayment = true;
-    ref.read(pendingBookingSessionProvider.notifier).state =
-        PendingBookingSession(booking: booking, review: draft);
+    ref
+        .read(pendingBookingSessionProvider.notifier)
+        .state = PendingBookingSession(booking: booking, review: draft);
 
     final router = GoRouter.maybeOf(context);
     if (router != null) {
-      ref.read(bookingReviewDraftProvider.notifier).state = null;
-      context.go(AppRoutes.bookingPayment(booking.id));
+      context.push(AppRoutes.bookingPayment(booking.id));
       return;
     }
-    Navigator.of(context).pushReplacement(
+    Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => PaymentScreen(bookingId: booking.id),
       ),
     );
-    ref.read(bookingReviewDraftProvider.notifier).state = null;
   }
 
   static String? _formatHoldsUntil(DateTime? holdsUntil, String localeCode) {
@@ -258,7 +254,7 @@ class _BookingReviewScreenState extends ConsumerState<BookingReviewScreen> {
 
     if (draft == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted || _navigatingToPayment) return;
+        if (!mounted) return;
         _pop(BookingReviewPopResult.cancelled);
       });
       return const Scaffold(
@@ -291,9 +287,9 @@ class _BookingReviewScreenState extends ConsumerState<BookingReviewScreen> {
         ),
         title: Text(
           l10n.bookingReviewTitle,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w800,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
         ),
       ),
       bottomNavigationBar: _BookingReviewBar(
@@ -334,10 +330,7 @@ class _BookingReviewScreenState extends ConsumerState<BookingReviewScreen> {
             duration: duration,
           ),
           const SizedBox(height: AppSpacing.sm),
-          _PriceDetailsCard(
-            l10n: l10n,
-            price: price,
-          ),
+          _PriceDetailsCard(l10n: l10n, price: price),
           const SizedBox(height: AppSpacing.sm),
           _NotReservedYetBanner(message: l10n.bookingReviewNotReservedYet),
         ],
@@ -379,10 +372,7 @@ class _VenueHeroCard extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        AppColors.imageScrim,
-                      ],
+                      colors: [Colors.transparent, AppColors.imageScrim],
                       stops: [0.45, 1],
                     ),
                   ),
@@ -399,10 +389,10 @@ class _VenueHeroCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: AppColors.heroOnBrand,
-                              fontWeight: FontWeight.w800,
-                              height: 1.15,
-                            ),
+                          color: AppColors.heroOnBrand,
+                          fontWeight: FontWeight.w800,
+                          height: 1.15,
+                        ),
                       ),
                       const SizedBox(height: 4),
                       Text(
@@ -410,9 +400,9 @@ class _VenueHeroCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: AppColors.heroOnBrandSoft,
-                              fontWeight: FontWeight.w500,
-                            ),
+                          color: AppColors.heroOnBrandSoft,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ],
                   ),
@@ -457,9 +447,9 @@ class _CustomerCard extends StatelessWidget {
             Text(
               l10n.bookingReviewCustomer,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.brandDeep,
-                  ),
+                fontWeight: FontWeight.w800,
+                color: AppColors.brandDeep,
+              ),
             ),
             const SizedBox(height: 4),
             _DetailLine(
@@ -518,9 +508,9 @@ class _YourBookingCard extends StatelessWidget {
             Text(
               l10n.bookingReviewYourBooking,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.brandDeep,
-                  ),
+                fontWeight: FontWeight.w800,
+                color: AppColors.brandDeep,
+              ),
             ),
             const SizedBox(height: 4),
             _DetailLine(
@@ -579,9 +569,9 @@ class _DetailLine extends StatelessWidget {
       value,
       textAlign: TextAlign.end,
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontWeight: FontWeight.w700,
-            color: AppColors.onSurface,
-          ),
+        fontWeight: FontWeight.w700,
+        color: AppColors.onSurface,
+      ),
     );
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 7),
@@ -592,9 +582,9 @@ class _DetailLine extends StatelessWidget {
           Text(
             label,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.onSurfaceMuted,
-                  fontWeight: FontWeight.w600,
-                ),
+              color: AppColors.onSurfaceMuted,
+              fontWeight: FontWeight.w600,
+            ),
           ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
@@ -613,10 +603,7 @@ class _DetailLine extends StatelessWidget {
 }
 
 class _PriceDetailsCard extends StatelessWidget {
-  const _PriceDetailsCard({
-    required this.l10n,
-    required this.price,
-  });
+  const _PriceDetailsCard({required this.l10n, required this.price});
 
   final AppLocalizations l10n;
   final String price;
@@ -641,9 +628,9 @@ class _PriceDetailsCard extends StatelessWidget {
             Text(
               l10n.bookingReviewPriceDetails,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.brandDeep,
-                  ),
+                fontWeight: FontWeight.w800,
+                color: AppColors.brandDeep,
+              ),
             ),
             const SizedBox(height: 6),
             Row(
@@ -652,16 +639,16 @@ class _PriceDetailsCard extends StatelessWidget {
                   child: Text(
                     l10n.bookingReviewPitchReservation,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.onSurfaceMuted,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      color: AppColors.onSurfaceMuted,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
                 Text(
                   price,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ],
             ),
@@ -675,16 +662,16 @@ class _PriceDetailsCard extends StatelessWidget {
                   child: Text(
                     l10n.bookingReviewTotalLabel,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w800,
-                        ),
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
                 Text(
                   price,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.brandDeep,
-                      ),
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.brandDeep,
+                  ),
                 ),
               ],
             ),
@@ -725,10 +712,10 @@ class _NotReservedYetBanner extends StatelessWidget {
               child: Text(
                 message,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.onPrimarySoft,
-                      height: 1.3,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  color: AppColors.onPrimarySoft,
+                  height: 1.3,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ],
@@ -781,17 +768,17 @@ class _BookingReviewBar extends StatelessWidget {
                     Text(
                       totalLabel,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                            color: AppColors.onSurfaceMuted,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        color: AppColors.onSurfaceMuted,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       price,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.brandDeep,
-                          ),
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.brandDeep,
+                      ),
                     ),
                   ],
                 ),

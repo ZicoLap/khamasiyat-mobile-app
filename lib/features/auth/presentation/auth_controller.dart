@@ -144,6 +144,41 @@ class AuthController extends StateNotifier<AuthState> {
     );
   }
 
+  Future<AuthUser> updateName(String name) async {
+    try {
+      final user = await _repository.updateMe(
+        UpdateMeRequest(name: name.trim()),
+      );
+      state = AuthAuthenticated(user);
+      return user;
+    } on NonCustomerAccountException {
+      state = const AuthUnauthenticated(messageCode: 'nonCustomer');
+      rethrow;
+    } on ClientException catch (error) {
+      if (error.message == 'ACCOUNT_SUSPENDED') {
+        state = const AuthUnauthenticated(messageCode: 'accountSuspended');
+      }
+      rethrow;
+    }
+  }
+
+  /// Reloads the signed-in user from `GET /users/me` without rotating tokens.
+  Future<AuthUser> refreshMe() async {
+    try {
+      final user = await _repository.fetchMe();
+      state = AuthAuthenticated(user);
+      return user;
+    } on NonCustomerAccountException {
+      state = const AuthUnauthenticated(messageCode: 'nonCustomer');
+      rethrow;
+    } on ClientException catch (error) {
+      if (error.message == 'ACCOUNT_SUSPENDED') {
+        state = const AuthUnauthenticated(messageCode: 'accountSuspended');
+      }
+      rethrow;
+    }
+  }
+
   Future<void> changePassword({
     required String currentPassword,
     required String newPassword,

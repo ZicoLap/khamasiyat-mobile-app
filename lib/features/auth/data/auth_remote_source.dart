@@ -14,4 +14,5 @@ abstract class AuthRemoteSource {
   Future<MessageResponse> resetPassword(ResetPasswordRequest request);
   Future<MessageResponse> changePassword(ChangePasswordRequest request);
   Future<AuthUser> getMe();
+  Future<AuthUser> updateMe(UpdateMeRequest request);
 }
