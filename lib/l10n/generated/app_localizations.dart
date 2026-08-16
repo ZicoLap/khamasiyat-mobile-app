@@ -1007,6 +1007,612 @@ abstract class AppLocalizations {
   /// **'Pitch ID: {id}'**
   String pitchDetailIdLabel(String id);
 
+  /// No description provided for @pitchDetailErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load pitch'**
+  String get pitchDetailErrorTitle;
+
+  /// No description provided for @pitchDetailErrorBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your connection and try again.'**
+  String get pitchDetailErrorBody;
+
+  /// No description provided for @pitchDetailShareTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get pitchDetailShareTooltip;
+
+  /// No description provided for @pitchDetailShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'{pitch} at {stadium} — Khamasiyat'**
+  String pitchDetailShareText(String pitch, String stadium);
+
+  /// No description provided for @pitchDetailOutdoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Outdoor'**
+  String get pitchDetailOutdoor;
+
+  /// No description provided for @pitchDetailFromPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'From {price} / slot'**
+  String pitchDetailFromPrice(String price);
+
+  /// No description provided for @pitchDetailSelectDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get pitchDetailSelectDate;
+
+  /// No description provided for @pitchDetailCalendarTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose date'**
+  String get pitchDetailCalendarTooltip;
+
+  /// No description provided for @pitchDetailAvailableTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'Available times'**
+  String get pitchDetailAvailableTimes;
+
+  /// No description provided for @pitchDetailMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get pitchDetailMorning;
+
+  /// No description provided for @pitchDetailAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Afternoon'**
+  String get pitchDetailAfternoon;
+
+  /// No description provided for @pitchDetailEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening'**
+  String get pitchDetailEvening;
+
+  /// No description provided for @pitchDetailNoSlots.
+  ///
+  /// In en, this message translates to:
+  /// **'No available times for this date.'**
+  String get pitchDetailNoSlots;
+
+  /// No description provided for @pitchDetailChooseAnotherDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose another date'**
+  String get pitchDetailChooseAnotherDate;
+
+  /// No description provided for @pitchDetailSlotUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'This time is no longer available. Please choose another slot.'**
+  String get pitchDetailSlotUnavailable;
+
+  /// No description provided for @pitchDetailRefreshFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t refresh times.'**
+  String get pitchDetailRefreshFailed;
+
+  /// No description provided for @pitchDetailSlotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get pitchDetailSlotAvailable;
+
+  /// No description provided for @pitchDetailDurationHoursMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String pitchDetailDurationHoursMinutes(int hours, int minutes);
+
+  /// No description provided for @pitchDetailDurationHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h'**
+  String pitchDetailDurationHours(int hours);
+
+  /// No description provided for @pitchDetailDurationMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m'**
+  String pitchDetailDurationMinutes(int minutes);
+
+  /// No description provided for @pitchDetailTimezoneNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Times are shown in stadium local time ({timeZone}).'**
+  String pitchDetailTimezoneNote(String timeZone);
+
+  /// No description provided for @pitchDetailContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get pitchDetailContinue;
+
+  /// No description provided for @pitchDetailBookingSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking started. Complete payment from Bookings.'**
+  String get pitchDetailBookingSuccess;
+
+  /// No description provided for @pitchDetailPhotoSemantic.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo of {name}, {current} of {total}'**
+  String pitchDetailPhotoSemantic(String name, int current, int total);
+
+  /// No description provided for @pitchDetailSlotSemantic.
+  ///
+  /// In en, this message translates to:
+  /// **'{start} to {end}'**
+  String pitchDetailSlotSemantic(String start, String end);
+
+  /// No description provided for @bookingReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review booking'**
+  String get bookingReviewTitle;
+
+  /// No description provided for @bookingReviewYourBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Your booking'**
+  String get bookingReviewYourBooking;
+
+  /// No description provided for @bookingReviewCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get bookingReviewCustomer;
+
+  /// No description provided for @bookingReviewNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get bookingReviewNameLabel;
+
+  /// No description provided for @bookingReviewPitchLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pitch'**
+  String get bookingReviewPitchLabel;
+
+  /// No description provided for @bookingReviewTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get bookingReviewTypeLabel;
+
+  /// No description provided for @bookingReviewDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get bookingReviewDateLabel;
+
+  /// No description provided for @bookingReviewTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get bookingReviewTimeLabel;
+
+  /// No description provided for @bookingReviewDurationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get bookingReviewDurationLabel;
+
+  /// No description provided for @bookingReviewTotalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get bookingReviewTotalLabel;
+
+  /// No description provided for @bookingReviewPriceDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Price details'**
+  String get bookingReviewPriceDetails;
+
+  /// No description provided for @bookingReviewPitchReservation.
+  ///
+  /// In en, this message translates to:
+  /// **'Pitch reservation'**
+  String get bookingReviewPitchReservation;
+
+  /// No description provided for @bookingReviewNotReservedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Your slot isn\'t reserved yet.\nTap Book this slot to reserve it while you complete payment.'**
+  String get bookingReviewNotReservedYet;
+
+  /// No description provided for @bookingReviewCheckDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Please check your booking details before confirming this slot.'**
+  String get bookingReviewCheckDetails;
+
+  /// No description provided for @bookingReviewCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get bookingReviewCancel;
+
+  /// No description provided for @bookingReviewBookSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Book this slot'**
+  String get bookingReviewBookSlot;
+
+  /// No description provided for @bookingReservedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Slot reserved'**
+  String get bookingReservedTitle;
+
+  /// No description provided for @bookingReservedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This time is temporarily reserved for you. Complete your payment before the reservation expires to confirm your booking.'**
+  String get bookingReservedBody;
+
+  /// No description provided for @bookingReservedHoldUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation held until {time}'**
+  String bookingReservedHoldUntil(String time);
+
+  /// No description provided for @bookingReservedContinuePayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to payment'**
+  String get bookingReservedContinuePayment;
+
+  /// No description provided for @bookingConflictTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This time is no longer available.'**
+  String get bookingConflictTitle;
+
+  /// No description provided for @bookingConflictBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone else booked this slot while you were reviewing your booking. Please choose another time.'**
+  String get bookingConflictBody;
+
+  /// No description provided for @bookingConflictChooseAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose another time'**
+  String get bookingConflictChooseAnother;
+
+  /// No description provided for @paymentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get paymentTitle;
+
+  /// No description provided for @paymentPlaceholderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get paymentPlaceholderTitle;
+
+  /// No description provided for @paymentPlaceholderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment methods arrive in the next phase.'**
+  String get paymentPlaceholderBody;
+
+  /// No description provided for @paymentBookingIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking ID: {id}'**
+  String paymentBookingIdLabel(String id);
+
+  /// No description provided for @paymentHoldsUntilLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold until: {time}'**
+  String paymentHoldsUntilLabel(String time);
+
+  /// No description provided for @paymentStatusPendingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: {status}'**
+  String paymentStatusPendingLabel(String status);
+
+  /// No description provided for @paymentHoldReservedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your slot is reserved'**
+  String get paymentHoldReservedTitle;
+
+  /// No description provided for @paymentHoldRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} remaining'**
+  String paymentHoldRemaining(String time);
+
+  /// No description provided for @paymentHoldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your payment before the reservation expires.'**
+  String get paymentHoldHint;
+
+  /// No description provided for @paymentBookingSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking summary'**
+  String get paymentBookingSummary;
+
+  /// No description provided for @paymentAmountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount: {amount}'**
+  String paymentAmountLabel(String amount);
+
+  /// No description provided for @paymentChooseMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a payment method'**
+  String get paymentChooseMethod;
+
+  /// No description provided for @paymentNoMethods.
+  ///
+  /// In en, this message translates to:
+  /// **'No payment methods are available for this stadium right now.'**
+  String get paymentNoMethods;
+
+  /// No description provided for @paymentMethodCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash at stadium'**
+  String get paymentMethodCash;
+
+  /// No description provided for @paymentMethodBankak.
+  ///
+  /// In en, this message translates to:
+  /// **'Bankak'**
+  String get paymentMethodBankak;
+
+  /// No description provided for @paymentMethodBankTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank transfer'**
+  String get paymentMethodBankTransfer;
+
+  /// No description provided for @paymentMethodLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Method: {method}'**
+  String paymentMethodLabel(String method);
+
+  /// No description provided for @paymentCashInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay in cash at the stadium according to the venue instructions.'**
+  String get paymentCashInstructions;
+
+  /// No description provided for @paymentAccountHolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Account holder'**
+  String get paymentAccountHolder;
+
+  /// No description provided for @paymentAccountNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Account number'**
+  String get paymentAccountNumber;
+
+  /// No description provided for @paymentBankName.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get paymentBankName;
+
+  /// No description provided for @paymentIban.
+  ///
+  /// In en, this message translates to:
+  /// **'IBAN'**
+  String get paymentIban;
+
+  /// No description provided for @paymentPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get paymentPhoneNumber;
+
+  /// No description provided for @paymentReferenceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction reference'**
+  String get paymentReferenceLabel;
+
+  /// No description provided for @paymentReferenceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the transfer reference'**
+  String get paymentReferenceHint;
+
+  /// No description provided for @paymentReceiptTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt'**
+  String get paymentReceiptTitle;
+
+  /// No description provided for @paymentReceiptHint.
+  ///
+  /// In en, this message translates to:
+  /// **'JPEG, PNG, WebP, or PDF up to 5 MB.'**
+  String get paymentReceiptHint;
+
+  /// No description provided for @paymentChooseReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose receipt'**
+  String get paymentChooseReceipt;
+
+  /// No description provided for @paymentReplaceReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace'**
+  String get paymentReplaceReceipt;
+
+  /// No description provided for @paymentRemoveReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get paymentRemoveReceipt;
+
+  /// No description provided for @paymentReceiptSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Size: {size}'**
+  String paymentReceiptSize(String size);
+
+  /// No description provided for @paymentUploading.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading receipt…'**
+  String get paymentUploading;
+
+  /// No description provided for @paymentSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit payment'**
+  String get paymentSubmit;
+
+  /// No description provided for @paymentGenericError.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get paymentGenericError;
+
+  /// No description provided for @paymentErrorUnsupportedType.
+  ///
+  /// In en, this message translates to:
+  /// **'This file type is not supported. Use JPEG, PNG, WebP, or PDF.'**
+  String get paymentErrorUnsupportedType;
+
+  /// No description provided for @paymentErrorOversized.
+  ///
+  /// In en, this message translates to:
+  /// **'This file is too large. Maximum size is 5 MB.'**
+  String get paymentErrorOversized;
+
+  /// No description provided for @paymentRetryLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get paymentRetryLoad;
+
+  /// No description provided for @paymentSubmittedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment submitted'**
+  String get paymentSubmittedTitle;
+
+  /// No description provided for @paymentSubmittedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your payment is waiting for stadium confirmation.'**
+  String get paymentSubmittedBody;
+
+  /// No description provided for @paymentSubmittedNotConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'The booking is not yet confirmed.'**
+  String get paymentSubmittedNotConfirmed;
+
+  /// No description provided for @paymentStatusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: {status}'**
+  String paymentStatusLabel(String status);
+
+  /// No description provided for @paymentStatusSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted'**
+  String get paymentStatusSubmitted;
+
+  /// No description provided for @paymentStatusConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get paymentStatusConfirmed;
+
+  /// No description provided for @paymentStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get paymentStatusRejected;
+
+  /// No description provided for @paymentRejectedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment needs attention'**
+  String get paymentRejectedTitle;
+
+  /// No description provided for @paymentRejectedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The stadium rejected this receipt:\n\"{reason}\"'**
+  String paymentRejectedBody(String reason);
+
+  /// No description provided for @paymentRejectedBodyGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'The stadium rejected this payment. Please try again with a new receipt.'**
+  String get paymentRejectedBodyGeneric;
+
+  /// No description provided for @paymentUploadAnotherReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload another receipt'**
+  String get paymentUploadAnotherReceipt;
+
+  /// No description provided for @paymentConfirmedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking confirmed'**
+  String get paymentConfirmedTitle;
+
+  /// No description provided for @paymentConfirmedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your pitch is booked.'**
+  String get paymentConfirmedBody;
+
+  /// No description provided for @paymentExpiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation expired'**
+  String get paymentExpiredTitle;
+
+  /// No description provided for @paymentExpiredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This slot is no longer reserved.'**
+  String get paymentExpiredBody;
+
+  /// No description provided for @paymentExpiredChooseAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose another time'**
+  String get paymentExpiredChooseAnother;
+
   /// No description provided for @bookingsPlaceholderTitle.
   ///
   /// In en, this message translates to:

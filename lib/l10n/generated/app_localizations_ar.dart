@@ -525,6 +525,345 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get pitchDetailErrorTitle => 'تعذر تحميل الملعب';
+
+  @override
+  String get pitchDetailErrorBody => 'تحقق من اتصالك ثم أعد المحاولة.';
+
+  @override
+  String get pitchDetailShareTooltip => 'مشاركة';
+
+  @override
+  String pitchDetailShareText(String pitch, String stadium) {
+    return '$pitch في $stadium — خماسيات';
+  }
+
+  @override
+  String get pitchDetailOutdoor => 'خارجي';
+
+  @override
+  String pitchDetailFromPrice(String price) {
+    return 'من $price / فترة';
+  }
+
+  @override
+  String get pitchDetailSelectDate => 'التاريخ';
+
+  @override
+  String get pitchDetailCalendarTooltip => 'اختيار تاريخ';
+
+  @override
+  String get pitchDetailAvailableTimes => 'الأوقات المتاحة';
+
+  @override
+  String get pitchDetailMorning => 'صباح';
+
+  @override
+  String get pitchDetailAfternoon => 'بعد الظهر';
+
+  @override
+  String get pitchDetailEvening => 'مساء';
+
+  @override
+  String get pitchDetailNoSlots => 'لا توجد أوقات متاحة في هذا التاريخ.';
+
+  @override
+  String get pitchDetailChooseAnotherDate => 'اختر تاريخًا آخر';
+
+  @override
+  String get pitchDetailSlotUnavailable => 'هذا الموعد لم يعد متاحًا. يُرجى اختيار وقت آخر.';
+
+  @override
+  String get pitchDetailRefreshFailed => 'تعذر تحديث الأوقات.';
+
+  @override
+  String get pitchDetailSlotAvailable => 'متاح';
+
+  @override
+  String pitchDetailDurationHoursMinutes(int hours, int minutes) {
+    return '$hours س و $minutes د';
+  }
+
+  @override
+  String pitchDetailDurationHours(int hours) {
+    return '$hours س';
+  }
+
+  @override
+  String pitchDetailDurationMinutes(int minutes) {
+    return '$minutes د';
+  }
+
+  @override
+  String pitchDetailTimezoneNote(String timeZone) {
+    return 'الأوقات حسب التوقيت المحلي للملعب ($timeZone).';
+  }
+
+  @override
+  String get pitchDetailContinue => 'متابعة';
+
+  @override
+  String get pitchDetailBookingSuccess => 'بدأ الحجز. أكمل الدفع من صفحة الحجوزات.';
+
+  @override
+  String pitchDetailPhotoSemantic(String name, int current, int total) {
+    return 'صورة $name، $current من $total';
+  }
+
+  @override
+  String pitchDetailSlotSemantic(String start, String end) {
+    return '$start إلى $end';
+  }
+
+  @override
+  String get bookingReviewTitle => 'مراجعة الحجز';
+
+  @override
+  String get bookingReviewYourBooking => 'حجزك';
+
+  @override
+  String get bookingReviewCustomer => 'العميل';
+
+  @override
+  String get bookingReviewNameLabel => 'الاسم';
+
+  @override
+  String get bookingReviewPitchLabel => 'الملعب';
+
+  @override
+  String get bookingReviewTypeLabel => 'النوع';
+
+  @override
+  String get bookingReviewDateLabel => 'التاريخ';
+
+  @override
+  String get bookingReviewTimeLabel => 'الوقت';
+
+  @override
+  String get bookingReviewDurationLabel => 'المدة';
+
+  @override
+  String get bookingReviewTotalLabel => 'الإجمالي';
+
+  @override
+  String get bookingReviewPriceDetails => 'تفاصيل السعر';
+
+  @override
+  String get bookingReviewPitchReservation => 'حجز الملعب';
+
+  @override
+  String get bookingReviewNotReservedYet => 'موعدك غير محجوز بعد.\nاضغط «احجز هذا الموعد» لحجزه مؤقتًا أثناء إكمال الدفع.';
+
+  @override
+  String get bookingReviewCheckDetails => 'يرجى التحقق من تفاصيل حجزك قبل تأكيد هذا الموعد.';
+
+  @override
+  String get bookingReviewCancel => 'إلغاء';
+
+  @override
+  String get bookingReviewBookSlot => 'احجز هذا الموعد';
+
+  @override
+  String get bookingReservedTitle => 'تم حجز الموعد مؤقتًا';
+
+  @override
+  String get bookingReservedBody => 'هذا الوقت محجوز لك مؤقتًا. أكمل الدفع قبل انتهاء مدة الحجز لتأكيد حجزك.';
+
+  @override
+  String bookingReservedHoldUntil(String time) {
+    return 'الحجز ساري حتى $time';
+  }
+
+  @override
+  String get bookingReservedContinuePayment => 'متابعة إلى الدفع';
+
+  @override
+  String get bookingConflictTitle => 'هذا الموعد لم يعد متاحًا.';
+
+  @override
+  String get bookingConflictBody => 'حجز شخص آخر هذا الموعد أثناء مراجعتك. يُرجى اختيار وقت آخر.';
+
+  @override
+  String get bookingConflictChooseAnother => 'اختر وقتًا آخر';
+
+  @override
+  String get paymentTitle => 'الدفع';
+
+  @override
+  String get paymentPlaceholderTitle => 'الدفع';
+
+  @override
+  String get paymentPlaceholderBody => 'طرق الدفع تأتي في المرحلة التالية.';
+
+  @override
+  String paymentBookingIdLabel(String id) {
+    return 'معرّف الحجز: $id';
+  }
+
+  @override
+  String paymentHoldsUntilLabel(String time) {
+    return 'الحجز حتى: $time';
+  }
+
+  @override
+  String paymentStatusPendingLabel(String status) {
+    return 'الحالة: $status';
+  }
+
+  @override
+  String get paymentHoldReservedTitle => 'موعدك محجوز مؤقتًا';
+
+  @override
+  String paymentHoldRemaining(String time) {
+    return 'متبقي $time';
+  }
+
+  @override
+  String get paymentHoldHint => 'أكمل الدفع قبل انتهاء مدة الحجز.';
+
+  @override
+  String get paymentBookingSummary => 'ملخص الحجز';
+
+  @override
+  String paymentAmountLabel(String amount) {
+    return 'المبلغ: $amount';
+  }
+
+  @override
+  String get paymentChooseMethod => 'اختر طريقة الدفع';
+
+  @override
+  String get paymentNoMethods => 'لا تتوفر طرق دفع لهذا الملعب حاليًا.';
+
+  @override
+  String get paymentMethodCash => 'نقدًا في الملعب';
+
+  @override
+  String get paymentMethodBankak => 'بنكك';
+
+  @override
+  String get paymentMethodBankTransfer => 'تحويل بنكي';
+
+  @override
+  String paymentMethodLabel(String method) {
+    return 'الطريقة: $method';
+  }
+
+  @override
+  String get paymentCashInstructions => 'ادفع نقدًا في الملعب وفق تعليمات المكان.';
+
+  @override
+  String get paymentAccountHolder => 'اسم الحساب';
+
+  @override
+  String get paymentAccountNumber => 'رقم الحساب';
+
+  @override
+  String get paymentBankName => 'البنك';
+
+  @override
+  String get paymentIban => 'IBAN';
+
+  @override
+  String get paymentPhoneNumber => 'الهاتف';
+
+  @override
+  String get paymentReferenceLabel => 'مرجع التحويل';
+
+  @override
+  String get paymentReferenceHint => 'أدخل مرجع التحويل';
+
+  @override
+  String get paymentReceiptTitle => 'الإيصال';
+
+  @override
+  String get paymentReceiptHint => 'JPEG أو PNG أو WebP أو PDF حتى 5 ميجابايت.';
+
+  @override
+  String get paymentChooseReceipt => 'اختر إيصالًا';
+
+  @override
+  String get paymentReplaceReceipt => 'استبدال';
+
+  @override
+  String get paymentRemoveReceipt => 'إزالة';
+
+  @override
+  String paymentReceiptSize(String size) {
+    return 'الحجم: $size';
+  }
+
+  @override
+  String get paymentUploading => 'جارٍ رفع الإيصال…';
+
+  @override
+  String get paymentSubmit => 'إرسال الدفع';
+
+  @override
+  String get paymentGenericError => 'حدث خطأ. يُرجى المحاولة مرة أخرى.';
+
+  @override
+  String get paymentErrorUnsupportedType => 'نوع الملف غير مدعوم. استخدم JPEG أو PNG أو WebP أو PDF.';
+
+  @override
+  String get paymentErrorOversized => 'الملف كبير جدًا. الحد الأقصى 5 ميجابايت.';
+
+  @override
+  String get paymentRetryLoad => 'إعادة المحاولة';
+
+  @override
+  String get paymentSubmittedTitle => 'تم إرسال الدفع';
+
+  @override
+  String get paymentSubmittedBody => 'دفعك بانتظار تأكيد الملعب.';
+
+  @override
+  String get paymentSubmittedNotConfirmed => 'الحجز غير مؤكد بعد.';
+
+  @override
+  String paymentStatusLabel(String status) {
+    return 'الحالة: $status';
+  }
+
+  @override
+  String get paymentStatusSubmitted => 'مُرسل';
+
+  @override
+  String get paymentStatusConfirmed => 'مؤكد';
+
+  @override
+  String get paymentStatusRejected => 'مرفوض';
+
+  @override
+  String get paymentRejectedTitle => 'الدفع يحتاج إلى مراجعة';
+
+  @override
+  String paymentRejectedBody(String reason) {
+    return 'رفض الملعب هذا الإيصال:\n\"$reason\"';
+  }
+
+  @override
+  String get paymentRejectedBodyGeneric => 'رفض الملعب هذا الدفع. يُرجى المحاولة بإيصال جديد.';
+
+  @override
+  String get paymentUploadAnotherReceipt => 'رفع إيصال آخر';
+
+  @override
+  String get paymentConfirmedTitle => 'تم تأكيد الحجز';
+
+  @override
+  String get paymentConfirmedBody => 'تم حجز ملعبك.';
+
+  @override
+  String get paymentExpiredTitle => 'انتهت مدة الحجز';
+
+  @override
+  String get paymentExpiredBody => 'هذا الموعد لم يعد محجوزًا.';
+
+  @override
+  String get paymentExpiredChooseAnother => 'اختر وقتًا آخر';
+
+  @override
   String get bookingsPlaceholderTitle => 'حجوزاتك';
 
   @override

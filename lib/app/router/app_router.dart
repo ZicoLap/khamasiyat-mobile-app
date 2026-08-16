@@ -13,11 +13,13 @@ import 'package:khamasiyat_mobile_app/features/auth/presentation/login/login_scr
 import 'package:khamasiyat_mobile_app/features/auth/presentation/register/register_screen.dart';
 import 'package:khamasiyat_mobile_app/features/auth/presentation/register/register_verify_screen.dart';
 import 'package:khamasiyat_mobile_app/features/auth/presentation/session_splash_screen.dart';
+import 'package:khamasiyat_mobile_app/features/bookings/presentation/booking_review_screen.dart';
 import 'package:khamasiyat_mobile_app/features/bookings/presentation/bookings_placeholder_screen.dart';
-import 'package:khamasiyat_mobile_app/features/catalog/presentation/pitch_detail_placeholder_screen.dart';
+import 'package:khamasiyat_mobile_app/features/catalog/presentation/pitch_detail_screen.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/presentation/search_screen.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/presentation/stadium_detail_screen.dart';
 import 'package:khamasiyat_mobile_app/features/home/presentation/home_screen.dart';
+import 'package:khamasiyat_mobile_app/features/payments/presentation/payment_screen.dart';
 import 'package:khamasiyat_mobile_app/features/profile/presentation/profile_placeholder_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -136,7 +138,22 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         parentNavigatorKey: rootNavigatorKey,
         builder: (context, state) {
           final id = state.pathParameters['pitchId'] ?? '';
-          return PitchDetailPlaceholderScreen(pitchId: id);
+          return PitchDetailScreen(pitchId: id);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.bookingReview,
+        name: 'bookingReview',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) => const BookingReviewScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.bookingPaymentPath,
+        name: 'bookingPayment',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) {
+          final id = state.pathParameters['bookingId'] ?? '';
+          return PaymentScreen(bookingId: id);
         },
       ),
       StatefulShellRoute.indexedStack(

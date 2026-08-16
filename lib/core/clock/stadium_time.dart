@@ -58,4 +58,44 @@ abstract final class StadiumTime {
     final mm = minute.toString().padLeft(2, '0');
     return '$hh:$mm';
   }
+
+  /// Africa/Khartoum is UTC+2 with no DST in this product.
+  static const khartoumUtcOffset = Duration(hours: 2);
+
+  /// Current civil time in the stadium zone (Khartoum UTC+2).
+  static DateTime stadiumCivilNow({DateTime? utcNow}) {
+    final utc = utcNow ?? DateTime.now().toUtc();
+    return utc.add(khartoumUtcOffset);
+  }
+
+  /// Formats a civil date as `yyyy-MM-dd` without timezone conversion.
+  static String toIsoDate(DateTime civil) {
+    final y = civil.year.toString().padLeft(4, '0');
+    final m = civil.month.toString().padLeft(2, '0');
+    final d = civil.day.toString().padLeft(2, '0');
+    return '$y-$m-$d';
+  }
+
+  /// Parses `yyyy-MM-dd` as a UTC calendar date (date-only arithmetic).
+  static DateTime parseIsoDate(String isoDate) {
+    final parts = isoDate.split('-');
+    if (parts.length != 3) {
+      throw FormatException('Invalid ISO date: $isoDate');
+    }
+    return DateTime.utc(
+      int.parse(parts[0]),
+      int.parse(parts[1]),
+      int.parse(parts[2]),
+    );
+  }
+
+  /// Adds [days] to a `yyyy-MM-dd` civil date.
+  static String addIsoDateDays(String isoDate, int days) {
+    return toIsoDate(parseIsoDate(isoDate).add(Duration(days: days)));
+  }
+
+  /// Today's stadium civil date as `yyyy-MM-dd`.
+  static String todayIsoDate({DateTime? utcNow}) {
+    return toIsoDate(stadiumCivilNow(utcNow: utcNow));
+  }
 }

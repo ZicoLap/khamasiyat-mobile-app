@@ -236,6 +236,202 @@
       "id": { "type": "String" }
     }
   },
+  "pitchDetailErrorTitle": "تعذر تحميل الملعب",
+  "pitchDetailErrorBody": "تحقق من اتصالك ثم أعد المحاولة.",
+  "pitchDetailShareTooltip": "مشاركة",
+  "pitchDetailShareText": "{pitch} في {stadium} — خماسيات",
+  "@pitchDetailShareText": {
+    "placeholders": {
+      "pitch": { "type": "String" },
+      "stadium": { "type": "String" }
+    }
+  },
+  "pitchDetailOutdoor": "خارجي",
+  "pitchDetailFromPrice": "من {price} / فترة",
+  "@pitchDetailFromPrice": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "pitchDetailSelectDate": "التاريخ",
+  "pitchDetailCalendarTooltip": "اختيار تاريخ",
+  "pitchDetailAvailableTimes": "الأوقات المتاحة",
+  "pitchDetailMorning": "صباح",
+  "pitchDetailAfternoon": "بعد الظهر",
+  "pitchDetailEvening": "مساء",
+  "pitchDetailNoSlots": "لا توجد أوقات متاحة في هذا التاريخ.",
+  "pitchDetailChooseAnotherDate": "اختر تاريخًا آخر",
+  "pitchDetailSlotUnavailable": "هذا الموعد لم يعد متاحًا. يُرجى اختيار وقت آخر.",
+  "pitchDetailRefreshFailed": "تعذر تحديث الأوقات.",
+  "pitchDetailSlotAvailable": "متاح",
+  "pitchDetailDurationHoursMinutes": "{hours} س و {minutes} د",
+  "@pitchDetailDurationHoursMinutes": {
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "int" }
+    }
+  },
+  "pitchDetailDurationHours": "{hours} س",
+  "@pitchDetailDurationHours": {
+    "placeholders": {
+      "hours": { "type": "int" }
+    }
+  },
+  "pitchDetailDurationMinutes": "{minutes} د",
+  "@pitchDetailDurationMinutes": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "pitchDetailTimezoneNote": "الأوقات حسب التوقيت المحلي للملعب ({timeZone}).",
+  "@pitchDetailTimezoneNote": {
+    "placeholders": {
+      "timeZone": { "type": "String" }
+    }
+  },
+  "pitchDetailContinue": "متابعة",
+  "pitchDetailBookingSuccess": "بدأ الحجز. أكمل الدفع من صفحة الحجوزات.",
+  "pitchDetailPhotoSemantic": "صورة {name}، {current} من {total}",
+  "@pitchDetailPhotoSemantic": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "pitchDetailSlotSemantic": "{start} إلى {end}",
+  "@pitchDetailSlotSemantic": {
+    "placeholders": {
+      "start": { "type": "String" },
+      "end": { "type": "String" }
+    }
+  },
+  "bookingReviewTitle": "مراجعة الحجز",
+  "bookingReviewYourBooking": "حجزك",
+  "bookingReviewCustomer": "العميل",
+  "bookingReviewNameLabel": "الاسم",
+  "bookingReviewPitchLabel": "الملعب",
+  "bookingReviewTypeLabel": "النوع",
+  "bookingReviewDateLabel": "التاريخ",
+  "bookingReviewTimeLabel": "الوقت",
+  "bookingReviewDurationLabel": "المدة",
+  "bookingReviewTotalLabel": "الإجمالي",
+  "bookingReviewPriceDetails": "تفاصيل السعر",
+  "bookingReviewPitchReservation": "حجز الملعب",
+  "bookingReviewNotReservedYet": "موعدك غير محجوز بعد.\nاضغط «احجز هذا الموعد» لحجزه مؤقتًا أثناء إكمال الدفع.",
+  "bookingReviewCheckDetails": "يرجى التحقق من تفاصيل حجزك قبل تأكيد هذا الموعد.",
+  "bookingReviewCancel": "إلغاء",
+  "bookingReviewBookSlot": "احجز هذا الموعد",
+  "bookingReservedTitle": "تم حجز الموعد مؤقتًا",
+  "bookingReservedBody": "هذا الوقت محجوز لك مؤقتًا. أكمل الدفع قبل انتهاء مدة الحجز لتأكيد حجزك.",
+  "bookingReservedHoldUntil": "الحجز ساري حتى {time}",
+  "@bookingReservedHoldUntil": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "bookingReservedContinuePayment": "متابعة إلى الدفع",
+  "bookingConflictTitle": "هذا الموعد لم يعد متاحًا.",
+  "bookingConflictBody": "حجز شخص آخر هذا الموعد أثناء مراجعتك. يُرجى اختيار وقت آخر.",
+  "bookingConflictChooseAnother": "اختر وقتًا آخر",
+  "paymentTitle": "الدفع",
+  "paymentPlaceholderTitle": "الدفع",
+  "paymentPlaceholderBody": "طرق الدفع تأتي في المرحلة التالية.",
+  "paymentBookingIdLabel": "معرّف الحجز: {id}",
+  "@paymentBookingIdLabel": {
+    "placeholders": {
+      "id": { "type": "String" }
+    }
+  },
+  "paymentHoldsUntilLabel": "الحجز حتى: {time}",
+  "@paymentHoldsUntilLabel": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "paymentStatusPendingLabel": "الحالة: {status}",
+  "@paymentStatusPendingLabel": {
+    "placeholders": {
+      "status": { "type": "String" }
+    }
+  },
+  "paymentHoldReservedTitle": "موعدك محجوز مؤقتًا",
+  "paymentHoldRemaining": "متبقي {time}",
+  "@paymentHoldRemaining": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "paymentHoldHint": "أكمل الدفع قبل انتهاء مدة الحجز.",
+  "paymentBookingSummary": "ملخص الحجز",
+  "paymentAmountLabel": "المبلغ: {amount}",
+  "@paymentAmountLabel": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "paymentChooseMethod": "اختر طريقة الدفع",
+  "paymentNoMethods": "لا تتوفر طرق دفع لهذا الملعب حاليًا.",
+  "paymentMethodCash": "نقدًا في الملعب",
+  "paymentMethodBankak": "بنكك",
+  "paymentMethodBankTransfer": "تحويل بنكي",
+  "paymentMethodLabel": "الطريقة: {method}",
+  "@paymentMethodLabel": {
+    "placeholders": {
+      "method": { "type": "String" }
+    }
+  },
+  "paymentCashInstructions": "ادفع نقدًا في الملعب وفق تعليمات المكان.",
+  "paymentAccountHolder": "اسم الحساب",
+  "paymentAccountNumber": "رقم الحساب",
+  "paymentBankName": "البنك",
+  "paymentIban": "IBAN",
+  "paymentPhoneNumber": "الهاتف",
+  "paymentReferenceLabel": "مرجع التحويل",
+  "paymentReferenceHint": "أدخل مرجع التحويل",
+  "paymentReceiptTitle": "الإيصال",
+  "paymentReceiptHint": "JPEG أو PNG أو WebP أو PDF حتى 5 ميجابايت.",
+  "paymentChooseReceipt": "اختر إيصالًا",
+  "paymentReplaceReceipt": "استبدال",
+  "paymentRemoveReceipt": "إزالة",
+  "paymentReceiptSize": "الحجم: {size}",
+  "@paymentReceiptSize": {
+    "placeholders": {
+      "size": { "type": "String" }
+    }
+  },
+  "paymentUploading": "جارٍ رفع الإيصال…",
+  "paymentSubmit": "إرسال الدفع",
+  "paymentGenericError": "حدث خطأ. يُرجى المحاولة مرة أخرى.",
+  "paymentErrorUnsupportedType": "نوع الملف غير مدعوم. استخدم JPEG أو PNG أو WebP أو PDF.",
+  "paymentErrorOversized": "الملف كبير جدًا. الحد الأقصى 5 ميجابايت.",
+  "paymentRetryLoad": "إعادة المحاولة",
+  "paymentSubmittedTitle": "تم إرسال الدفع",
+  "paymentSubmittedBody": "دفعك بانتظار تأكيد الملعب.",
+  "paymentSubmittedNotConfirmed": "الحجز غير مؤكد بعد.",
+  "paymentStatusLabel": "الحالة: {status}",
+  "@paymentStatusLabel": {
+    "placeholders": {
+      "status": { "type": "String" }
+    }
+  },
+  "paymentStatusSubmitted": "مُرسل",
+  "paymentStatusConfirmed": "مؤكد",
+  "paymentStatusRejected": "مرفوض",
+  "paymentRejectedTitle": "الدفع يحتاج إلى مراجعة",
+  "paymentRejectedBody": "رفض الملعب هذا الإيصال:\n\"{reason}\"",
+  "@paymentRejectedBody": {
+    "placeholders": {
+      "reason": { "type": "String" }
+    }
+  },
+  "paymentRejectedBodyGeneric": "رفض الملعب هذا الدفع. يُرجى المحاولة بإيصال جديد.",
+  "paymentUploadAnotherReceipt": "رفع إيصال آخر",
+  "paymentConfirmedTitle": "تم تأكيد الحجز",
+  "paymentConfirmedBody": "تم حجز ملعبك.",
+  "paymentExpiredTitle": "انتهت مدة الحجز",
+  "paymentExpiredBody": "هذا الموعد لم يعد محجوزًا.",
+  "paymentExpiredChooseAnother": "اختر وقتًا آخر",
   "bookingsPlaceholderTitle": "حجوزاتك",
   "bookingsPlaceholderBody": "سجل الحجوزات والمباريات القادمة سيظهر هنا قريبًا.",
   "profilePlaceholderTitle": "حسابك",

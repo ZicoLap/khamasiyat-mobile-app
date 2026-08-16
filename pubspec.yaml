@@ -38,6 +38,7 @@ dependencies:
   # Testable clock
   clock: ^1.1.2
   url_launcher: ^6.3.2
+  file_picker: ^11.0.3
 
 dev_dependencies:
   flutter_test:

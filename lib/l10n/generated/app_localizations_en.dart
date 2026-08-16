@@ -525,6 +525,345 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get pitchDetailErrorTitle => 'Couldn\'t load pitch';
+
+  @override
+  String get pitchDetailErrorBody => 'Check your connection and try again.';
+
+  @override
+  String get pitchDetailShareTooltip => 'Share';
+
+  @override
+  String pitchDetailShareText(String pitch, String stadium) {
+    return '$pitch at $stadium — Khamasiyat';
+  }
+
+  @override
+  String get pitchDetailOutdoor => 'Outdoor';
+
+  @override
+  String pitchDetailFromPrice(String price) {
+    return 'From $price / slot';
+  }
+
+  @override
+  String get pitchDetailSelectDate => 'Date';
+
+  @override
+  String get pitchDetailCalendarTooltip => 'Choose date';
+
+  @override
+  String get pitchDetailAvailableTimes => 'Available times';
+
+  @override
+  String get pitchDetailMorning => 'Morning';
+
+  @override
+  String get pitchDetailAfternoon => 'Afternoon';
+
+  @override
+  String get pitchDetailEvening => 'Evening';
+
+  @override
+  String get pitchDetailNoSlots => 'No available times for this date.';
+
+  @override
+  String get pitchDetailChooseAnotherDate => 'Choose another date';
+
+  @override
+  String get pitchDetailSlotUnavailable => 'This time is no longer available. Please choose another slot.';
+
+  @override
+  String get pitchDetailRefreshFailed => 'Couldn\'t refresh times.';
+
+  @override
+  String get pitchDetailSlotAvailable => 'Available';
+
+  @override
+  String pitchDetailDurationHoursMinutes(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String pitchDetailDurationHours(int hours) {
+    return '${hours}h';
+  }
+
+  @override
+  String pitchDetailDurationMinutes(int minutes) {
+    return '${minutes}m';
+  }
+
+  @override
+  String pitchDetailTimezoneNote(String timeZone) {
+    return 'Times are shown in stadium local time ($timeZone).';
+  }
+
+  @override
+  String get pitchDetailContinue => 'Continue';
+
+  @override
+  String get pitchDetailBookingSuccess => 'Booking started. Complete payment from Bookings.';
+
+  @override
+  String pitchDetailPhotoSemantic(String name, int current, int total) {
+    return 'Photo of $name, $current of $total';
+  }
+
+  @override
+  String pitchDetailSlotSemantic(String start, String end) {
+    return '$start to $end';
+  }
+
+  @override
+  String get bookingReviewTitle => 'Review booking';
+
+  @override
+  String get bookingReviewYourBooking => 'Your booking';
+
+  @override
+  String get bookingReviewCustomer => 'Customer';
+
+  @override
+  String get bookingReviewNameLabel => 'Name';
+
+  @override
+  String get bookingReviewPitchLabel => 'Pitch';
+
+  @override
+  String get bookingReviewTypeLabel => 'Type';
+
+  @override
+  String get bookingReviewDateLabel => 'Date';
+
+  @override
+  String get bookingReviewTimeLabel => 'Time';
+
+  @override
+  String get bookingReviewDurationLabel => 'Duration';
+
+  @override
+  String get bookingReviewTotalLabel => 'Total';
+
+  @override
+  String get bookingReviewPriceDetails => 'Price details';
+
+  @override
+  String get bookingReviewPitchReservation => 'Pitch reservation';
+
+  @override
+  String get bookingReviewNotReservedYet => 'Your slot isn\'t reserved yet.\nTap Book this slot to reserve it while you complete payment.';
+
+  @override
+  String get bookingReviewCheckDetails => 'Please check your booking details before confirming this slot.';
+
+  @override
+  String get bookingReviewCancel => 'Cancel';
+
+  @override
+  String get bookingReviewBookSlot => 'Book this slot';
+
+  @override
+  String get bookingReservedTitle => 'Slot reserved';
+
+  @override
+  String get bookingReservedBody => 'This time is temporarily reserved for you. Complete your payment before the reservation expires to confirm your booking.';
+
+  @override
+  String bookingReservedHoldUntil(String time) {
+    return 'Reservation held until $time';
+  }
+
+  @override
+  String get bookingReservedContinuePayment => 'Continue to payment';
+
+  @override
+  String get bookingConflictTitle => 'This time is no longer available.';
+
+  @override
+  String get bookingConflictBody => 'Someone else booked this slot while you were reviewing your booking. Please choose another time.';
+
+  @override
+  String get bookingConflictChooseAnother => 'Choose another time';
+
+  @override
+  String get paymentTitle => 'Payment';
+
+  @override
+  String get paymentPlaceholderTitle => 'Payment';
+
+  @override
+  String get paymentPlaceholderBody => 'Payment methods arrive in the next phase.';
+
+  @override
+  String paymentBookingIdLabel(String id) {
+    return 'Booking ID: $id';
+  }
+
+  @override
+  String paymentHoldsUntilLabel(String time) {
+    return 'Hold until: $time';
+  }
+
+  @override
+  String paymentStatusPendingLabel(String status) {
+    return 'Status: $status';
+  }
+
+  @override
+  String get paymentHoldReservedTitle => 'Your slot is reserved';
+
+  @override
+  String paymentHoldRemaining(String time) {
+    return '$time remaining';
+  }
+
+  @override
+  String get paymentHoldHint => 'Complete your payment before the reservation expires.';
+
+  @override
+  String get paymentBookingSummary => 'Booking summary';
+
+  @override
+  String paymentAmountLabel(String amount) {
+    return 'Amount: $amount';
+  }
+
+  @override
+  String get paymentChooseMethod => 'Choose a payment method';
+
+  @override
+  String get paymentNoMethods => 'No payment methods are available for this stadium right now.';
+
+  @override
+  String get paymentMethodCash => 'Cash at stadium';
+
+  @override
+  String get paymentMethodBankak => 'Bankak';
+
+  @override
+  String get paymentMethodBankTransfer => 'Bank transfer';
+
+  @override
+  String paymentMethodLabel(String method) {
+    return 'Method: $method';
+  }
+
+  @override
+  String get paymentCashInstructions => 'Pay in cash at the stadium according to the venue instructions.';
+
+  @override
+  String get paymentAccountHolder => 'Account holder';
+
+  @override
+  String get paymentAccountNumber => 'Account number';
+
+  @override
+  String get paymentBankName => 'Bank';
+
+  @override
+  String get paymentIban => 'IBAN';
+
+  @override
+  String get paymentPhoneNumber => 'Phone';
+
+  @override
+  String get paymentReferenceLabel => 'Transaction reference';
+
+  @override
+  String get paymentReferenceHint => 'Enter the transfer reference';
+
+  @override
+  String get paymentReceiptTitle => 'Receipt';
+
+  @override
+  String get paymentReceiptHint => 'JPEG, PNG, WebP, or PDF up to 5 MB.';
+
+  @override
+  String get paymentChooseReceipt => 'Choose receipt';
+
+  @override
+  String get paymentReplaceReceipt => 'Replace';
+
+  @override
+  String get paymentRemoveReceipt => 'Remove';
+
+  @override
+  String paymentReceiptSize(String size) {
+    return 'Size: $size';
+  }
+
+  @override
+  String get paymentUploading => 'Uploading receipt…';
+
+  @override
+  String get paymentSubmit => 'Submit payment';
+
+  @override
+  String get paymentGenericError => 'Something went wrong. Please try again.';
+
+  @override
+  String get paymentErrorUnsupportedType => 'This file type is not supported. Use JPEG, PNG, WebP, or PDF.';
+
+  @override
+  String get paymentErrorOversized => 'This file is too large. Maximum size is 5 MB.';
+
+  @override
+  String get paymentRetryLoad => 'Try again';
+
+  @override
+  String get paymentSubmittedTitle => 'Payment submitted';
+
+  @override
+  String get paymentSubmittedBody => 'Your payment is waiting for stadium confirmation.';
+
+  @override
+  String get paymentSubmittedNotConfirmed => 'The booking is not yet confirmed.';
+
+  @override
+  String paymentStatusLabel(String status) {
+    return 'Status: $status';
+  }
+
+  @override
+  String get paymentStatusSubmitted => 'Submitted';
+
+  @override
+  String get paymentStatusConfirmed => 'Confirmed';
+
+  @override
+  String get paymentStatusRejected => 'Rejected';
+
+  @override
+  String get paymentRejectedTitle => 'Payment needs attention';
+
+  @override
+  String paymentRejectedBody(String reason) {
+    return 'The stadium rejected this receipt:\n\"$reason\"';
+  }
+
+  @override
+  String get paymentRejectedBodyGeneric => 'The stadium rejected this payment. Please try again with a new receipt.';
+
+  @override
+  String get paymentUploadAnotherReceipt => 'Upload another receipt';
+
+  @override
+  String get paymentConfirmedTitle => 'Booking confirmed';
+
+  @override
+  String get paymentConfirmedBody => 'Your pitch is booked.';
+
+  @override
+  String get paymentExpiredTitle => 'Reservation expired';
+
+  @override
+  String get paymentExpiredBody => 'This slot is no longer reserved.';
+
+  @override
+  String get paymentExpiredChooseAnother => 'Choose another time';
+
+  @override
   String get bookingsPlaceholderTitle => 'Your bookings';
 
   @override

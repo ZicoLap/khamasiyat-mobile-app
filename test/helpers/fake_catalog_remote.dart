@@ -1,4 +1,5 @@
 import 'package:khamasiyat_mobile_app/features/catalog/data/catalog_api.dart';
+import 'package:khamasiyat_mobile_app/features/catalog/domain/pitch_detail_models.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/domain/stadium_detail_models.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/domain/stadium_models.dart';
 import 'package:khamasiyat_mobile_app/shared/geo/sudan_locations.dart';
@@ -7,8 +8,10 @@ class FakeCatalogRemote implements CatalogRemoteSource {
   FakeCatalogRemote({
     this.pages = const {},
     this.stadiumById = const {},
+    this.pitchById = const {},
     this.failWith,
     this.failDetailWith,
+    this.failPitchWith,
     this.delay = Duration.zero,
   });
 
@@ -18,11 +21,15 @@ class FakeCatalogRemote implements CatalogRemoteSource {
   /// stadiumId → detail
   Map<String, StadiumDetail> stadiumById;
 
+  Map<String, PitchDetail> pitchById;
+
   Object? failWith;
   Object? failDetailWith;
+  Object? failPitchWith;
   Duration delay;
   final List<Map<String, dynamic>> requests = [];
   final List<String> detailRequests = [];
+  final List<String> pitchRequests = [];
   var inFlight = 0;
 
   @override
@@ -67,6 +74,22 @@ class FakeCatalogRemote implements CatalogRemoteSource {
       throw Exception('Stadium not found: $stadiumId');
     }
     return detail;
+  }
+
+  @override
+  Future<PitchDetail> getPitch(String pitchId) async {
+    pitchRequests.add(pitchId);
+    if (delay > Duration.zero) {
+      await Future<void>.delayed(delay);
+    }
+    if (failPitchWith != null) {
+      throw failPitchWith!;
+    }
+    final pitch = pitchById[pitchId];
+    if (pitch == null) {
+      throw Exception('Pitch not found: $pitchId');
+    }
+    return pitch;
   }
 }
 
@@ -164,3 +187,37 @@ StadiumDetail sampleStadiumDetail({
         ],
   );
 }
+
+PitchDetail samplePitchDetail({
+  String id = 'p1',
+  String name = 'Pitch A',
+  List<String> photoUrls = const [],
+}) {
+  return PitchDetail(
+    id: id,
+    name: name,
+    type: PitchType.fiveASide,
+    surfaceType: SurfaceType.artificialTurf,
+    isIndoor: false,
+    hasRoof: true,
+    lengthMeters: 40,
+    widthMeters: 20,
+    photos: [
+      for (var i = 0; i < photoUrls.length; i++)
+        PitchPhotoItem(
+          id: 'ph$i',
+          url: photoUrls[i],
+          displayOrder: i,
+          isPrimary: i == 0,
+        ),
+    ],
+    stadium: const PitchStadiumSummary(
+      id: 's1',
+      name: 'Al-Nile Stadium',
+      state: SudanState.khartoum,
+      city: SudanCity.khartoumCity,
+      timeZone: 'Africa/Khartoum',
+    ),
+  );
+}
+

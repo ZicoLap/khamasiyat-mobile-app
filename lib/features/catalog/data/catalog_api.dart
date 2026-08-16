@@ -1,4 +1,5 @@
 import 'package:khamasiyat_mobile_app/core/network/api_client.dart';
+import 'package:khamasiyat_mobile_app/features/catalog/domain/pitch_detail_models.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/domain/stadium_detail_models.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/domain/stadium_models.dart';
 
@@ -10,6 +11,8 @@ abstract class CatalogRemoteSource {
   });
 
   Future<StadiumDetail> getStadium(String stadiumId);
+
+  Future<PitchDetail> getPitch(String pitchId);
 }
 
 class CatalogApi implements CatalogRemoteSource {
@@ -37,6 +40,16 @@ class CatalogApi implements CatalogRemoteSource {
     return _client.get(
       '/stadiums/$stadiumId',
       fromJson: (json) => StadiumDetail.fromJson(
+        Map<String, dynamic>.from(json! as Map),
+      ),
+    );
+  }
+
+  @override
+  Future<PitchDetail> getPitch(String pitchId) {
+    return _client.get(
+      '/pitches/$pitchId',
+      fromJson: (json) => PitchDetail.fromJson(
         Map<String, dynamic>.from(json! as Map),
       ),
     );

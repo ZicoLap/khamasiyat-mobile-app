@@ -26,7 +26,8 @@ fake catalog remote (`test/helpers/fake_catalog_remote.dart`) with optional
 `ImageProvider` hook (`StadiumPhoto.debugImageProviderForUrl`) — not production
 data.
 
-F2.2 visual approval frames: [`docs/f2.2-visual-review/`](f2.2-visual-review/).
+Home visual approval frames: [`docs/f2.3.1-visual-review/`](f2.3.1-visual-review/).
+Filter-sheet frames: [`docs/f2.2-visual-review/`](f2.2-visual-review/).
 
 Recommended backend follow-up (outside this mobile phase): ensure seed/demo
 stadiums include at least one primary photo URL so device smoke screenshots

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:khamasiyat_mobile_app/core/network/api_client.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/data/catalog_api.dart';
+import 'package:khamasiyat_mobile_app/features/catalog/domain/pitch_detail_models.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/domain/stadium_detail_models.dart';
 import 'package:khamasiyat_mobile_app/features/catalog/domain/stadium_models.dart';
 
@@ -23,6 +24,10 @@ class CatalogRepository {
 
   Future<StadiumDetail> getStadium(String stadiumId) {
     return _remote.getStadium(stadiumId);
+  }
+
+  Future<PitchDetail> getPitch(String pitchId) {
+    return _remote.getPitch(pitchId);
   }
 }
 

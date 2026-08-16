@@ -239,6 +239,202 @@
       "id": { "type": "String" }
     }
   },
+  "pitchDetailErrorTitle": "Couldn't load pitch",
+  "pitchDetailErrorBody": "Check your connection and try again.",
+  "pitchDetailShareTooltip": "Share",
+  "pitchDetailShareText": "{pitch} at {stadium} — Khamasiyat",
+  "@pitchDetailShareText": {
+    "placeholders": {
+      "pitch": { "type": "String" },
+      "stadium": { "type": "String" }
+    }
+  },
+  "pitchDetailOutdoor": "Outdoor",
+  "pitchDetailFromPrice": "From {price} / slot",
+  "@pitchDetailFromPrice": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "pitchDetailSelectDate": "Date",
+  "pitchDetailCalendarTooltip": "Choose date",
+  "pitchDetailAvailableTimes": "Available times",
+  "pitchDetailMorning": "Morning",
+  "pitchDetailAfternoon": "Afternoon",
+  "pitchDetailEvening": "Evening",
+  "pitchDetailNoSlots": "No available times for this date.",
+  "pitchDetailChooseAnotherDate": "Choose another date",
+  "pitchDetailSlotUnavailable": "This time is no longer available. Please choose another slot.",
+  "pitchDetailRefreshFailed": "Couldn't refresh times.",
+  "pitchDetailSlotAvailable": "Available",
+  "pitchDetailDurationHoursMinutes": "{hours}h {minutes}m",
+  "@pitchDetailDurationHoursMinutes": {
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "int" }
+    }
+  },
+  "pitchDetailDurationHours": "{hours}h",
+  "@pitchDetailDurationHours": {
+    "placeholders": {
+      "hours": { "type": "int" }
+    }
+  },
+  "pitchDetailDurationMinutes": "{minutes}m",
+  "@pitchDetailDurationMinutes": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "pitchDetailTimezoneNote": "Times are shown in stadium local time ({timeZone}).",
+  "@pitchDetailTimezoneNote": {
+    "placeholders": {
+      "timeZone": { "type": "String" }
+    }
+  },
+  "pitchDetailContinue": "Continue",
+  "pitchDetailBookingSuccess": "Booking started. Complete payment from Bookings.",
+  "pitchDetailPhotoSemantic": "Photo of {name}, {current} of {total}",
+  "@pitchDetailPhotoSemantic": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "pitchDetailSlotSemantic": "{start} to {end}",
+  "@pitchDetailSlotSemantic": {
+    "placeholders": {
+      "start": { "type": "String" },
+      "end": { "type": "String" }
+    }
+  },
+  "bookingReviewTitle": "Review booking",
+  "bookingReviewYourBooking": "Your booking",
+  "bookingReviewCustomer": "Customer",
+  "bookingReviewNameLabel": "Name",
+  "bookingReviewPitchLabel": "Pitch",
+  "bookingReviewTypeLabel": "Type",
+  "bookingReviewDateLabel": "Date",
+  "bookingReviewTimeLabel": "Time",
+  "bookingReviewDurationLabel": "Duration",
+  "bookingReviewTotalLabel": "Total",
+  "bookingReviewPriceDetails": "Price details",
+  "bookingReviewPitchReservation": "Pitch reservation",
+  "bookingReviewNotReservedYet": "Your slot isn't reserved yet.\nTap Book this slot to reserve it while you complete payment.",
+  "bookingReviewCheckDetails": "Please check your booking details before confirming this slot.",
+  "bookingReviewCancel": "Cancel",
+  "bookingReviewBookSlot": "Book this slot",
+  "bookingReservedTitle": "Slot reserved",
+  "bookingReservedBody": "This time is temporarily reserved for you. Complete your payment before the reservation expires to confirm your booking.",
+  "bookingReservedHoldUntil": "Reservation held until {time}",
+  "@bookingReservedHoldUntil": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "bookingReservedContinuePayment": "Continue to payment",
+  "bookingConflictTitle": "This time is no longer available.",
+  "bookingConflictBody": "Someone else booked this slot while you were reviewing your booking. Please choose another time.",
+  "bookingConflictChooseAnother": "Choose another time",
+  "paymentTitle": "Payment",
+  "paymentPlaceholderTitle": "Payment",
+  "paymentPlaceholderBody": "Payment methods arrive in the next phase.",
+  "paymentBookingIdLabel": "Booking ID: {id}",
+  "@paymentBookingIdLabel": {
+    "placeholders": {
+      "id": { "type": "String" }
+    }
+  },
+  "paymentHoldsUntilLabel": "Hold until: {time}",
+  "@paymentHoldsUntilLabel": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "paymentStatusPendingLabel": "Status: {status}",
+  "@paymentStatusPendingLabel": {
+    "placeholders": {
+      "status": { "type": "String" }
+    }
+  },
+  "paymentHoldReservedTitle": "Your slot is reserved",
+  "paymentHoldRemaining": "{time} remaining",
+  "@paymentHoldRemaining": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "paymentHoldHint": "Complete your payment before the reservation expires.",
+  "paymentBookingSummary": "Booking summary",
+  "paymentAmountLabel": "Amount: {amount}",
+  "@paymentAmountLabel": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "paymentChooseMethod": "Choose a payment method",
+  "paymentNoMethods": "No payment methods are available for this stadium right now.",
+  "paymentMethodCash": "Cash at stadium",
+  "paymentMethodBankak": "Bankak",
+  "paymentMethodBankTransfer": "Bank transfer",
+  "paymentMethodLabel": "Method: {method}",
+  "@paymentMethodLabel": {
+    "placeholders": {
+      "method": { "type": "String" }
+    }
+  },
+  "paymentCashInstructions": "Pay in cash at the stadium according to the venue instructions.",
+  "paymentAccountHolder": "Account holder",
+  "paymentAccountNumber": "Account number",
+  "paymentBankName": "Bank",
+  "paymentIban": "IBAN",
+  "paymentPhoneNumber": "Phone",
+  "paymentReferenceLabel": "Transaction reference",
+  "paymentReferenceHint": "Enter the transfer reference",
+  "paymentReceiptTitle": "Receipt",
+  "paymentReceiptHint": "JPEG, PNG, WebP, or PDF up to 5 MB.",
+  "paymentChooseReceipt": "Choose receipt",
+  "paymentReplaceReceipt": "Replace",
+  "paymentRemoveReceipt": "Remove",
+  "paymentReceiptSize": "Size: {size}",
+  "@paymentReceiptSize": {
+    "placeholders": {
+      "size": { "type": "String" }
+    }
+  },
+  "paymentUploading": "Uploading receipt…",
+  "paymentSubmit": "Submit payment",
+  "paymentGenericError": "Something went wrong. Please try again.",
+  "paymentErrorUnsupportedType": "This file type is not supported. Use JPEG, PNG, WebP, or PDF.",
+  "paymentErrorOversized": "This file is too large. Maximum size is 5 MB.",
+  "paymentRetryLoad": "Try again",
+  "paymentSubmittedTitle": "Payment submitted",
+  "paymentSubmittedBody": "Your payment is waiting for stadium confirmation.",
+  "paymentSubmittedNotConfirmed": "The booking is not yet confirmed.",
+  "paymentStatusLabel": "Status: {status}",
+  "@paymentStatusLabel": {
+    "placeholders": {
+      "status": { "type": "String" }
+    }
+  },
+  "paymentStatusSubmitted": "Submitted",
+  "paymentStatusConfirmed": "Confirmed",
+  "paymentStatusRejected": "Rejected",
+  "paymentRejectedTitle": "Payment needs attention",
+  "paymentRejectedBody": "The stadium rejected this receipt:\n\"{reason}\"",
+  "@paymentRejectedBody": {
+    "placeholders": {
+      "reason": { "type": "String" }
+    }
+  },
+  "paymentRejectedBodyGeneric": "The stadium rejected this payment. Please try again with a new receipt.",
+  "paymentUploadAnotherReceipt": "Upload another receipt",
+  "paymentConfirmedTitle": "Booking confirmed",
+  "paymentConfirmedBody": "Your pitch is booked.",
+  "paymentExpiredTitle": "Reservation expired",
+  "paymentExpiredBody": "This slot is no longer reserved.",
+  "paymentExpiredChooseAnother": "Choose another time",
   "bookingsPlaceholderTitle": "Your bookings",
   "bookingsPlaceholderBody": "Booking history and upcoming matches will appear here soon.",
   "profilePlaceholderTitle": "Your profile",

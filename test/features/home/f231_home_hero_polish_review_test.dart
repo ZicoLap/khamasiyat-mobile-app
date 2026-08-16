@@ -13,8 +13,10 @@ import 'package:khamasiyat_mobile_app/features/home/presentation/home_screen.dar
 import '../../helpers/fake_catalog_remote.dart';
 import '../../helpers/solid_color_image.dart';
 
-/// F2.3.1 visual review — regenerate with:
+/// F2.3.1 Home hero visual review — regenerate with:
 /// `flutter test --update-goldens test/features/home/f231_home_hero_polish_review_test.dart`
+///
+/// Current production [HomeHero] is the source of truth. F2.3 snapshots were retired.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 

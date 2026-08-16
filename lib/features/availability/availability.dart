@@ -1,2 +1,2 @@
-/// Placeholder — pitch availability feature.
+/// Public pitch availability (`GET /pitches/:id/availability`).
 library;
