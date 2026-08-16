@@ -1,221 +1,390 @@
-# Khamasiyat Customer Mobile App
+# Khamasiyat Customer App — Simple Setup Guide
 
-Flutter customer application for Khamasiyat (stadium pitch booking).
+Welcome. This guide is for people who are **not** software developers.
 
-**Phase:** F2.2 - Customer App Visual Redesign (architecture from F2/F2.1 preserved).
+It explains, step by step, how to:
 
-## Toolchain
+1. Download this project safely from GitHub  
+2. Install the free tools you need  
+3. Run the Khamasiyat mobile app on a Windows computer (Android)
 
-Recorded during F0 setup:
+Please follow the steps **in order**. Do not skip steps.
 
-- Flutter **3.29.3** (stable)
-- Dart **3.7.2**
+---
 
-## Architecture
+## What is this project?
 
-Feature-first layout with clear presentation / domain / data boundaries.
+**Khamasiyat** is a mobile app for customers to browse stadiums, choose a pitch time, book a slot, and pay.
+
+This folder is the **source code** of the customer app (built with Flutter).
+
+That means:
+
+- You are **not** installing a finished app from the Play Store.
+- You are downloading the project and running it in **developer / test mode** on your computer.
+
+---
+
+## Before you start — what you need
+
+| Item | Notes |
+|------|--------|
+| A Windows computer | Windows 10 or 11 is best |
+| Internet connection | Needed for downloads and first setup |
+| About **15–30 GB** free disk space | Android tools are large |
+| Time | First setup can take **1–2 hours** |
+| Patience | The first install is the hard part; later runs are faster |
+
+### Important honesty check
+
+This app talks to a **backend server** (API).
+
+- If the server is **not running**, the app may open but login / stadiums / booking will fail.
+- If you only received this mobile project, ask the person who shared it for:
+  - the server address, **or**
+  - help starting the backend
+
+You can still complete install and launch steps below.
+
+---
+
+## Safety rules (please read)
+
+Follow these to stay safe:
+
+1. **Download only from the official GitHub link** below.  
+2. **Do not** download Flutter, Android Studio, or Git from random websites or ads.  
+3. **Do not** enter real bank passwords into unknown copies of this project.  
+4. Use this for **testing** unless your team tells you otherwise.  
+5. If Windows asks “Allow this app to make changes?”, only click **Yes** for software you intentionally installed (Android Studio, Flutter).  
+6. Never share your GitHub password in chat, screenshots, or email.
+
+**Official project page:**
+
+https://github.com/ZicoLap/khamasiyat-mobile-app
+
+If the page does not look like GitHub, or the address is different, stop and ask for help.
+
+---
+
+## Step 1 — Download the project from GitHub (easiest way)
+
+You do **not** need to know Git for this method.
+
+1. Open this link in your browser:  
+   https://github.com/ZicoLap/khamasiyat-mobile-app
+2. Click the green **Code** button.
+3. Click **Download ZIP**.
+4. Wait until the ZIP file finishes downloading.
+5. Open your **Downloads** folder.
+6. Right-click the ZIP file → **Extract All…** → choose a simple place, for example:
+
+   `C:\Users\YOUR_NAME\Desktop\Khamasiyat`
+
+7. Open the extracted folder until you see files like:
+   - `README.md` (this file)
+   - `pubspec.yaml`
+   - folders named `lib`, `android`, `config`
+
+**Tip:** Avoid putting the project in folders with Arabic characters or spaces if you can.  
+A path like `C:\Khamasiyat\khamasiyat-mobile-app` is safer.
+
+---
+
+## Step 2 — Install Git (recommended)
+
+Git is a free tool. Some Flutter tools work better when Git is installed.
+
+1. Open: https://git-scm.com/download/win  
+2. Download the Windows installer.  
+3. Run it.  
+4. Keep clicking **Next** (default options are fine).  
+5. Finish the install.  
+6. Restart your computer if asked.
+
+---
+
+## Step 3 — Install Android Studio
+
+Android Studio is free. It includes the Android tools and an optional phone simulator.
+
+1. Open: https://developer.android.com/studio  
+2. Download **Android Studio**.  
+3. Install it (default options are fine).  
+4. Open Android Studio for the first time.  
+5. Complete the setup wizard and let it download components.  
+6. When finished, leave Android Studio installed (you will use it again).
+
+### Create a virtual phone (emulator)
+
+1. In Android Studio, open **Device Manager** (phone icon / More Actions).  
+2. Click **Create device** (or Create Virtual Device).  
+3. Choose a modern phone, for example **Pixel 6**.  
+4. Download a system image if asked (choose a recent one).  
+5. Finish and click **Finish**.
+
+You now have a virtual Android phone on your computer.
+
+---
+
+## Step 4 — Install Flutter
+
+Flutter is the free toolkit this app is built with.
+
+1. Open: https://docs.flutter.dev/get-started/install/windows  
+2. Follow the official Windows install page carefully.  
+3. Download the Flutter SDK ZIP.  
+4. Extract it to a simple folder, for example:
+
+   `C:\flutter`
+
+5. Add Flutter to your PATH (the Flutter install page explains this).  
+6. Close **all** open terminals / Command Prompt windows.  
+7. Open a **new** Command Prompt or PowerShell.  
+8. Type this command and press Enter:
 
 ```text
-lib/
-  app/                 # bootstrap, router, theme, localization
-  core/                # config, network, auth session, storage, errors, clock
-  features/            # auth, catalog, availability, bookings, payments, profile, recurring (+ smoke)
-  shared/              # formatting, validation, shared widgets
-  l10n/                # ARB source files
-  main.dart
+flutter doctor
 ```
 
-See also [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+9. Read the report.
+10. Fix anything marked with an **X** (Flutter doctor often tells you what to install next).
+11. Run again until Android tooling looks mostly OK:
 
-### State management and DI
-
-- **flutter_riverpod** - root `ProviderScope` in `lib/app/bootstrap/bootstrap.dart`
-- Providers live next to the infrastructure they expose (`appConfigProvider`, `apiClientProvider`, `tokenStoreProvider`, `goRouterProvider`, ...)
-
-### Navigation
-
-- **go_router** - `lib/app/router/app_router.dart`
-- F0 route: `/` (smoke screen)
-- Ready for F1+: auth redirects, deep links, authenticated shells (not implemented yet)
-
-### Networking
-
-- **dio** via centralized `ApiClient` (`lib/core/network/api_client.dart`)
-- Base path: `{API_BASE_URL}/api/v1`
-- Bearer token injection (`AuthInterceptor`)
-- `X-Request-Id` on requests
-- Central timeouts from `AppConfig`
-- Envelope unwrapping + error mapping so repositories never re-parse responses
-- Dev logging redacts `Authorization` and other sensitive headers
-- Production builds force network logging **off**
-
-### API envelope
-
-Success:
-
-```json
-{ "success": true, "data": {} }
+```text
+flutter doctor
 ```
 
-Error:
+Common required items:
 
-```json
-{
-  "success": false,
-  "error": {
-    "code": "...",
-    "message": "...",
-    "details": {},
-    "requestId": "..."
-  }
-}
+- Flutter SDK  
+- Android toolchain  
+- Android Studio  
+- Windows version of Chrome (optional for web; not required for this Android guide)
+
+---
+
+## Step 5 — Accept Android licenses (one-time)
+
+In Command Prompt / PowerShell, run:
+
+```text
+flutter doctor --android-licenses
 ```
 
-Use `ApiEnvelope.unwrap` / `ApiClient` only. Preserve `error.code` and `requestId` via `ApiException`.
+When asked, type `y` and press Enter for each license until finished.
 
-### Secure storage
+---
 
-- `TokenStore` + `SecureTokenStore` (`flutter_secure_storage`)
-- Stores access + refresh tokens; `clearSession()` wipes both
-- Tokens are **not** stored in SharedPreferences
-- `InMemoryTokenStore` is for tests only
+## Step 6 — Prepare the project on your computer
 
-### Token refresh (deferred to F1)
+1. Open Command Prompt or PowerShell.  
+2. Go into the project folder. Example:
 
-Extension point: `AuthInterceptor` / sibling refresh interceptor. See comments in
-`lib/core/network/auth_interceptor.dart`. Do not put refresh logic in repositories.
+```text
+cd C:\Users\YOUR_NAME\Desktop\Khamasiyat\khamasiyat-mobile-app-main
+```
 
-### Time handling
+(Use your real extracted folder name. Sometimes GitHub adds `-main` at the end.)
 
-See `lib/core/clock/stadium_time.dart`:
+3. Download project packages:
 
-- Absolute ISO-8601 instants -> UTC
-- Wall-clock `HH:mm` / local booking dates -> stadium civil time (commonly `Africa/Khartoum`)
-- Never treat stadium wall-clock values as UTC device-local conversions
+```text
+flutter pub get
+```
 
-## Environment configuration
+Wait until it finishes without red error text.
 
-Compile-time defines (or `--dart-define-from-file`):
+---
 
-| Define | Purpose | Default |
-|--------|---------|---------|
-| `ENV` | `development` / `staging` / `production` | `development` |
-| `API_BASE_URL` | Backend origin (no `/api/v1`) | env-specific default |
-| `ENABLE_NETWORK_LOGGING` | Dio request logs | `true` in development only; forced `false` in production |
+## Step 7 — Start the virtual phone
 
-Example files under `config/`:
+1. Open Android Studio.  
+2. Open **Device Manager**.  
+3. Click the **Play** button next to your virtual phone.  
+4. Wait until the virtual phone home screen appears.
 
-- `config/development.json`
-- `config/staging.json`
-- `config/production.json`
-- `config/local.json.example` -> copy to `config/local.json` (gitignored)
+**Keep the virtual phone running** while you start the app.
 
-### Launch commands
+---
 
-**Development (Android emulator -> NestJS on host):**
+## Step 8 — Run the Khamasiyat app
 
-```bash
+In the same project folder in Command Prompt / PowerShell, run:
+
+```text
+flutter devices
+```
+
+You should see your emulator listed.
+
+Then run:
+
+```text
 flutter run --dart-define-from-file=config/development.json
 ```
 
-Default API origin: `http://10.0.2.2:3000` -> `/api/v1`.
+What happens next:
 
-Debug Android builds allow cleartext HTTP for local NestJS.
+1. Flutter builds the app (first time can take **many minutes**).  
+2. The app installs on the virtual phone.  
+3. The Khamasiyat login / splash screen should appear.
 
-**iOS simulator:**
+### How to stop the app later
 
-```bash
-flutter run --dart-define-from-file=config/development.json --dart-define=API_BASE_URL=http://127.0.0.1:3000
-```
+In the terminal where the app is running:
 
-**Physical device (LAN IP - do not commit personal IPs):**
+- Press `q` to quit  
+  or  
+- Close the terminal window
 
-```bash
+---
+
+## Step 9 — Using a real Android phone (optional)
+
+If you prefer a real phone instead of the emulator:
+
+1. On your phone, enable **Developer options** and **USB debugging**  
+   (search Google for “enable USB debugging” + your phone brand).  
+2. Connect the phone with a USB cable.  
+3. Allow the computer when the phone asks.  
+4. Run:
+
+```text
+flutter devices
 flutter run --dart-define-from-file=config/local.json
 ```
 
-**Staging / production:**
+For a real phone, `config/local.json` must point to a server address your phone can reach on Wi‑Fi.
 
-```bash
-flutter run --dart-define-from-file=config/staging.json
-flutter run --release --dart-define-from-file=config/production.json
+Ask a technical teammate for the correct `API_BASE_URL` before doing this.
+
+---
+
+## About the server (why login might fail)
+
+This mobile app needs a working backend.
+
+Default development setting (Android emulator):
+
+- Server address: `http://10.0.2.2:3000`
+
+That special address means: “the computer running the emulator.”
+
+So for full testing you usually need:
+
+1. The **Khamasiyat server** running on your computer, **and**  
+2. This mobile app running on the emulator
+
+If you do not have the server:
+
+- The app may still open.  
+- Features that need internet data (login, stadiums, booking, payment) may show errors.
+
+That is expected. Ask your team for the backend setup instructions.
+
+---
+
+## Common problems and easy fixes
+
+### “flutter is not recognized”
+
+- Flutter is not in PATH, or you did not open a **new** terminal after installing.  
+- Close the terminal, open a new one, try again.  
+- Re-check the Flutter Windows install guide.
+
+### “No devices found”
+
+- Start the Android emulator first.  
+- Wait until the virtual phone fully boots.  
+- Run `flutter devices` again.
+
+### Build takes forever / computer is slow
+
+- First build is normal to be slow.  
+- Close other heavy apps.  
+- Leave the computer alone until it finishes.
+
+### App opens but cannot log in / no stadiums
+
+- Backend server is probably not running, or the API address is wrong.  
+- Ask a teammate to confirm the server is up.
+
+### Antivirus / Windows Defender warnings
+
+- Prefer official downloads only.  
+- If a warning appears for Android Studio or Flutter from official sites, it is usually a normal installer prompt.  
+- If unsure, pause and ask a technical person.
+
+### “Permission denied” or strange path errors
+
+- Move the project to a simple English path like `C:\Khamasiyat\app`.  
+- Avoid OneDrive-synced folders if they cause file lock issues.
+
+### ZIP folder name ends with `-main`
+
+That is normal. Use that folder as your project folder.
+
+---
+
+## What success looks like
+
+You are done with the basic setup when:
+
+1. `flutter doctor` looks mostly healthy  
+2. An Android emulator (or phone) is visible in `flutter devices`  
+3. `flutter run --dart-define-from-file=config/development.json` launches the app  
+4. You can see the Khamasiyat screens on the phone/emulator  
+
+If login and stadium lists also work, the backend is connected successfully.
+
+---
+
+## Safe daily habit after setup
+
+Next time you want to run the app:
+
+1. Start the Android emulator  
+2. Open terminal in the project folder  
+3. Run:
+
+```text
+flutter pub get
+flutter run --dart-define-from-file=config/development.json
 ```
 
-Replace placeholder hostnames in `config/*.json` with real environments when available.
+You usually do **not** need to reinstall Flutter or Android Studio every time.
 
-## Localization
+---
 
-- Arabic (default) + English
-- ARB files: `lib/l10n/app_ar.arb`, `lib/l10n/app_en.arb`
-- RTL/LTR follows active locale automatically
-- Runtime + persisted locale switching: `LocaleController`
-- Do not hardcode user-facing strings; use `context.l10n`
+## Need help?
 
-## Theme
+When asking for help, send:
 
-Light theme foundation in `lib/app/theme/`:
+1. A screenshot of the error  
+2. The exact command you typed  
+3. The output of:
 
-- Typography hierarchy
-- Spacing / radii tokens
-- Input + button themes
-- Surface / card conventions
+```text
+flutter doctor -v
+```
 
-Not a full design system - product UI design comes later.
+Do **not** send passwords, payment receipts, or private API keys.
 
-## Shared helpers
+---
 
-- `SdgFormatter` - SDG display formatting
-- `SudanPhone` - E.164 normalization / light validation
-- Backend remains authoritative for prices, booking state, availability, payments, holds, cancellation, PIN
+## For developers (short reference)
 
-## Testing
+If you are a developer, this project is a Flutter customer app.
 
 ```bash
 flutter pub get
 flutter analyze
 flutter test
+flutter run --dart-define-from-file=config/development.json
 ```
 
-F0 coverage includes:
+Config files live in `config/`.  
+Architecture notes: `docs/ARCHITECTURE.md`.
 
-- API envelope success/error parsing
-- Error mapper transport conversion
-- App configuration
-- SDG formatter
-- Sudan phone helper
-- Stadium time helpers
-- Token store (in-memory)
-- App startup / router / localization smoke widget tests
-
-Integration tests: folder prepared; product flows in later phases.
-
-## Security checklist (F0)
-
-- No API credentials committed
-- Access/refresh tokens only in secure storage
-- Auth headers redacted in network logs
-- Production network logging disabled by config rules
-- `config/local.json` gitignored
-
-
-## Authentication (F1)
-
-- Session restore from secure storage on cold start (splash, no login flash)
-- Login, register + email OTP, OTP resend (UI cooldown), forgot/reset password
-- Change-password infrastructure (required when `mustChangePassword`)
-- Central refresh-token rotation with concurrent 401 consolidation
-- CUSTOMER-only gate (OWNER/ADMIN rejected and tokens cleared)
-- Auth-aware `go_router` redirects
-- Offline logout clears local session even if the network call fails
-
-## Catalog (F2)
-
-- Authenticated shell with bottom nav: Home, Search, Bookings (placeholder), Profile (placeholder)
-- `GET /api/v1/stadiums` via `CatalogRepository` / `ApiClient`
-- Server-side filters: `state`, `city`, `pitchType`
-- Pagination with load-more, pull-to-refresh, empty/error states
-- Stadium cards navigate to `/stadiums/:id` placeholder (detail in F3)
-- In-memory catalog state retained per tab scope (no offline DB)
-## What is intentionally not in F2
-
-Stadium detail, availability, booking, payment, PIN, maps, recurring bookings.
+Default Android emulator API origin: `http://10.0.2.2:3000` → `/api/v1`.
